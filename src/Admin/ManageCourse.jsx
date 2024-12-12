@@ -137,7 +137,7 @@ const ManageCourse = () => {
                     Delete
                   </button>
                   <Link
-                    to={"#"}
+                    to={`/admin/insertchapter/${course.id}/${course.course_slug}`}
                     className=" text-white px-2 py-2 bg-teal-500
                      text-center"
                   >

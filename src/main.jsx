@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.jsx";
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -28,17 +28,14 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
 
       <Route path="/admin" element={<AdminLayout />}>
-      <Route path="/admin/insertchapter" element={<InsertChapter/>}/>
-      <Route path="/admin/managechapter" element={<ManageChapter/>}/>
-      
-      
-      
-      <Route path="/admin/insertcourse" element={<InsertCourse/>}/>
-      <Route path="/admin/managecourse" element={<ManageCourse/>}/>
-
+        <Route path="/admin/insertcourse" element={<InsertCourse />} />
+        <Route path="/admin/managecourse" element={<ManageCourse />} />
+        <Route
+          path="/admin/insertchapter/:id/:slug"
+          element={<InsertChapter />}
+        />
+        <Route path="/admin/managechapter" element={<ManageChapter />} />
       </Route>
-      
-      
     </>
   )
 );
