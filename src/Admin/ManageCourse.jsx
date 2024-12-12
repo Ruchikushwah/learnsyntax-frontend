@@ -27,37 +27,7 @@ const ManageCourse = () => {
     fetchCourse();
   }, []);
 
-  const handleCourse = async () => {
-    if (!title || !description || !image) {
-      alert("All fields are required.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("image", image);
-    formData.append("title", title);
-    formData.append("description", description);
-    try {
-      let resp = await fetch("http://127.0.0.1:8000/api/courses", {
-        method: "POST",
-
-        body: formData,
-      });
-
-      if (!resp.ok) {
-        throw new Error(`Error: ${resp.statusText}`);
-      }
-
-      resp = await resp.json();
-      alert(resp.message);
-      setRecord(resp);
-    } catch (error) {
-      console.error("Error handling course:", error);
-      alert("An error occurred while handling the course.");
-    }
-  };
-
-  const handleDelete = async (id) => {
+ const handleDelete = async (id) => {
     let resp = await fetch(`http://127.0.0.1:8000/api/courses/${id}`, {
       method: "DELETE",
     });
@@ -119,7 +89,7 @@ const ManageCourse = () => {
                 <td className="px-6 py-4">
                   
                   <img
-                    src={`http://127.0.0.1:8000/storage/images/${course.image}`}
+                    src={`http://127.0.0.1:8000/storage/${course.image}`}
                     
                     className="w-16 h-16"
                   />
