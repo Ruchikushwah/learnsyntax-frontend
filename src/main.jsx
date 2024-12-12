@@ -15,6 +15,8 @@ import Login from "./Auth/Login.jsx";
 import AdminLayout from "./Admin/AdminLayout.jsx";
 import InsertChapter from "./Admin/InsertChapter.jsx";
 import ManageChapter from "./Admin/ManageChapter.jsx";
+import InsertCourse from "./Admin/InsertCourse.jsx";
+import ManageCourse from "./Admin/ManageCourse.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +31,14 @@ const router = createBrowserRouter(
       <Route path="/admin/insertchapter" element={<InsertChapter/>}/>
       <Route path="/admin/managechapter" element={<ManageChapter/>}/>
       
+      
+      
+      <Route path="/admin/insertcourse" element={<InsertCourse/>}/>
+      <Route path="/admin/managecourse" element={<ManageCourse/>}/>
+
       </Route>
+      
+      
     </>
   )
 );

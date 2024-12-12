@@ -12,6 +12,7 @@ const Sidebar = () => {
     { name: "Users", icon: <FaUsers />, link: "#users" },
     { name: "Settings", icon: <FaCogs />, link: "#settings" },
     { name: "Logout", icon: <FaSignOutAlt />, link: "#logout" },
+    { name: "admin/insertcourse", icon: <FaSignOutAlt />, link: "#admin/insertcourse" },
   ];
 
   return (
