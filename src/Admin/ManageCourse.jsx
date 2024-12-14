@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { FiDelete, FiEdit } from "react-icons/fi";
+import { GrChapterAdd } from "react-icons/gr";
+import { HiOutlineViewfinderCircle } from "react-icons/hi2";
+
+import { MdDelete, MdDeleteForever, MdPreview } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const ManageCourse = () => {
   const [title, setTitle] = useState("");
@@ -27,7 +32,7 @@ const ManageCourse = () => {
     fetchCourse();
   }, []);
 
- const handleDelete = async (id) => {
+  const handleDelete = async (id) => {
     let resp = await fetch(`http://127.0.0.1:8000/api/courses/${id}`, {
       method: "DELETE",
     });
@@ -87,31 +92,44 @@ const ManageCourse = () => {
                 <td className="px-6 py-4">{course.title}</td>
                 <td className="px-6 py-4">{course.description}</td>
                 <td className="px-6 py-4">
-                  
                   <img
                     src={`http://127.0.0.1:8000/storage/${course.image}`}
-                    
                     className="w-16 h-16"
                   />
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 flex gap-2">
+                  <button
+                    className="ml-2 text-white bg-red-600 hover:underline p-2 rounded-md "
+                    onClick={() => handleDelete(course.id)}
+                    title="delete"
+                  >
+                    <MdDelete size={22} />
+                  </button>
                   <Link to={"#"}>
-                    <button className="text-blue-500 hover:underline mr-2">
-                      Edit
+                    <button
+                      className=" text-white px-2 py-2 bg-teal-500
+                     text-center rounded-md "
+                      title="edit"
+                    >
+                      <FiEdit size={22} />
                     </button>
                   </Link>
-                  <button
-                    className="ml-2 text-red-500 hover:underline"
-                    onClick={() => handleDelete(course.id)}
-                  >
-                    Delete
-                  </button>
+
                   <Link
                     to={`/admin/insertchapter/${course.id}/${course.course_slug}`}
-                    className=" text-white px-2 py-2 bg-teal-500
+                    className=" text-white px-2 py-2 bg-teal-500 rounded-md
                      text-center"
+                    title="add chapter"
                   >
-                    Add Chapter
+                    <GrChapterAdd size={22} />
+                  </Link>
+                  <Link
+                    to={`/admin/managecourse/${course.id}`}
+                    className="   text-white px-2 py-2 bg-teal-500 rounded-md
+                     text-center"
+                    title="view"
+                  >
+                    <HiOutlineViewfinderCircle size={22} />
                   </Link>
                 </td>
               </tr>
@@ -121,6 +139,6 @@ const ManageCourse = () => {
       </div>
     </div>
   );
-}
+};
 
-export default ManageCourse
+export default ManageCourse;

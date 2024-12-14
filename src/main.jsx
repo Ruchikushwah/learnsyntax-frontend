@@ -17,6 +17,8 @@ import InsertChapter from "./Admin/InsertChapter.jsx";
 import ManageChapter from "./Admin/ManageChapter.jsx";
 import InsertCourse from "./Admin/InsertCourse.jsx";
 import ManageCourse from "./Admin/ManageCourse.jsx";
+import ViewCourse from "./Admin/ViewCourse.jsx";
+import ViewChapter from "./Admin/ViewChapter.jsx";
 import ManageTopic from "./Admin/ManageTopic.jsx";
 import InsertTopic from "./Admin/InsertTopic.jsx";
 
@@ -36,8 +38,10 @@ const router = createBrowserRouter(
 
         <Route path="/admin/insertcourse" element={<InsertCourse />} />
         <Route path="/admin/managecourse" element={<ManageCourse />} />
+        <Route path="/admin/managecourse/:id" element={<ViewCourse />} />
+        <Route path="/admin/viewchapter/:id" element={<ViewChapter/>}/>
         <Route
-          path="/admin/insertchapter/:id/:slug"
+          path="/admin/insertchapter/:id"
           element={<InsertChapter />}
         />
         <Route path="/admin/managechapter" element={<ManageChapter />} />
