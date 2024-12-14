@@ -33,7 +33,7 @@ const InsertChapter = () => {
         setChapterName("");
         setChapterDescription("");
         setOrder("");
-        navigate("/admin/managechapter");
+        navigate("/admin/viewcourse");
       } else {
         alert("Failed to add chapter");
       }

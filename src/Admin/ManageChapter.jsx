@@ -24,6 +24,7 @@ const ManageChapter = () => {
     }
     fetchChapter();
   }, []);
+
   const handleDelete = async (id) => {
     let resp = await fetch(`http://127.0.0.1:8000/api/chapter/${id}`, {
       method: "DELETE",
@@ -31,7 +32,7 @@ const ManageChapter = () => {
     if (resp.ok) {
       console.log(`chapter ${id} deleted successfully`);
     } else {
-      console.error("failed to delete course", resp);
+      console.error("failed to delete chapter", resp);
     }
   };
 
@@ -124,7 +125,7 @@ const ManageChapter = () => {
             No chapters found matching your search.
           </p>
         )}
-        ;
+        
       </div>
     </div>
   );
