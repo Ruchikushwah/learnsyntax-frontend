@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const InsertTopic = () => {
-  const { chapterId } = useParams();  // Fetch the chapterId from URL params
+  const { id, course_slug, chapterId } = useParams();  // Fetch the chapterId from URL params
   const [topicName, setTopicName] = useState("");
   const [topicDescription, setTopicDescription] = useState("");
   const [order, setOrder] = useState("");
@@ -16,6 +16,7 @@ const InsertTopic = () => {
     };
 
     try {
+      // this will give all the topics related to the chapterid
       const response = await fetch(`http://127.0.0.1:8000/api/chapters/${chapterId}/topics`, {
         method: "POST",
         headers: {
@@ -27,15 +28,15 @@ const InsertTopic = () => {
       const result = await response.json();
 
       if (response.ok) {
-        alert("Topic Added Successfully");
+        console.log('Topic added succesfully');
 
         // Reset input fields
         setTopicName("");
         setTopicDescription("");
         setOrder("");
-        
+
         // Navigate to the topic management page after success
-        navigate("/admin/managetopic/:chapterId");
+        navigate(-1);
       } else {
         alert("Failed to add topic");
       }
