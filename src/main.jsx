@@ -21,6 +21,7 @@ import ViewCourse from "./Admin/ViewCourse.jsx";
 import ViewChapter from "./Admin/ViewChapter.jsx";
 import ManageTopic from "./Admin/ManageTopic.jsx";
 import InsertTopic from "./Admin/InsertTopic.jsx";
+import Dashboard from "./Admin/Dashboard.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,7 +32,7 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
 
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route path="/admin" element={<Dashboard/>}>
       
         <Route path="/admin/managetopic/:chapterId" element={<ManageTopic />} />
         <Route path="/admin/inserttopic/:chapterId" element={<InsertTopic />} />

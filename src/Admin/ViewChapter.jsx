@@ -72,7 +72,7 @@ const ViewChapter = () => {
   }
 
   return (
-    <div className="w-full bg-gray-100 p-10 flex">
+    <div className="w-full bg-gray-100 p-10 ">
       {/* Left Side: Chapters Details */}
       <div className="mx-auto bg-white shadow-lg rounded-lg overflow-hidden flex-1">
         

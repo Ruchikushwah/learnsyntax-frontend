@@ -26,20 +26,7 @@ const Sidebar = () => {
         </button>
 
         <ul className="mt-10 items-center">
-          <NavLink to="dashboard">
-            <li
-              className={`text-gray-300 text-sm flex items-center gap-x-4 p-2 rounded-md cursor-pointer hover:bg-gray-700 ${
-                isOpen && "pl-4"
-              }`}
-            >
-              <span className="material-icons ">
-                <LuLayoutDashboard className=" size-6 " />
-              </span>
-              <span className={`${!isOpen && "hidden"} duration-300`}>
-                Dashboard
-              </span>
-            </li>
-          </NavLink>
+          
           <NavLink to="managecourse">
             <li
               className={`text-gray-300 text-sm flex items-center gap-x-4 p-2 rounded-md cursor-pointer hover:bg-gray-700 ${
