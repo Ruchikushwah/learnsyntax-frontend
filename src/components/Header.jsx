@@ -72,13 +72,16 @@ const Header = () => {
                 Login{""}
               </NavLink>
             <div className="text-white lg:flex gap-4 items-center hidden ">
-              <NavLink
-                to="register"
-                className=" bg-orange-500 px-6 py-2 font-medium rounded  hover:bg-white hover:text-orange-500 transition-all ease-in"
-              >
-                register{" "}
-              </NavLink>
-            </div>
+
+          <NavLink
+            to="register"
+            className=" bg-orange-500 px-6 py-2 font-medium rounded  hover:bg-white hover:text-orange-500 transition-all ease-in"
+          >
+            Register
+          </NavLink>
+        </div>
+             
+
           </div>
         )}
       </div>
