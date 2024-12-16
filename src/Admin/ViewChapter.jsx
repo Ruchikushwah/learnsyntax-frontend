@@ -73,7 +73,7 @@ const [topicCount, setTopicCount] = useState(0);
 
   return (
     <div className="w-full bg-gray-100 p-10 flex">
-      {/* Left Side: Chapters Details */}
+      {/* Left Side: Course Details */}
       <div className="mx-auto bg-white shadow-lg rounded-lg overflow-hidden flex-1">
         
 
@@ -85,7 +85,7 @@ const [topicCount, setTopicCount] = useState(0);
         </div>
       </div>
 
-      {/* Right Side: Topics */}
+      {/* Right Side: chpters */}
       <div className="bg-gray-300 flex-1 p-6">
         <div className="border-b-2  px-6 py-2 flex  justify-between items-center ">
           <h2 className="text-xl font-bold text-gray-700 ">Topics

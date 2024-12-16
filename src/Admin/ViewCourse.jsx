@@ -1,53 +1,95 @@
 import React, { useEffect, useState } from "react";
 import { GrChapterAdd } from "react-icons/gr";
-import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 import { MdDelete } from "react-icons/md";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 
 const ViewCourse = () => {
-  const { id } = useParams();
-  const [record, setRecord] = useState(null); // State for course details
-  const [chapters, setChapters] = useState([]); // State for chapters
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const [chapterCount, setChapterCount] = useState(0);
-  
+  const { id, course_slug } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams(); // <-- To get the query param
+  const [record, setRecord] = useState(null);
+  const [chapters, setChapters] = useState([]);
+  const [selectedChapter, setSelectedChapter] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchCourseAndChapters = async () => {
-      try {
-        // Fetch course details
-        const courseResponse = await fetch(
-          `http://127.0.0.1:8000/api/courses/${id}`
+  // Fetch course and chapters - now reuses the previous selection
+  const fetchCourseAndChapters = async (preserveSelectedChapterId = null) => {
+    setLoading(true);
+    try {
+      const courseResponse = await fetch(`http://127.0.0.1:8000/api/courses/${id}`);
+      const courseData = await courseResponse.json();
+
+      if (courseResponse.ok) {
+        const chaptersWithTopics = await Promise.all(
+          courseData.data.chapters.map(async (chapter) => {
+            const topicsResponse = await fetch(`http://127.0.0.1:8000/api/chapters/${chapter.id}/topics`);
+            const topicsData = await topicsResponse.json();
+            return { ...chapter, topics: topicsData.data || [] };
+          })
         );
-        const courseData = await courseResponse.json();
 
-        if (courseResponse.ok) {
-          setRecord(courseData.data || null);
-          setChapters(courseData.data.chapters || []);
-          setChapterCount(courseData.data.chapters.length);
-        } else {
-          setError(courseData.message || "Failed to fetch course details.");
-          return;
-        }
-      } catch (error) {
-        setError("Error fetching data.");
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
+        setRecord(courseData.data || null);
+        setChapters(chaptersWithTopics);
+        
+        // Get the chapterId from the query params if available
+        const chapterIdFromURL = searchParams.get("chapterId");
+        
+        const currentChapter = chaptersWithTopics.find(chapter => chapter.id === (preserveSelectedChapterId || parseInt(chapterIdFromURL, 10)));
+        setSelectedChapter(currentChapter || chaptersWithTopics[0] || null);
+      } else {
+        setError(courseData.message || "Failed to fetch course details.");
       }
-    };
+    } catch (error) {
+      setError("Error fetching data.");
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  // Call fetchCourseAndChapters on component mount
+  useEffect(() => {
     fetchCourseAndChapters();
   }, [id]);
-  const handleDelete = async (id) => {
-    let resp = await fetch(`http://127.0.0.1:8000/api/chapter/${id}`, {
-      method: "DELETE",
-    });
-    if (resp.ok) {
-      console.log(`chapter ${id} deleted successfully`);
-    } else {
-      console.error("failed to delete chapter", resp);
+
+  // Handle chapter deletion
+  const handleDelete = async (chapterId) => {
+    try {
+      const resp = await fetch(`http://127.0.0.1:8000/api/chapter/${chapterId}`, {
+        method: "DELETE",
+      });
+      if (resp.ok) {
+        console.log(`Chapter ${chapterId} deleted successfully`);
+        setChapters(chapters.filter((chapter) => chapter.id !== chapterId));
+        
+        // Reset selected chapter to null if the currently selected chapter is deleted
+        if (selectedChapter && selectedChapter.id === chapterId) {
+          setSelectedChapter(null);
+        }
+      } else {
+        console.error("Failed to delete chapter", resp);
+      }
+    } catch (error) {
+      console.error("Error deleting chapter:", error);
+    }
+  };
+
+  // Handle topic deletion
+  const handleDeleteTopic = async (chapterId, topicId) => {
+    try {
+      const url = `http://127.0.0.1:8000/api/chapters/${chapterId}/topics/${topicId}`;
+      const response = await fetch(url, { method: "DELETE" });
+  
+      if (response.ok) {
+        console.log(`Topic ${topicId} deleted successfully`);
+  
+        // Re-fetch course and chapters after deleting a topic
+        fetchCourseAndChapters(selectedChapter?.id);
+      } else {
+        console.error("Failed to delete topic", response);
+      }
+    } catch (error) {
+      console.error("Error deleting topic:", error);
     }
   };
 
@@ -73,74 +115,56 @@ const ViewCourse = () => {
 
   return (
     <div className="w-full bg-gray-100 p-10 flex">
-      {/* Left Side: Course Details */}
-      <div className="mx-auto bg-white shadow-lg rounded-lg overflow-hidden flex-1">
-        {record.image && (
-          <img
-            src={`http://127.0.0.1:8000/storage/${record.image}`}
-            alt={record.title || "Course"}
-            className="w-full h-64 object-cover"
-          />
-        )}
-
-        <div className="p-6">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">
-            {record.title}
-          </h1>
-          <p className="text-gray-600 mb-6">{record.description}</p>
-        </div>
-      </div>
-
-      {/* Right Side: Chapters */}
-      <div className="bg-gray-300 flex-1 p-6">
-        <div className="border-b-2  px-6 py-2 flex  justify-between items-center ">
-          <h2 className="text-xl font-bold text-gray-700 ">Chapters
-            <span>({chapterCount})</span>
-          </h2>
-          <Link
-            to={`/admin/insertchapter/${record.id}`}
-            className=" text-white px-2 py-2 bg-teal-500 rounded-md
-                     text-center"
-            title="add chapter"
-          >
+      {/* Left Side: Chapters */}
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden flex-1 max-w-sm">
+        <div className="border-b-2 px-6 py-2 flex justify-between items-center">
+          <h2 className="text-xl font-bold text-gray-700">Chapters</h2>
+          <Link to={`/admin/insertchapter/${record.id}`} className="text-white px-2 py-2 bg-teal-500 rounded-md">
             <GrChapterAdd size={22} />
           </Link>
         </div>
-        {chapters.length > 0 ? (
-          <ul className="list-disc pl-6">
-            {chapters.map((chapter, index) => (
-              <li key={index} className="text-gray-800 mb-4 ">
-                <span>{chapter.order}</span>
-                <h3 className="text-lg font-semibold">
-                  {chapter.chapter_name}
-                </h3>
-                <p className="text-gray-600 line-clamp-3 mb-3">
-                  {chapter.chapter_description}
-                </p>
-                <div className="flex gap-3">
-                  <button
-                    className="ml-2 text-white bg-red-600 hover:underline p-2 rounded-md "
-                    onClick={() => handleDelete(chapter.id)}
-                    title="delete"
-                  >
-                    <MdDelete size={22} />
-                  </button>
-                  <Link
-                    to={`/admin/viewchapter/${chapter.id}`}
-                    className="   text-white px-2 py-2 bg-teal-500 rounded-md
-                                     text-center"
-                    title="view"
-                  >
-                    <HiOutlineViewfinderCircle size={22} />
-                  </Link>
-                </div>
-              </li>
+
+        {chapters.map((chapter) => (
+          <div 
+            key={chapter.id} 
+            className={`p-4 cursor-pointer ${chapter.id === selectedChapter?.id ? 'bg-teal-200' : ''}`} 
+            onClick={() => {
+              setSelectedChapter(chapter);
+              setSearchParams({ chapterId: chapter.id }); // <-- Update the URL param
+            }}
+          >
+            <h3 className="text-lg font-semibold">{chapter.chapter_name}</h3>
+            <p className="text-gray-600 line-clamp-3 mb-3">{chapter.chapter_description}</p>
+            <button className="text-white bg-red-600 p-2 rounded-md" onClick={() => handleDelete(chapter.id)}>
+              <MdDelete size={22} />
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Right Side: Topics */}
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden flex-1 ml-6">
+        {selectedChapter ? (
+          <div>
+            <div className="flex justify-between items-center p-6">
+              <h2 className="text-xl font-bold text-gray-700">Topics in {selectedChapter.chapter_name}</h2>
+              <Link to={`/admin/inserttopic/${selectedChapter.id}?chapterId=${selectedChapter.id}`} className="text-white px-2 py-2 bg-teal-500 rounded-md">
+                Add Topic
+              </Link>
+            </div>
+
+            {selectedChapter.topics.map((topic) => (
+              <div key={topic.id} className="p-4 border-b">
+                <h4 className="font-semibold">{topic.topic_name}</h4>
+                <p className="text-gray-600 mb-2">{topic.topic_description}</p>
+                <button className="text-red-500" onClick={() => handleDeleteTopic(selectedChapter.id, topic.id)}>
+                  Delete
+                </button>
+              </div>
             ))}
-          </ul>
+          </div>
         ) : (
-          <p className="text-gray-600">
-            No chapters available for this course.
-          </p>
+          <p className="p-6 text-gray-600">Select a chapter to view its topics.</p>
         )}
       </div>
     </div>

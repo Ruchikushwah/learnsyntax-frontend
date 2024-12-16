@@ -33,14 +33,18 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route path="/admin/managetopic/:chapterId" element={<ManageTopic />} />
+      
+        <Route path="/admin/managecourse/:id/:course_slug/:chapterId/:chapter_slug/managetopic" element={<ManageTopic />} />
         <Route path="/admin/inserttopic/:chapterId" element={<InsertTopic />} />
 
         <Route path="/admin/insertcourse" element={<InsertCourse />} />
         <Route path="/admin/managecourse" element={<ManageCourse />} />
-        <Route path="/admin/managecourse/:id" element={<ViewCourse />} />
-        <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
-        <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
+        <Route path="/admin/managecourse/:id/:course_slug" element={<ViewCourse />} />
+        <Route path="/admin/viewchapter/:id" element={<ViewChapter/>}/>
+        <Route
+          path="/admin/insertchapter/:id"
+          element={<InsertChapter />}
+        />
         <Route path="/admin/managechapter" element={<ManageChapter />} />
         <Route path="/admin/setting" element={<Setting/>}/>
       </Route>
