@@ -40,7 +40,7 @@ const handleLogout = () => {
             to="register"
             className=" bg-orange-500 px-6 py-2 font-medium rounded  hover:bg-white hover:text-orange-500 transition-all ease-in"
           >
-            register{" "}
+            Register
           </NavLink>
         </div>
           </div>

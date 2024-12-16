@@ -12,6 +12,7 @@ import Layout from "./Layout.jsx";
 import Home from "./Home/Home.jsx";
 import Register from "./Auth/Register.jsx";
 import Login from "./Auth/Login.jsx";
+
 import AdminLayout from "./Admin/AdminLayout.jsx";
 import InsertChapter from "./Admin/InsertChapter.jsx";
 import ManageChapter from "./Admin/ManageChapter.jsx";
@@ -26,31 +27,26 @@ import Dashboard from "./Admin/Dashboard.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
+      {/* Main Routes */}
       <Route path="/" element={<Layout />}>
-        <Route path="" element={<Home />} />
+        <Route index element={<Home />} />
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
       </Route>
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
 
-      <Route path="/admin" element={<Dashboard/>}>
-      
-        <Route path="/admin/managetopic/:chapterId" element={<ManageTopic />} />
-        <Route path="/admin/inserttopic/:chapterId" element={<InsertTopic />} />
-
-        <Route path="/admin/insertcourse" element={<InsertCourse />} />
-        <Route path="/admin/managecourse" element={<ManageCourse />} />
-        <Route path="/admin/managecourse/:id" element={<ViewCourse />} />
-        <Route path="/admin/viewchapter/:id" element={<ViewChapter/>}/>
-        <Route
-          path="/admin/insertchapter/:id"
-          element={<InsertChapter />}
-        />
-        <Route path="/admin/managechapter" element={<ManageChapter />} />
-
-        
-        
+      {/* Admin Routes */}
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route path="managetopic/:chapterId" element={<ManageTopic />} />
+        <Route index element={<Dashboard />} />
+        <Route path="managetopic/:chapterId" element={<ManageTopic />} />
+        <Route path="inserttopic/:chapterId" element={<InsertTopic />} />
+        <Route path="insertcourse" element={<InsertCourse />} />
+        <Route path="managecourse" element={<ManageCourse />} />
+        <Route path="managecourse/:id" element={<ViewCourse />} />
+        <Route path="viewchapter/:id" element={<ViewChapter />} />
+        <Route path="insertchapter/:id" element={<InsertChapter />} />
+        <Route path="managechapter" element={<ManageChapter />} />
       </Route>
-      
     </>
   )
 );

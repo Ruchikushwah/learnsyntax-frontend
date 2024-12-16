@@ -5,6 +5,7 @@ import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 
 import { MdDelete, MdDeleteForever, MdPreview } from "react-icons/md";
 import { Link } from "react-router-dom";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const ManageCourse = () => {
   const [title, setTitle] = useState("");
@@ -43,10 +44,12 @@ const ManageCourse = () => {
     }
   };
   return (
-    <div className="relative overflow-x-auto w-full py-10 px-8">
+    <div className="relative overflow-x-auto w-full py-6 px-8">
+      
       <h2 className="text-lg font-bold text-gray-700 border-l-4 border-teal-600 p-1">
         Manage Course
       </h2>
+
 
       <div className="flex flex-col md:flex-row justify-between md:items-center py-4 space-y-4 md:space-y-0">
         <input
