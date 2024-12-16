@@ -16,6 +16,7 @@ const ManageChapter = () => {
         }
         const data = await response.json();
         setRecord(data.data);
+       
         setFilterRecords(data.data);
         console.log("Fetched Chapters:", data.data);
       } catch (error) {

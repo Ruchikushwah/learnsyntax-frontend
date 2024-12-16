@@ -6,11 +6,11 @@ import { Link, useParams } from "react-router-dom";
 
 const ViewChapter = () => {
   const { id } = useParams();
-  const [record, setRecord] = useState(null); // State for chapters details
-  const [topics, setTopics] = useState([]); // State for topics
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-
+  const [record, setRecord] = useState(null); 
+  const [topics, setTopics] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+const [topicCount, setTopicCount] = useState(0);
   useEffect(() => {
     const fetchChaptersAndTopic = async () => {
       try {
@@ -24,7 +24,7 @@ const ViewChapter = () => {
           setRecord(chapterData.data || null);
           console.log(chapterData.data);
           setTopics(chapterData.data.topic || []);
-         
+          setTopicCount(chapterData.data.topic.length);
           
         } else {
           setError(chapterData.message || "Failed to fetch chapter details.");
@@ -72,8 +72,12 @@ const ViewChapter = () => {
   }
 
   return (
+
     <div className="w-full bg-gray-100 p-10 ">
       {/* Left Side: Chapters Details */}
+
+   
+
       <div className="mx-auto bg-white shadow-lg rounded-lg overflow-hidden flex-1">
         
 
@@ -85,10 +89,12 @@ const ViewChapter = () => {
         </div>
       </div>
 
-      {/* Right Side: Topics */}
+      {/* Right Side: chpters */}
       <div className="bg-gray-300 flex-1 p-6">
         <div className="border-b-2  px-6 py-2 flex  justify-between items-center ">
-          <h2 className="text-xl font-bold text-gray-700 ">Topics</h2>
+          <h2 className="text-xl font-bold text-gray-700 ">Topics
+            <span>({topicCount})</span>
+          </h2>
           <Link
             to={`/admin/inserttopic/${record.id}`}
             className=" text-white px-2 py-2 bg-teal-500 rounded-md

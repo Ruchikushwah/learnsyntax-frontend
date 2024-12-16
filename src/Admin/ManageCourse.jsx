@@ -13,6 +13,8 @@ const ManageCourse = () => {
   const [image, setImage] = useState("");
   const [record, setRecord] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [courseCount, setCourseCount] = useState(0);
+
 
   useEffect(() => {
     async function fetchCourse() {
@@ -26,6 +28,7 @@ const ManageCourse = () => {
 
         setRecord(data.data);
         console.log(record);
+        setCourseCount(data.data.length);
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
@@ -48,6 +51,7 @@ const ManageCourse = () => {
       
       <h2 className="text-lg font-bold text-gray-700 border-l-4 border-teal-600 p-1">
         Manage Course
+        <span>({courseCount})</span>
       </h2>
 
 
@@ -127,7 +131,7 @@ const ManageCourse = () => {
                     <GrChapterAdd size={22} />
                   </Link>
                   <Link
-                    to={`/admin/managecourse/${course.id}`}
+                    to={`/admin/managecourse/${course.id}/${course.course_slug}`}
                     className="   text-white px-2 py-2 bg-teal-500 rounded-md
                      text-center"
                     title="view"
