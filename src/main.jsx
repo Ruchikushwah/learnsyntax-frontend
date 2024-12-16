@@ -21,6 +21,7 @@ import ViewCourse from "./Admin/ViewCourse.jsx";
 import ViewChapter from "./Admin/ViewChapter.jsx";
 import ManageTopic from "./Admin/ManageTopic.jsx";
 import InsertTopic from "./Admin/InsertTopic.jsx";
+import Setting from "./Admin/Setting.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,24 +33,17 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
 
       <Route path="/admin" element={<AdminLayout />}>
-      
         <Route path="/admin/managetopic/:chapterId" element={<ManageTopic />} />
         <Route path="/admin/inserttopic/:chapterId" element={<InsertTopic />} />
 
         <Route path="/admin/insertcourse" element={<InsertCourse />} />
         <Route path="/admin/managecourse" element={<ManageCourse />} />
         <Route path="/admin/managecourse/:id" element={<ViewCourse />} />
-        <Route path="/admin/viewchapter/:id" element={<ViewChapter/>}/>
-        <Route
-          path="/admin/insertchapter/:id"
-          element={<InsertChapter />}
-        />
+        <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
+        <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
         <Route path="/admin/managechapter" element={<ManageChapter />} />
-
-        
-        
+        <Route path="/admin/setting" element={<Setting/>}/>
       </Route>
-      
     </>
   )
 );

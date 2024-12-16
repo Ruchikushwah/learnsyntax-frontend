@@ -12,6 +12,8 @@ const ManageCourse = () => {
   const [image, setImage] = useState("");
   const [record, setRecord] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [courseCount, setCourseCount] = useState(0);
+
 
   useEffect(() => {
     async function fetchCourse() {
@@ -25,6 +27,7 @@ const ManageCourse = () => {
 
         setRecord(data.data);
         console.log(record);
+        setCourseCount(data.data.length);
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
@@ -46,6 +49,7 @@ const ManageCourse = () => {
     <div className="relative overflow-x-auto w-full py-10 px-8">
       <h2 className="text-lg font-bold text-gray-700 border-l-4 border-teal-600 p-1">
         Manage Course
+        <span>({courseCount})</span>
       </h2>
 
       <div className="flex flex-col md:flex-row justify-between md:items-center py-4 space-y-4 md:space-y-0">

@@ -10,6 +10,8 @@ const ViewCourse = () => {
   const [chapters, setChapters] = useState([]); // State for chapters
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
+  const [chapterCount, setChapterCount] = useState(0);
+  
 
   useEffect(() => {
     const fetchCourseAndChapters = async () => {
@@ -23,6 +25,7 @@ const ViewCourse = () => {
         if (courseResponse.ok) {
           setRecord(courseData.data || null);
           setChapters(courseData.data.chapters || []);
+          setChapterCount(courseData.data.chapters.length);
         } else {
           setError(courseData.message || "Failed to fetch course details.");
           return;
@@ -91,7 +94,9 @@ const ViewCourse = () => {
       {/* Right Side: Chapters */}
       <div className="bg-gray-300 flex-1 p-6">
         <div className="border-b-2  px-6 py-2 flex  justify-between items-center ">
-          <h2 className="text-xl font-bold text-gray-700 ">Chapters</h2>
+          <h2 className="text-xl font-bold text-gray-700 ">Chapters
+            <span>({chapterCount})</span>
+          </h2>
           <Link
             to={`/admin/insertchapter/${record.id}`}
             className=" text-white px-2 py-2 bg-teal-500 rounded-md
