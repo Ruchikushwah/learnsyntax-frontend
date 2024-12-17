@@ -122,7 +122,7 @@ const Sidebar = () => {
                 <MdOutlinePostAdd className=" size-6" />
               </span>
               <span className={`${!isOpen && "hidden"} duration-300`}>
-                setting
+                Setting
               </span>
             </li>
           </NavLink>
