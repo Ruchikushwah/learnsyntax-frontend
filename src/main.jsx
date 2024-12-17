@@ -15,7 +15,7 @@ import Login from "./Auth/Login.jsx";
 
 import AdminLayout from "./Admin/AdminLayout.jsx";
 import InsertChapter from "./Admin/InsertChapter.jsx";
-import ManageChapter from "./Admin/ManageChapter.jsx";
+
 import InsertCourse from "./Admin/InsertCourse.jsx";
 import ManageCourse from "./Admin/ManageCourse.jsx";
 import ViewCourse from "./Admin/ViewCourse.jsx";
@@ -60,7 +60,7 @@ const router = createBrowserRouter(
         />
         <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
         <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
-        <Route path="/admin/managechapter" element={<ManageChapter />} />
+        
         <Route path="/admin/setting" element={<Setting/>}/>
         <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
 2
