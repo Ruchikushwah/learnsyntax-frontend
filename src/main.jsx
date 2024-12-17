@@ -25,6 +25,7 @@ import InsertTopic from "./Admin/InsertTopic.jsx";
 
 import Dashboard from "./Admin/Dashboard.jsx";
 import Setting from "./Admin/Setting.jsx";
+import CourseEdit from "./Admin/CourseEdit.jsx";
 
 
 const router = createBrowserRouter(
@@ -56,6 +57,7 @@ const router = createBrowserRouter(
         />
         <Route path="/admin/managechapter" element={<ManageChapter />} />
         <Route path="/admin/setting" element={<Setting/>}/>
+        <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
 2
       </Route>
     </>
