@@ -8,13 +8,10 @@ const Setting = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        
         const token = localStorage.getItem("token");
         if (!token) {
           throw new Error("Authentication token is missing.");
         }
-
-        
         const response = await fetch("http://127.0.0.1:8000/api/user", {
           method: "GET",
           headers: {
@@ -46,14 +43,10 @@ const Setting = () => {
 
   
   if (loading) return <p>Loading...</p>;
-
-  
   if (error) return <p>Error: {error}</p>;
-
-  
   return (
     <div className="max-w-md mx-auto p-4 bg-white shadow rounded">
-      <h1 className="text-xl font-bold mb-4">User Profile</h1>
+      <h1 className="text-xl font-bold mb-4">Admin Profile</h1>
       <p><strong>Name:</strong> {user?.name}</p>
       <p><strong>Email:</strong> {user?.email}</p>
      
