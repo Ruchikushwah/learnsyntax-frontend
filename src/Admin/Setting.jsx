@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const Setting = () => {
-  const [user, setUser] = useState(null); 
+  const [user, setUser] = useState([]); 
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null);
 
@@ -24,11 +24,11 @@ const Setting = () => {
           throw new Error(`Failed to fetch: ${response.statusText}`);
         }
 
-        
+          
         const data = await response.json();
 
        
-        setUser(data.user);
+        setUser(data.allAdmin);
 
       } catch (err) {
         
@@ -47,8 +47,15 @@ const Setting = () => {
   return (
     <div className="max-w-md mx-auto p-4 bg-white shadow rounded">
       <h1 className="text-xl font-bold mb-4">Admin Profile</h1>
-      <p><strong>Name:</strong> {user?.name}</p>
-      <p><strong>Email:</strong> {user?.email}</p>
+      
+      {user.map((user, i) => (
+        <div key={i} className="mb-4">
+          <p><strong>Name:</strong> {user?.name}</p>
+          <p><strong>Email:</strong> {user?.email}</p>
+        </div>
+
+      ))}
+      
      
     </div>
   );
