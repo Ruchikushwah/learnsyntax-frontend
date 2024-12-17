@@ -50,7 +50,7 @@ const Header = () => {
       <div className="flex justify-center ">
         {isLoggedIn ? (
           <div>
-             {userInfo && (
+            {userInfo && (
               <div>
                 <h2 className="text-lg font-medium">
                   Welcome, {userInfo.name}!
@@ -58,30 +58,29 @@ const Header = () => {
                 <p className="text-sm text-gray-800">{userInfo.email}</p>
               </div>
             )}
-            <button className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500 transition" onClick={logout}>
-          Logout
-        </button></div>
-        
-          
+            <button
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-white  hover:text-blue-600 transition"
+              onClick={logout}
+            >
+              Logout
+            </button>
+          </div>
         ) : (
           <div className="flex gap-3 ">
             <NavLink
-                to="login"
-                className=" bg-orange-500 px-6 py-2 font-medium rounded  hover:bg-white hover:text-orange-500 transition-all ease-in"
-              >
-                Login{""}
-              </NavLink>
+              to="login"
+              className=" bg-blue-600 px-6 py-2 font-medium rounded  hover:bg-white hover:text-blue-600 transition-all ease-in"
+            >
+              Login{""}
+            </NavLink>
             <div className="text-white lg:flex gap-4 items-center hidden ">
-
-          <NavLink
-            to="register"
-            className=" bg-orange-500 px-6 py-2 font-medium rounded  hover:bg-white hover:text-orange-500 transition-all ease-in"
-          >
-            Register
-          </NavLink>
-        </div>
-             
-
+              <NavLink
+                to="register"
+                className=" bg-blue-600 px-6 py-2 font-medium rounded  hover:bg-white hover:text-blue-600 transition-all ease-in"
+              >
+                Register
+              </NavLink>
+            </div>
           </div>
         )}
       </div>
