@@ -17,7 +17,7 @@ const InsertChapter = () => {
     };
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/chapter", {
+      const response = await fetch("http://127.0.0.1:8000/api/chapters", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const InsertChapter = () => {
         setChapterName("");
         setChapterDescription("");
         setOrder("");
-        navigate("/admin/viewcourse");
+        navigate(-1);
       } else {
         alert("Failed to add chapter");
       }
