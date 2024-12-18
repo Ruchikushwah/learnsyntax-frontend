@@ -27,6 +27,7 @@ import Dashboard from "./Admin/Dashboard.jsx";
 import Setting from "./Admin/Setting.jsx";
 import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
+import Chapteredit from "./Admin/Chapteredit.jsx";
 
 
 const router = createBrowserRouter(
@@ -63,6 +64,7 @@ const router = createBrowserRouter(
         
         <Route path="/admin/setting" element={<Setting/>}/>
         <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
+        <Route path="/admin/managecourse/chapteredit/:id/:chapter_slug" element={<Chapteredit/>} />
 2
         <Route path="/admin/setting" element={<Setting />} />
       </Route>

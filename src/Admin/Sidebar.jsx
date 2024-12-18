@@ -22,7 +22,7 @@ const Sidebar = () => {
           className="absolute  top-9 w-7 h-7 bg-white border border-gray-700 rounded-full flex justify-center
            items-center cursor-pointer"
         >
-          {isOpen ? "+" : "-"}
+          {isOpen ? "-" : "+"}
         </button>
 
         <ul className="mt-10 items-center">

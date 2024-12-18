@@ -54,7 +54,7 @@ const Setting = () => {
           <p><strong>Email:</strong> {user?.email}</p>
         </div>
 
-      ))}
+      ))};
       
      
     </div>

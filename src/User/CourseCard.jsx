@@ -11,7 +11,7 @@ const CourseCard = ({ courses = [] }) => {
           <NavLink
             to={`/singleviewpage/${course.id}/${course.course_slug}`}
             key={course.id}
-            className="p-5 shadow-lg rounded cursor-pointer"
+            className="p-5 shadow rounded cursor-pointer hover:shadow-lg"
           >
             <div>
               <img

@@ -11,6 +11,8 @@ const ViewChapter = () => {
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null); 
 const [topicCount, setTopicCount] = useState(0);
+
+
   useEffect(() => {
     const fetchChaptersAndTopic = async () => {
       try {
@@ -22,7 +24,7 @@ const [topicCount, setTopicCount] = useState(0);
 
         if (Response.ok) {
           setRecord(chapterData.data || null);
-          console.log(chapterData.data);
+          
           setTopics(chapterData.data.topic || []);
           setTopicCount(chapterData.data.topic.length);
           
