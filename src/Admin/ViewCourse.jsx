@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { GrChapterAdd } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
-import { Link, NavLink, useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 
 const ViewCourse = () => {
   const { id, course_slug } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams(); // <-- To get the query param
+  const [searchParams, setSearchParams] = useSearchParams();
   const [record, setRecord] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [selectedChapter, setSelectedChapter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch course and chapters - now reuses the previous selection
   const fetchCourseAndChapters = async (preserveSelectedChapterId = null) => {
     setLoading(true);
     try {
@@ -31,9 +30,7 @@ const ViewCourse = () => {
         setRecord(courseData.data || null);
         setChapters(chaptersWithTopics);
         
-        // Get the chapterId from the query params if available
         const chapterIdFromURL = searchParams.get("chapterId");
-        
         const currentChapter = chaptersWithTopics.find(chapter => chapter.id === (preserveSelectedChapterId || parseInt(chapterIdFromURL, 10)));
         setSelectedChapter(currentChapter || chaptersWithTopics[0] || null);
       } else {
@@ -47,12 +44,10 @@ const ViewCourse = () => {
     }
   };
 
-  // Call fetchCourseAndChapters on component mount
   useEffect(() => {
     fetchCourseAndChapters();
   }, [id]);
 
-  // Handle chapter deletion
   const handleDelete = async (chapterId) => {
     try {
       const resp = await fetch(`http://127.0.0.1:8000/api/chapter/${chapterId}`, {
@@ -61,8 +56,6 @@ const ViewCourse = () => {
       if (resp.ok) {
         console.log(`Chapter ${chapterId} deleted successfully`);
         setChapters(chapters.filter((chapter) => chapter.id !== chapterId));
-        
-        // Reset selected chapter to null if the currently selected chapter is deleted
         if (selectedChapter && selectedChapter.id === chapterId) {
           setSelectedChapter(null);
         }
@@ -74,7 +67,6 @@ const ViewCourse = () => {
     }
   };
 
-  // Handle topic deletion
   const handleDeleteTopic = async (chapterId, topicId) => {
     try {
       const url = `http://127.0.0.1:8000/api/chapters/${chapterId}/topics/${topicId}`;
@@ -82,8 +74,6 @@ const ViewCourse = () => {
   
       if (response.ok) {
         console.log(`Topic ${topicId} deleted successfully`);
-  
-        // Re-fetch course and chapters after deleting a topic
         fetchCourseAndChapters(selectedChapter?.id);
       } else {
         console.error("Failed to delete topic", response);
@@ -112,7 +102,6 @@ const ViewCourse = () => {
 
   return (
     <div className="w-full bg-gray-100 p-10 flex">
-      {/* Left Side: Chapters */}
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex-1 max-w-sm">
         <div className="border-b-2 px-6 py-2 flex justify-between items-center">
           <h2 className="text-xl font-bold text-gray-700">Chapters</h2>
@@ -132,7 +121,7 @@ const ViewCourse = () => {
             }`}
             onClick={() => {
               setSelectedChapter(chapter);
-              setSearchParams({ chapterId: chapter.id }); // <-- Update the URL param
+              setSearchParams({ chapterId: chapter.id });
             }}
           >
             <h3 className="text-lg font-semibold">{chapter.chapter_name}</h3>
@@ -149,7 +138,6 @@ const ViewCourse = () => {
         ))}
       </div>
 
-      {/* Right Side: Topics */}
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex-1 ml-6">
         {selectedChapter ? (
           <div>
@@ -169,21 +157,9 @@ const ViewCourse = () => {
               <div key={topic.id} className="p-4 border-b">
                 <h4 className="font-semibold">{topic.topic_name}</h4>
                 <p className="text-gray-600 mb-2">{topic.topic_description}</p>
-                <div className=" flex gap-3">
-                  <button
-                    className="text-red-500"
-                    onClick={() =>
-                      handleDeleteTopic(selectedChapter.id, topic.id)
-                    }
-                  >
-                    Delete
-                  </button>
-                  <NavLink
-                    to={`/admin/managecourse/topiceedit/${topic.id}/${topic.topic_slug}`}
-                  >
-                    <button className=" text-blue-600">Edit</button>
-                  </NavLink>
-                </div>
+                <button className="text-red-500" onClick={() => handleDeleteTopic(selectedChapter.id, topic.id)}>
+                  Delete
+                </button>
               </div>
             ))}
           </div>

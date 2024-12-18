@@ -22,9 +22,13 @@ import ManageTopic from "./Admin/ManageTopic.jsx";
 import InsertTopic from "./Admin/InsertTopic.jsx";
 import Dashboard from "./Admin/Dashboard.jsx";
 import Setting from "./Admin/Setting.jsx";
+
+import ViewPost from "./Admin/ViewPost.jsx";
+
 import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
+
 
 
 const router = createBrowserRouter(
@@ -61,6 +65,19 @@ const router = createBrowserRouter(
         <Route path="/admin/setting" element={<Setting />} />
         <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit />}/>
         <Route path="/admin/managecourse/topiceedit/:id/:topic_slug"element={<TopicEdit />}/>
+        
+        <Route path="/admin/setting" element={<Setting/>}/>
+
+
+        {/* route for the posts */}
+        {/* <Route path="/admin/viewpost/:topic_id" element={<ViewPost/>} /> */}
+        {/* to={`/admin/managecourse/${id}/${course_slug}/${selectedChapter.id}/${selectedChapter.chapter_name}/viewpost/${topic.id}/${topic.topic_name}`} */}
+        <Route path="/admin/managecourse/:id/:course_slug/:chapter_id/:chapter_slug/viewpost/:topic_id/:topic_slug" element={<ViewPost/>} />
+
+
+
+        <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
+
         <Route path="/admin/setting" element={<Setting />} />
       </Route>
     </>
