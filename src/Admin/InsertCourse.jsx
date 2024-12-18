@@ -1,62 +1,104 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const InsertCourse = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [errors, setErrors] = useState({});// To store error messages
+   const navigate = useNavigate();
+
+  const validateForm = () => {
+    let formErrors = {};
+    let isValid = true;
+
+    // Validate Title
+    if (!title) {
+      formErrors.title = "Course title is required";
+      isValid = false;
+    }
+
+    // Validate Description
+    if (!description) {
+      formErrors.description = "Course description is required";
+      isValid = false;
+    }
+
+    // Validate Image
+    if (!image) {
+      formErrors.image = "Course image is required";
+      isValid = false;
+    } 
+
+    setErrors(formErrors);
+    return isValid;
+  };
 
   const handleCourse = async () => {
+    
+    if (!validateForm()) {
+      return; 
+    }
+
     const formData = new FormData();
-    formData.append("title",title);
-    formData.append("description",description);
-    formData.append("image",image);
-    try{
-      const response = await fetch("http://127.0.0.1:8000/api/courses",{
-        method:"POST",
-        body:formData,
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("image", image);
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/courses", {
+        method: "POST",
+        body: formData,
       });
       const result = await response.json();
-      if(response.ok){
+
+      if (response.ok) {
         alert("Course Added Successfully");
         setTitle("");
         setDescription("");
         setImage("");
-      }else{
+        setErrors({});
+        navigate(-1);
+      } else {
         alert("Failed to add course");
       }
-    } catch (error){
-      console.error("Error:",error);
-      alert("Error occured while adding course");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error occurred while adding course");
     }
   };
- 
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
       <div className="w-full max-w-md p-6 bg-white rounded shadow-lg">
         <h2 className="text-lg font-bold text-gray-700 mb-4">Insert Course</h2>
 
+       
         <div className="mb-4">
           <label
-            htmlFor="name"
+            htmlFor="title"
             className="block text-sm font-medium text-gray-600 mb-1"
           >
             Course Title
           </label>
           <input
             type="text"
-            id="name"
+            id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
             placeholder="Enter Course Title"
             required
           />
+          {errors.title && (
+            <p className="text-red-500 text-sm">{errors.title}</p>
+          )}
         </div>
 
+        
         <div className="mb-4">
           <label
-            htmlFor="descrition"
+            htmlFor="description"
             className="block text-sm font-medium text-gray-600 mb-1"
           >
             Course Description
@@ -69,7 +111,11 @@ const InsertCourse = () => {
             placeholder="Enter Course Description"
             rows="4"
           ></textarea>
+          {errors.description && (
+            <p className="text-red-500 text-sm">{errors.description}</p>
+          )}
         </div>
+
        
         <div className="mb-4">
           <label
@@ -82,11 +128,14 @@ const InsertCourse = () => {
             type="file"
             id="image"
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder=" Enter Course Image"
             onChange={(e) => setImage(e.target.files[0])}
           />
+          {errors.image && (
+            <p className="text-red-500 text-sm">{errors.image}</p>
+          )}
         </div>
 
+       
         <div className="flex justify-end gap-2">
           <button
             onClick={handleCourse}
@@ -98,6 +147,6 @@ const InsertCourse = () => {
       </div>
     </div>
   );
-}
+};
 
-export default InsertCourse
+export default InsertCourse;

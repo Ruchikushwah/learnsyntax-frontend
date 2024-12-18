@@ -4,9 +4,7 @@ import { useParams } from "react-router-dom";
 const Image = ({ label, field, src }) => {
   const [edit, setEdit] = useState(true);
   const [image, setImage] = useState("");
-
   const { id } = useParams();
-
   const formData = new FormData();
   formData.append("image", image);
 
