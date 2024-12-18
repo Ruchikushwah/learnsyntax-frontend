@@ -42,7 +42,7 @@ const Home = () => {
 
         <div className="mt-10 md:mt-0 md:w-1/2 flex justify-center">
           <img
-            src="public\bg-removebg-preview.png"
+            src="bg-removebg-preview.png"
             alt="Programmer Illustration"
             className="w-3/4 md:w-full"
           />
@@ -60,7 +60,7 @@ const Home = () => {
             in your browser
           </p>
           <img
-            src="public\codeeditor.webp"
+            src="codeeditor.webp"
             alt=""
           />
         </div>

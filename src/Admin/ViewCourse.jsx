@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GrChapterAdd } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, NavLink, useParams, useSearchParams } from "react-router-dom";
 
 const ViewCourse = () => {
   const { id, course_slug } = useParams();
@@ -93,10 +93,7 @@ const ViewCourse = () => {
     }
   };
 
-  if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
-  }
-
+ 
   if (error) {
     return (
       <div className="text-center py-10 text-red-500">
@@ -119,23 +116,33 @@ const ViewCourse = () => {
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex-1 max-w-sm">
         <div className="border-b-2 px-6 py-2 flex justify-between items-center">
           <h2 className="text-xl font-bold text-gray-700">Chapters</h2>
-          <Link to={`/admin/insertchapter/${record.id}`} className="text-white px-2 py-2 bg-teal-500 rounded-md">
+          <Link
+            to={`/admin/insertchapter/${record.id}`}
+            className="text-white px-2 py-2 bg-teal-500 rounded-md"
+          >
             <GrChapterAdd size={22} />
           </Link>
         </div>
 
         {chapters.map((chapter) => (
-          <div 
-            key={chapter.id} 
-            className={`p-4 cursor-pointer ${chapter.id === selectedChapter?.id ? 'bg-teal-200' : ''}`} 
+          <div
+            key={chapter.id}
+            className={`p-4 cursor-pointer ${
+              chapter.id === selectedChapter?.id ? "bg-teal-200" : ""
+            }`}
             onClick={() => {
               setSelectedChapter(chapter);
               setSearchParams({ chapterId: chapter.id }); // <-- Update the URL param
             }}
           >
             <h3 className="text-lg font-semibold">{chapter.chapter_name}</h3>
-            <p className="text-gray-600 line-clamp-3 mb-3">{chapter.chapter_description}</p>
-            <button className="text-white bg-red-600 p-2 rounded-md" onClick={() => handleDelete(chapter.id)}>
+            <p className="text-gray-600 line-clamp-3 mb-3">
+              {chapter.chapter_description}
+            </p>
+            <button
+              className="text-white bg-red-600 p-2 rounded-md"
+              onClick={() => handleDelete(chapter.id)}
+            >
               <MdDelete size={22} />
             </button>
           </div>
@@ -147,8 +154,13 @@ const ViewCourse = () => {
         {selectedChapter ? (
           <div>
             <div className="flex justify-between items-center p-6">
-              <h2 className="text-xl font-bold text-gray-700">Topics in {selectedChapter.chapter_name}</h2>
-              <Link to={`/admin/inserttopic/${selectedChapter.id}?chapterId=${selectedChapter.id}`} className="text-white px-2 py-2 bg-teal-500 rounded-md">
+              <h2 className="text-xl font-bold text-gray-700">
+                Topics in {selectedChapter.chapter_name}
+              </h2>
+              <Link
+                to={`/admin/inserttopic/${selectedChapter.id}?chapterId=${selectedChapter.id}`}
+                className="text-white px-2 py-2 bg-teal-500 rounded-md"
+              >
                 Add Topic
               </Link>
             </div>
@@ -157,14 +169,28 @@ const ViewCourse = () => {
               <div key={topic.id} className="p-4 border-b">
                 <h4 className="font-semibold">{topic.topic_name}</h4>
                 <p className="text-gray-600 mb-2">{topic.topic_description}</p>
-                <button className="text-red-500" onClick={() => handleDeleteTopic(selectedChapter.id, topic.id)}>
-                  Delete
-                </button>
+                <div className=" flex gap-3">
+                  <button
+                    className="text-red-500"
+                    onClick={() =>
+                      handleDeleteTopic(selectedChapter.id, topic.id)
+                    }
+                  >
+                    Delete
+                  </button>
+                  <NavLink
+                    to={`/admin/managecourse/topiceedit/${topic.id}/${topic.topic_slug}`}
+                  >
+                    <button className=" text-blue-600">Edit</button>
+                  </NavLink>
+                </div>
               </div>
             ))}
           </div>
         ) : (
-          <p className="p-6 text-gray-600">Select a chapter to view its topics.</p>
+          <p className="p-6 text-gray-600">
+            Select a chapter to view its topics.
+          </p>
         )}
       </div>
     </div>

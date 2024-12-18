@@ -12,21 +12,19 @@ import Layout from "./Layout.jsx";
 import Home from "./User/Home.jsx";
 import Register from "./Auth/Register.jsx";
 import Login from "./Auth/Login.jsx";
-
 import AdminLayout from "./Admin/AdminLayout.jsx";
 import InsertChapter from "./Admin/InsertChapter.jsx";
-
 import InsertCourse from "./Admin/InsertCourse.jsx";
 import ManageCourse from "./Admin/ManageCourse.jsx";
 import ViewCourse from "./Admin/ViewCourse.jsx";
 import ViewChapter from "./Admin/ViewChapter.jsx";
 import ManageTopic from "./Admin/ManageTopic.jsx";
 import InsertTopic from "./Admin/InsertTopic.jsx";
-
 import Dashboard from "./Admin/Dashboard.jsx";
 import Setting from "./Admin/Setting.jsx";
 import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
+import TopicEdit from "./Admin/TopicEdit.jsx";
 
 
 const router = createBrowserRouter(
@@ -60,10 +58,9 @@ const router = createBrowserRouter(
         />
         <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
         <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
-        
-        <Route path="/admin/setting" element={<Setting/>}/>
-        <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
-2
+        <Route path="/admin/setting" element={<Setting />} />
+        <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit />}/>
+        <Route path="/admin/managecourse/topiceedit/:id/:topic_slug"element={<TopicEdit />}/>
         <Route path="/admin/setting" element={<Setting />} />
       </Route>
     </>

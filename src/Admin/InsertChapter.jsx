@@ -6,9 +6,36 @@ const InsertChapter = () => {
   const [chapterName, setChapterName] = useState("");
   const [chapterDescription, setChapterDescription] = useState("");
   const [order, setOrder] = useState("");
+  const [errors,setErrors] = useState({});
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const validateForm = () => {
+    let formErrors = {};
+    let isValid = true;
+
+    //Validate Chapter Name
+    if(!chapterName){
+      formErrors.chapterName = "Chapter Name is required";
+      isValid = false;
+    }
+    //Validate Chapter Description
+    if(!chapterDescription){
+      formErrors.chapterDescription = "Chapter Description is required";
+      isValid = false;
+    }
+    // Validate Chapter Order
+    if(!order){
+      formErrors.order = "Chapter Order is required";
+      isValid = false;
+    }
+    setErrors (formErrors);
+    return isValid;
+};
+
+  const handleChapter = async () => {
+    if(!validateForm()){
+      return;
+    }
     const chapterData = {
       chapter_name: chapterName,
       chapter_description: chapterDescription,
@@ -64,6 +91,9 @@ const InsertChapter = () => {
             placeholder="Enter your name"
             required
           />
+          {errors.chapterName && (
+            <p className="text-red-500 text-sm">{errors.chapterName}</p>
+          )}
         </div>
 
         <div className="mb-4">
@@ -81,6 +111,9 @@ const InsertChapter = () => {
             placeholder="Enter your chapter description"
             rows="4"
           ></textarea>
+          {errors.chapterDescription && (
+            <p className="text-red-500 text-sm">{errors.chapterDescription}</p>
+          )}
         </div>
         <div className="mb-4">
           <label
@@ -98,11 +131,14 @@ const InsertChapter = () => {
             placeholder="Enter order number"
             required
           />
+          {errors.order && (
+            <p className="text-red-500 text-sm">{errors.order}</p>
+          )}
         </div>
 
         <div className="flex justify-end gap-2">
           <button
-            onClick={handleSubmit}
+            onClick={handleChapter}
             className="px-4 py-2 text-white bg-teal-500 rounded hover:bg-teal-600"
           >
             Submit

@@ -6,9 +6,35 @@ const InsertTopic = () => {
   const [topicName, setTopicName] = useState("");
   const [topicDescription, setTopicDescription] = useState("");
   const [order, setOrder] = useState("");
+  const [errors,setErrors] = useState({});
   const navigate = useNavigate();
+   const validateForm = () => {
+     let formErrors = {};
+     let isValid = true;
+
+     //Validate Topic Name
+     if (!topicName) {
+       formErrors.topicName = "Topic Name is required";
+       isValid = false;
+     }
+     //Validate Topic Description
+     if (!topicDescription) {
+       formErrors.topicDescription = "Topic Description is required";
+       isValid = false;
+     }
+     // Validate Chapter Order
+     if (!order) {
+       formErrors.order = "Topic Order is required";
+       isValid = false;
+     }
+     setErrors(formErrors);
+     return isValid;
+   };
 
   const handleSubmit = async () => {
+     if (!validateForm()) {
+       return;
+     }
     const topicData = {
       topic_name: topicName,
       topic_description: topicDescription,
@@ -67,6 +93,9 @@ const InsertTopic = () => {
             placeholder="Enter topic name"
             required
           />
+          {errors.topicName && (
+            <p className="text-red-500 text-sm">{errors.topicName}</p>
+          )}
         </div>
 
         <div className="mb-4">
@@ -84,6 +113,9 @@ const InsertTopic = () => {
             placeholder="Enter topic description"
             rows="4"
           ></textarea>
+          {errors.topicDescription && (
+            <p className="text-red-500 text-sm">{errors.topicDescription}</p>
+          )}
         </div>
 
         <div className="mb-4">
@@ -103,6 +135,7 @@ const InsertTopic = () => {
             required
           />
         </div>
+        {errors.order && <p className="text-red-500 text-sm">{errors.order}</p>}
 
         <div className="flex justify-end gap-2">
           <button
