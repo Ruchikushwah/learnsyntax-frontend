@@ -26,11 +26,12 @@ const InsertChapter = () => {
       });
 
       const result = await response.json();
+     
 
       if (response.ok) {
-        alert("Chapter Added Successfully");
+        console.log("Chapter Added Successfully");
 
-        setChapterName("");
+        setChapterName(""); 
         setChapterDescription("");
         setOrder("");
         navigate(-1);

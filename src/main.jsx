@@ -9,13 +9,13 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Layout from "./Layout.jsx";
-import Home from "./Home/Home.jsx";
+import Home from "./User/Home.jsx";
 import Register from "./Auth/Register.jsx";
 import Login from "./Auth/Login.jsx";
 
 import AdminLayout from "./Admin/AdminLayout.jsx";
 import InsertChapter from "./Admin/InsertChapter.jsx";
-import ManageChapter from "./Admin/ManageChapter.jsx";
+
 import InsertCourse from "./Admin/InsertCourse.jsx";
 import ManageCourse from "./Admin/ManageCourse.jsx";
 import ViewCourse from "./Admin/ViewCourse.jsx";
@@ -25,7 +25,12 @@ import InsertTopic from "./Admin/InsertTopic.jsx";
 
 import Dashboard from "./Admin/Dashboard.jsx";
 import Setting from "./Admin/Setting.jsx";
+
 import ViewPost from "./Admin/ViewPost.jsx";
+
+import CourseEdit from "./Admin/CourseEdit.jsx";
+import SingleViewPage from "./User/SingleViewPage.jsx";
+
 
 
 const router = createBrowserRouter(
@@ -36,27 +41,32 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
+        {/* User Routes */}
+        <Route
+          path="/singleviewpage/:id/:course_slug"
+          element={<SingleViewPage />}
+        />
       </Route>
 
       {/* Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
-
-       
         <Route index element={<Dashboard />} />
-      
-        <Route path="/admin/managecourse/:id/:course_slug/:chapterId/:chapter_slug/managetopic" element={<ManageTopic />} />
+        <Route
+          path="/admin/managecourse/:id/:course_slug/:chapterId/:chapter_slug/managetopic"
+          element={<ManageTopic />}
+        />
         <Route path="/admin/inserttopic/:chapterId" element={<InsertTopic />} />
-
         <Route path="/admin/insertcourse" element={<InsertCourse />} />
         <Route path="/admin/managecourse" element={<ManageCourse />} />
-        <Route path="/admin/managecourse/:id/:course_slug" element={<ViewCourse />} />
-        <Route path="/admin/viewchapter/:id" element={<ViewChapter/>}/>
         <Route
-          path="/admin/insertchapter/:id"
-          element={<InsertChapter />}
+          path="/admin/managecourse/:id/:course_slug"
+          element={<ViewCourse />}
         />
-        <Route path="/admin/managechapter" element={<ManageChapter />} />
+        <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
+        <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
+        
         <Route path="/admin/setting" element={<Setting/>}/>
+
 
         {/* route for the posts */}
         {/* <Route path="/admin/viewpost/:topic_id" element={<ViewPost/>} /> */}
@@ -64,6 +74,10 @@ const router = createBrowserRouter(
         <Route path="/admin/managecourse/:id/:course_slug/:chapter_id/:chapter_slug/viewpost/:topic_id/:topic_slug" element={<ViewPost/>} />
 
 
+
+        <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
+
+        <Route path="/admin/setting" element={<Setting />} />
       </Route>
     </>
   )

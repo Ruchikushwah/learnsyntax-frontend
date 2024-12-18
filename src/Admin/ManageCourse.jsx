@@ -112,7 +112,7 @@ const ManageCourse = () => {
                   >
                     <MdDelete size={22} />
                   </button>
-                  <Link to={"#"}>
+                  <Link to={`/admin/managecourse/courseedit/${course.id}/${course.course_slug}`}>
                     <button
                       className=" text-white px-2 py-2 bg-teal-500
                      text-center rounded-md "
