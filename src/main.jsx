@@ -1,4 +1,4 @@
-import { lazy, StrictMode } from "react";
+import {  StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
@@ -27,6 +27,7 @@ import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
 import Chapteredit from "./Admin/Chapteredit.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
+import AllContents from "./User/AllContents.jsx";
 
 
 
