@@ -4,9 +4,28 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errors,setErrors] = useState({});
     const navigate = useNavigate();
+    const validateForm = () => {
+    let formErrors = {};
+    let isValid = true;
+     //Validate Email
+    if(!email){
+      formErrors.email = "Email is required";
+      isValid = false;
+    }
+    //Validate Password
+    if(!password){
+      formErrors.password = "Password is required";
+    }
+     setErrors(formErrors);
+     return isValid;
+  }
 
     const handleLogin = async () => {
+       if (!validateForm()) {
+         return;
+       }
         const data = {email:email,password:password};
         let resp = await fetch("http://127.0.0.1:8000/api/auth/login",{
             method:"POST",
@@ -27,7 +46,6 @@ const Login = () => {
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-8">
       <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg gap-5 flex flex-col">
         <div className="flex flex-col ">
-         
           <p className="mb-4 text-center text-lg font-semibold text-gray-600">
             Please log in to continue
           </p>
@@ -48,6 +66,9 @@ const Login = () => {
             placeholder="Enter your email"
             required
           />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email}</p>
+          )}
         </div>
         <div>
           <label
@@ -65,6 +86,9 @@ const Login = () => {
             placeholder="Enter your password"
             required
           />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password}</p>
+          )}
         </div>
         <button
           type="submit"

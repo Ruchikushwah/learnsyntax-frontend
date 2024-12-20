@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { lazy, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
@@ -20,7 +20,7 @@ import ViewCourse from "./Admin/ViewCourse.jsx";
 import ViewChapter from "./Admin/ViewChapter.jsx";
 import ManageTopic from "./Admin/ManageTopic.jsx";
 import InsertTopic from "./Admin/InsertTopic.jsx";
-import Dashboard from "./Admin/Dashboard.jsx";
+import Dashboard from "./Admin///Dashboard.jsx";
 import Setting from "./Admin/Setting.jsx";
 import ViewPost from "./Admin/ViewPost.jsx";
 import CourseEdit from "./Admin/CourseEdit.jsx";
@@ -46,7 +46,6 @@ const router = createBrowserRouter(
         />
         <Route path="/allcontents/:id/:slug" element={<AllContents/>}/>
       </Route>
-
       {/* Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
@@ -68,8 +67,8 @@ const router = createBrowserRouter(
         <Route path="/admin/managecourse/topiceedit/:id/:topic_slug"element={<TopicEdit />}/>
         
         <Route path="/admin/setting" element={<Setting/>}/>
-        <Route path="/admin/insertpost/:id" element={<InsertPost/>} />
 
+<Route path="/admin/insertpost/:id" element={<InsertPost/>}/>
 
         {/* route for the posts */}
         {/* <Route path="/admin/viewpost/:topic_id" element={<ViewPost/>} /> */}
@@ -80,7 +79,7 @@ const router = createBrowserRouter(
 
         <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
         <Route path="/admin/managecourse/chapteredit/:id/:chapter_slug" element={<ChapterEdit/>} />
-
+2
 
         <Route path="/admin/setting" element={<Setting />} />
       </Route>
