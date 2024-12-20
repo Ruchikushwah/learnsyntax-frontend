@@ -28,8 +28,8 @@ import SingleViewPage from "./User/SingleViewPage.jsx";
 import Chapteredit from "./Admin/Chapteredit.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
 import AllContents from "./User/AllContents.jsx";
-
-
+import InsertPost from "./Admin/InsertPost.jsx";
+import ChapterEdit from "./Admin/Chapteredit.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -68,6 +68,7 @@ const router = createBrowserRouter(
         
         <Route path="/admin/setting" element={<Setting/>}/>
 
+<Route path="/admin/insertpost/:id" element={<InsertPost/>}/>
 
         {/* route for the posts */}
         {/* <Route path="/admin/viewpost/:topic_id" element={<ViewPost/>} /> */}
@@ -77,7 +78,7 @@ const router = createBrowserRouter(
 
 
         <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
-        <Route path="/admin/managecourse/chapteredit/:id/:chapter_slug" element={<Chapteredit/>} />
+        <Route path="/admin/managecourse/chapteredit/:id/:chapter_slug" element={<ChapterEdit/>} />
 2
 
         <Route path="/admin/setting" element={<Setting />} />
