@@ -3,6 +3,7 @@ import { GrChapterAdd } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { GrView } from "react-icons/gr"; // Import the view icon
 import { Link, useParams, useSearchParams } from "react-router-dom";
+import { FiEdit } from "react-icons/fi";
 
 const ViewCourse = () => {
   const { id, course_slug } = useParams();
@@ -143,12 +144,25 @@ const ViewCourse = () => {
             <p className="text-gray-600 line-clamp-3 mb-3">
               {chapter.chapter_description}
             </p>
-            <button
+           <div className="flex gap-2">
+           <button
               className="text-white bg-red-600 p-2 rounded-md"
               onClick={() => handleDelete(chapter.id)}
             >
               <MdDelete size={22} />
             </button>
+            <Link
+              to={`/admin/managecourse/chapteredit/${chapter.id}/${chapter.chapter_slug}`}
+            >
+              <button
+                className=" text-white px-2 py-2 bg-teal-500
+                                 text-center rounded-md "
+                title="edit"
+              >
+                <FiEdit size={22} />
+              </button>
+            </Link>
+           </div>
           </div>
         ))}
       </div>
