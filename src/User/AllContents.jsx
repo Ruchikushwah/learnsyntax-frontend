@@ -1,0 +1,101 @@
+import React, { useEffect, useState } from "react";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { useParams } from "react-router-dom";
+
+const AllContents = () => {
+  const { id } = useParams();
+  const [chapters, setChapters] = useState([]);
+  const [topics, setTopics] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [openDropdown, setOpenDropdown] = useState(null); // Track which dropdown is open
+
+  const toggleDropdown = (index) => {
+    setOpenDropdown((prev) => (prev === index ? null : index)); // Toggle dropdown
+  };
+
+  useEffect(() => {
+    const fetchChapter = async () => {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/chapters/${id}/show`
+        );
+        const chapterData = await response.json();
+
+        if (response.ok) {
+          setChapters(chapterData.chapters || []);
+          setTopics(chapterData.data.topics);
+        } else {
+          setError(chapterData.message || "Failed to fetch course details.");
+          return;
+        }
+      } catch (error) {
+        setError("Error fetching data.");
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchChapter();
+  }, [id]);
+
+  return (
+    <div className="w-full flex gap-5">
+      <div className="flex w-4/12 bg-gray-100">
+        <div className="border bg-white">
+          {chapters.map((chapter) => (
+            <div key={chapter.id}>
+              <p
+                className="px-3 py-4 flex items-center justify-between border-b cursor-pointer"
+                onClick={() => toggleDropdown(index)}
+              >
+                <span>{chapter.chapter_name}</span>
+                <RiArrowDropDownLine
+                  size={22}
+                  className={`transform transition-transform ${
+                    openDropdown === index ? "rotate-180" : "rotate-0"
+                  }`}
+                />
+              </p>
+
+              {openDropdown === index && (
+                <div className="px-3 py-2 bg-gray-100">
+                  {topics.map((topic) => (
+                    <NavLink
+                      to={`/allcontents/${topic.id}/${topic.topic_slug}`}
+                      key={topic.id}
+                      className=" rounded cursor-pointer "
+                    >
+                      <p className="px-5 py-3 shadow hover:shadow-lg">
+                        <span>{topic.topic_name}</span>
+                      </p>
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className=" flex w-8/12">
+        <div className="px-3 py-2 bg-gray-100">
+          {topics.posts && topics.posts.length > 0 ? (
+            topics.posts.map((post) => (
+              
+                <p className="px-5 py-3 shadow hover:shadow-lg">
+                  <span>{post.title}</span>
+                </p>
+             
+            ))
+          ) : (
+            <span>No post available for this topics.</span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AllContents;
