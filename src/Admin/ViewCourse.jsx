@@ -16,13 +16,17 @@ const ViewCourse = () => {
   const fetchCourseAndChapters = async (preserveSelectedChapterId = null) => {
     setLoading(true);
     try {
-      const courseResponse = await fetch(`http://127.0.0.1:8000/api/courses/${id}`);
+      const courseResponse = await fetch(
+        `http://127.0.0.1:8000/api/courses/${id}`
+      );
       const courseData = await courseResponse.json();
 
       if (courseResponse.ok) {
         const chaptersWithTopics = await Promise.all(
           courseData.data.chapters.map(async (chapter) => {
-            const topicsResponse = await fetch(`http://127.0.0.1:8000/api/chapters/${chapter.id}/topics`);
+            const topicsResponse = await fetch(
+              `http://127.0.0.1:8000/api/chapters/${chapter.id}/topics`
+            );
             const topicsData = await topicsResponse.json();
             return { ...chapter, topics: topicsData.data || [] };
           })
@@ -30,9 +34,13 @@ const ViewCourse = () => {
 
         setRecord(courseData.data || null);
         setChapters(chaptersWithTopics);
-        
+
         const chapterIdFromURL = searchParams.get("chapterId");
-        const currentChapter = chaptersWithTopics.find(chapter => chapter.id === (preserveSelectedChapterId || parseInt(chapterIdFromURL, 10)));
+        const currentChapter = chaptersWithTopics.find(
+          (chapter) =>
+            chapter.id ===
+            (preserveSelectedChapterId || parseInt(chapterIdFromURL, 10))
+        );
         setSelectedChapter(currentChapter || chaptersWithTopics[0] || null);
       } else {
         setError(courseData.message || "Failed to fetch course details.");
@@ -51,9 +59,12 @@ const ViewCourse = () => {
 
   const handleDelete = async (chapterId) => {
     try {
-      const resp = await fetch(`http://127.0.0.1:8000/api/chapter/${chapterId}`, {
-        method: "DELETE",
-      });
+      const resp = await fetch(
+        `http://127.0.0.1:8000/api/chapter/${chapterId}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (resp.ok) {
         console.log(`Chapter ${chapterId} deleted successfully`);
         setChapters(chapters.filter((chapter) => chapter.id !== chapterId));
@@ -72,7 +83,7 @@ const ViewCourse = () => {
     try {
       const url = `http://127.0.0.1:8000/api/chapters/${chapterId}/topics/${topicId}`;
       const response = await fetch(url, { method: "DELETE" });
-  
+
       if (response.ok) {
         console.log(`Topic ${topicId} deleted successfully`);
         fetchCourseAndChapters(selectedChapter?.id);
@@ -190,6 +201,11 @@ const ViewCourse = () => {
                   </button>
                   <Link to={`/admin/managecourse/topiceedit/${topic.id}/${topic.topic_slug}`}>
                     <button className=" text-blue-600">Edit</button>
+                  <Link
+                    to={`/admin/insertpost/${topic.id}`}
+                    className="text-white px-2 py-2 bg-teal-500 rounded-md"
+                  >
+                    <GrChapterAdd size={22} />
                   </Link>
                 </div>
               </div>
