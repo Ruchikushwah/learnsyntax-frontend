@@ -5,8 +5,33 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors,setErrors] = useState({});
   const navigate = useNavigate();
+  const validateForm = () => {
+    let formErrors = {};
+    let isValid = true;
+
+    //Validate Name
+    if(!name){
+      formErrors.name = "Name is required";
+      isValid = false;
+    }
+    //Validate Email
+    if(!email){
+      formErrors.email = "Email is required";
+      isValid = false;
+    }
+    //Validate Password
+    if(!password){
+      formErrors.password = "Password is required";
+    }
+     setErrors(formErrors);
+     return isValid;
+  }
   const handleRegister = async () => {
+    if(!validateForm()){
+      return;
+    }
     const data = { name, email, password };
 
     try {
@@ -50,6 +75,7 @@ const Register = () => {
             className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
+          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-600">
@@ -63,6 +89,9 @@ const Register = () => {
             className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email}</p>
+          )}
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-600">
@@ -76,6 +105,7 @@ const Register = () => {
             className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
+          {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
         </div>
         <button
           onClick={() => handleRegister()}

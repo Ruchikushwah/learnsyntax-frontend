@@ -4,6 +4,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import AdminHeader from "./AdminHeader";
 import Sidebar from "./Sidebar";
 
+
 const AdminLayout = () => {
   return (
     <>
@@ -14,7 +15,11 @@ const AdminLayout = () => {
             <Sidebar />
             <div className=" flex flex-col w-full">
               <Breadcrumbs />
-              <Outlet />
+
+              
+               
+                <Outlet />
+             
             </div>
           </div>
         </div>

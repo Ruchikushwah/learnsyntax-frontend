@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import {  StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
@@ -20,17 +20,21 @@ import ViewCourse from "./Admin/ViewCourse.jsx";
 import ViewChapter from "./Admin/ViewChapter.jsx";
 import ManageTopic from "./Admin/ManageTopic.jsx";
 import InsertTopic from "./Admin/InsertTopic.jsx";
-import Dashboard from "./Admin/Dashboard.jsx";
+import Dashboard from "./Admin///Dashboard.jsx";
 import Setting from "./Admin/Setting.jsx";
-
 import ViewPost from "./Admin/ViewPost.jsx";
-
 import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
 import Chapteredit from "./Admin/Chapteredit.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
+
 import ContactForm from "./User/Home_components/ContatctForm.jsx";
 
+
+
+import AllContents from "./User/AllContents.jsx";
+import InsertPost from "./Admin/InsertPost.jsx";
+import ChapterEdit from "./Admin/Chapteredit.jsx";
 
 
 const router = createBrowserRouter(
@@ -48,8 +52,8 @@ const router = createBrowserRouter(
           path="/singleviewpage/:id/:course_slug"
           element={<SingleViewPage />}
         />
+        <Route path="/allcontents/:id/:slug" element={<AllContents/>}/>
       </Route>
-
       {/* Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
@@ -72,6 +76,7 @@ const router = createBrowserRouter(
         
         <Route path="/admin/setting" element={<Setting/>}/>
 
+<Route path="/admin/insertpost/:id" element={<InsertPost/>}/>
 
         {/* route for the posts */}
         {/* <Route path="/admin/viewpost/:topic_id" element={<ViewPost/>} /> */}
@@ -81,7 +86,7 @@ const router = createBrowserRouter(
 
 
         <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
-        <Route path="/admin/managecourse/chapteredit/:id/:chapter_slug" element={<Chapteredit/>} />
+        <Route path="/admin/managecourse/chapteredit/:id/:chapter_slug" element={<ChapterEdit/>} />
 2
 
         <Route path="/admin/setting" element={<Setting />} />
