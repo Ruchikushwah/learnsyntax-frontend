@@ -1,25 +1,27 @@
 import React, { useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; 
 import { useNavigate } from "react-router-dom";
 
 const InsertCourse = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  const [errors, setErrors] = useState({});// To store error messages
-   const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const validateForm = () => {
     let formErrors = {};
     let isValid = true;
 
     // Validate Title
-    if (!title) {
+    if (!title.trim()) {
       formErrors.title = "Course title is required";
       isValid = false;
     }
 
     // Validate Description
-    if (!description) {
+    if (!description.trim()) {
       formErrors.description = "Course description is required";
       isValid = false;
     }
@@ -28,16 +30,15 @@ const InsertCourse = () => {
     if (!image) {
       formErrors.image = "Course image is required";
       isValid = false;
-    } 
+    }
 
     setErrors(formErrors);
     return isValid;
   };
 
   const handleCourse = async () => {
-    
     if (!validateForm()) {
-      return; 
+      return;
     }
 
     const formData = new FormData();
@@ -73,7 +74,6 @@ const InsertCourse = () => {
       <div className="w-full max-w-md p-6 bg-white rounded shadow-lg">
         <h2 className="text-lg font-bold text-gray-700 mb-4">Insert Course</h2>
 
-       
         <div className="mb-4">
           <label
             htmlFor="title"
@@ -88,14 +88,12 @@ const InsertCourse = () => {
             onChange={(e) => setTitle(e.target.value)}
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
             placeholder="Enter Course Title"
-            required
           />
           {errors.title && (
             <p className="text-red-500 text-sm">{errors.title}</p>
           )}
         </div>
 
-        
         <div className="mb-4">
           <label
             htmlFor="description"
@@ -103,20 +101,17 @@ const InsertCourse = () => {
           >
             Course Description
           </label>
-          <textarea
-            id="description"
+          <ReactQuill
+            theme="snow"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter Course Description"
-            rows="4"
-          ></textarea>
+            onChange={setDescription}
+            className="bg-white"
+          />
           {errors.description && (
             <p className="text-red-500 text-sm">{errors.description}</p>
           )}
         </div>
 
-       
         <div className="mb-4">
           <label
             htmlFor="image"
@@ -135,7 +130,6 @@ const InsertCourse = () => {
           )}
         </div>
 
-       
         <div className="flex justify-end gap-2">
           <button
             onClick={handleCourse}
