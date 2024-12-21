@@ -29,6 +29,7 @@ import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
 import Chapteredit from "./Admin/Chapteredit.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
+import ContactForm from "./User/Home_components/ContatctForm.jsx";
 
 
 
@@ -40,6 +41,8 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
+        <Route path="contact" element={<ContactForm />} />
+
         {/* User Routes */}
         <Route
           path="/singleviewpage/:id/:course_slug"
