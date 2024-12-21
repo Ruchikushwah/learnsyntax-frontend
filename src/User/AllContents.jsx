@@ -22,8 +22,13 @@ const AllContents = () => {
           `http://127.0.0.1:8000/api/chapters/${id}/show`
         );
         const chapterData = await response.json();
+        console.log(chapterData);
 
         if (response.ok) {
+
+          // const mydata = chapterData.data.topics; // This contains the `data` field
+          // console.log("Chapter Data: new one", mydata);
+
           setChapters(chapterData.chapters || []);
           setTopics(chapterData.data.topics);
         } else {
@@ -81,7 +86,7 @@ const AllContents = () => {
       </div>
       <div className=" flex w-8/12">
         <div className="px-3 py-2 bg-gray-100">
-          {topics.posts && topics.posts.length > 0 ? (
+          {topics.post && topics.post.length > 0 ? (
             topics.posts.map((post) => (
               
                 <p className="px-5 py-3 shadow hover:shadow-lg">

@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { GrView } from "react-icons/gr"; // Import the view icon
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
-
+ 
 const ViewCourse = () => {
   const { id, course_slug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,7 +13,7 @@ const ViewCourse = () => {
   const [selectedChapter, setSelectedChapter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+ 
   const fetchCourseAndChapters = async (preserveSelectedChapterId = null) => {
     setLoading(true);
     try {
@@ -21,7 +21,7 @@ const ViewCourse = () => {
         `http://127.0.0.1:8000/api/courses/${id}`
       );
       const courseData = await courseResponse.json();
-
+ 
       if (courseResponse.ok) {
         const chaptersWithTopics = await Promise.all(
           courseData.data.chapters.map(async (chapter) => {
@@ -32,10 +32,10 @@ const ViewCourse = () => {
             return { ...chapter, topics: topicsData.data || [] };
           })
         );
-
+ 
         setRecord(courseData.data || null);
         setChapters(chaptersWithTopics);
-
+ 
         const chapterIdFromURL = searchParams.get("chapterId");
         const currentChapter = chaptersWithTopics.find(
           (chapter) =>
@@ -53,11 +53,11 @@ const ViewCourse = () => {
       setLoading(false);
     }
   };
-
+ 
   useEffect(() => {
     fetchCourseAndChapters();
   }, [id]);
-
+ 
   const handleDelete = async (chapterId) => {
     try {
       const resp = await fetch(
@@ -79,12 +79,12 @@ const ViewCourse = () => {
       console.error("Error deleting chapter:", error);
     }
   };
-
+ 
   const handleDeleteTopic = async (chapterId, topicId) => {
     try {
       const url = `http://127.0.0.1:8000/api/chapters/${chapterId}/topics/${topicId}`;
       const response = await fetch(url, { method: "DELETE" });
-
+ 
       if (response.ok) {
         console.log(`Topic ${topicId} deleted successfully`);
         fetchCourseAndChapters(selectedChapter?.id);
@@ -95,11 +95,11 @@ const ViewCourse = () => {
       console.error("Error deleting topic:", error);
     }
   };
-
+ 
   if (loading) {
     return <div className="text-center py-10">Loading...</div>;
   }
-
+ 
   if (error) {
     return (
       <div className="text-center py-10 text-red-500">
@@ -107,7 +107,7 @@ const ViewCourse = () => {
       </div>
     );
   }
-
+ 
   if (!record) {
     return (
       <div className="text-center py-10 text-gray-600">
@@ -115,7 +115,7 @@ const ViewCourse = () => {
       </div>
     );
   }
-
+ 
   return (
     <div className="w-full bg-gray-100 p-10 flex">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex-1 max-w-sm">
@@ -128,7 +128,7 @@ const ViewCourse = () => {
             <GrChapterAdd size={22} />
           </Link>
         </div>
-
+ 
         {chapters.map((chapter) => (
           <div
             key={chapter.id}
@@ -166,7 +166,7 @@ const ViewCourse = () => {
           </div>
         ))}
       </div>
-
+ 
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex-1 ml-6">
         {selectedChapter ? (
           <div>
@@ -181,7 +181,7 @@ const ViewCourse = () => {
                 Add Topic
               </Link>
             </div>
-
+ 
             {selectedChapter.topics.map((topic) => (
               <div
                 key={topic.id}
@@ -193,7 +193,7 @@ const ViewCourse = () => {
                     {topic.topic_description}
                   </p>
                 </div>
-
+ 
                 <div className="flex space-x-2">
                   <Link
                     // to={`/admin/viewpost/${topic.id}`}
@@ -203,7 +203,7 @@ const ViewCourse = () => {
                   >
                     <GrView size={22} />
                   </Link>
-
+ 
                   <button
                     className="text-white bg-red-600 p-2 rounded-md"
                     onClick={() =>
@@ -235,5 +235,5 @@ const ViewCourse = () => {
     </div>
   );
 };
-
+ 
 export default ViewCourse;
