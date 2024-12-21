@@ -1,40 +1,41 @@
 import React, { useState } from "react";
+import ReactQuill from "react-quill";
 import { useNavigate, useParams } from "react-router-dom";
 
 const InsertTopic = () => {
-  const { id, course_slug, chapterId } = useParams();  // Fetch the chapterId from URL params
+  const { id, course_slug, chapterId } = useParams(); // Fetch the chapterId from URL params
   const [topicName, setTopicName] = useState("");
   const [topicDescription, setTopicDescription] = useState("");
   const [order, setOrder] = useState("");
-  const [errors,setErrors] = useState({});
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-   const validateForm = () => {
-     let formErrors = {};
-     let isValid = true;
+  const validateForm = () => {
+    let formErrors = {};
+    let isValid = true;
 
-     //Validate Topic Name
-     if (!topicName) {
-       formErrors.topicName = "Topic Name is required";
-       isValid = false;
-     }
-     //Validate Topic Description
-     if (!topicDescription) {
-       formErrors.topicDescription = "Topic Description is required";
-       isValid = false;
-     }
-     // Validate Chapter Order
-     if (!order) {
-       formErrors.order = "Topic Order is required";
-       isValid = false;
-     }
-     setErrors(formErrors);
-     return isValid;
-   };
+    //Validate Topic Name
+    if (!topicName) {
+      formErrors.topicName = "Topic Name is required";
+      isValid = false;
+    }
+    //Validate Topic Description
+    if (!topicDescription) {
+      formErrors.topicDescription = "Topic Description is required";
+      isValid = false;
+    }
+    // Validate Chapter Order
+    if (!order) {
+      formErrors.order = "Topic Order is required";
+      isValid = false;
+    }
+    setErrors(formErrors);
+    return isValid;
+  };
 
   const handleSubmit = async () => {
-     if (!validateForm()) {
-       return;
-     }
+    if (!validateForm()) {
+      return;
+    }
     const topicData = {
       topic_name: topicName,
       topic_description: topicDescription,
@@ -43,18 +44,21 @@ const InsertTopic = () => {
 
     try {
       // this will give all the topics related to the chapterid
-      const response = await fetch(`http://127.0.0.1:8000/api/chapters/${chapterId}/topics`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(topicData),
-      });
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/chapters/${chapterId}/topics`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(topicData),
+        }
+      );
 
       const result = await response.json();
 
       if (response.ok) {
-        console.log('Topic added succesfully');
+        console.log("Topic added succesfully");
 
         // Reset input fields
         setTopicName("");
@@ -105,14 +109,14 @@ const InsertTopic = () => {
           >
             Topic Description
           </label>
-          <textarea
-            id="description"
+          <ReactQuill
+            theme="snow"
             value={topicDescription}
             onChange={(e) => setTopicDescription(e.target.value)}
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter topic description"
+           
             rows="4"
-          ></textarea>
+          />
           {errors.topicDescription && (
             <p className="text-red-500 text-sm">{errors.topicDescription}</p>
           )}

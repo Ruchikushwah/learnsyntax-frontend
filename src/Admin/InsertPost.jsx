@@ -1,4 +1,5 @@
 import React, {  useState } from "react";
+import ReactQuill from "react-quill";
 import { useNavigate, useParams } from "react-router-dom";
 
 const InsertPost = () => {
@@ -82,7 +83,7 @@ const InsertPost = () => {
           </label>
           <input
             type="text"
-            id="title"
+            id="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
@@ -101,14 +102,13 @@ const InsertPost = () => {
           >
             Content
           </label>
-          <textarea
+          <ReactQuill
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter your chapter description"
-            rows="4"
-          ></textarea>
+           
+          />
           {errors.content && (
             <p className="text-red-500 text-sm">{errors.content}</p>
           )}
