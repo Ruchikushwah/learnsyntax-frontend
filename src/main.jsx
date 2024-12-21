@@ -25,7 +25,6 @@ import Setting from "./Admin/Setting.jsx";
 import ViewPost from "./Admin/ViewPost.jsx";
 import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
-import Chapteredit from "./Admin/Chapteredit.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
 import AllContents from "./User/AllContents.jsx";
 import InsertPost from "./Admin/InsertPost.jsx";
