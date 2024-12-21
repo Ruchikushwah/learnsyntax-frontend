@@ -1,27 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const TopicEdit = () => {
   const [formData, setFormData] = useState({
+  
     topic_name: "",
     topic_description: "",
     order: "",
   });
+  const [loading, setLoading] = useState(true); // For fetching initial data
+  const [submitting, setSubmitting] = useState(false); // For submission process
   const [updateMessage, setUpdateMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const { chapterId, topicId } = useParams(); //these in the route.
+  const { id} = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchTopicData = async () => {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/topics/${id}`
+        );
+        if (!response.ok) {
+          throw new Error(`Failed to fetch topic: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setFormData({
+          id:id,
+          topic_name: data.data.topic_name || "",
+          topic_description: data.data.topic_description || "",
+          order: data.data.order || "",
+        });
+        setLoading(false);
+      } catch (error) {
+        setErrorMessage(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchTopicData();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrorMessage(null);
+    setUpdateMessage(null);
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/chapters/${chapterId}/topics/${topicId}`,
+        `http://127.0.0.1:8000/api/chapters/${id}/topics/${id}`,
         {
           method: "PUT",
           headers: {
@@ -33,16 +65,22 @@ const TopicEdit = () => {
       if (!response.ok) {
         throw new Error(`Failed to update: ${response.statusText}`);
       }
-      const data = await response.json();
-      console.log("Update response", data);
       setUpdateMessage("Topic Updated Successfully");
-      setErrorMessage(null);
-      setTimeout(() => navigate("/topics"), 2000); // Navigate after showing success
+      setTimeout(() => navigate("/topics"), 2000);
     } catch (error) {
-      setUpdateMessage(null);
       setErrorMessage(error.message);
+    } finally {
+      setSubmitting(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div className="p-4 text-white">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
@@ -114,9 +152,12 @@ const TopicEdit = () => {
           <div className="flex justify-end gap-2">
             <button
               type="submit"
-              className="px-4 py-2 text-white bg-teal-500 rounded hover:bg-teal-600"
+              className={`px-4 py-2 text-white bg-teal-500 rounded hover:bg-teal-600 ${
+                submitting ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={submitting}
             >
-              Submit
+              {submitting ? "Submitting..." : "Submit"}
             </button>
           </div>
         </form>

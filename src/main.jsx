@@ -25,11 +25,16 @@ import Setting from "./Admin/Setting.jsx";
 import ViewPost from "./Admin/ViewPost.jsx";
 import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
-import Chapteredit from "./Admin/Chapteredit.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
+
+import ContactForm from "./User/Home_components/ContatctForm.jsx";
+
+
+
 import AllContents from "./User/AllContents.jsx";
 import InsertPost from "./Admin/InsertPost.jsx";
 import ChapterEdit from "./Admin/Chapteredit.jsx";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,6 +44,8 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
+        <Route path="contact" element={<ContactForm />} />
+
         {/* User Routes */}
         <Route
           path="/singleviewpage/:id/:course_slug"

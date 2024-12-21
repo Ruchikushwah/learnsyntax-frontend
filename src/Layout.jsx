@@ -8,10 +8,10 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <div className="container mx-auto px-4 py-6">
+      {/* <div className="mx-auto px-4 py-6"> */}
         
         <Outlet />
-      </div>
+      {/* </div> */}
       <Footer />
     </>
   );
