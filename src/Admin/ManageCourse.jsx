@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { FiDelete, FiEdit } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 import { GrChapterAdd } from "react-icons/gr";
 import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 
-import { MdDelete, MdDeleteForever, MdPreview } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../components/Breadcrumbs";
 
 const ManageCourse = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+ 
   const [record, setRecord] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  
   const [courseCount, setCourseCount] = useState(0);
 
 

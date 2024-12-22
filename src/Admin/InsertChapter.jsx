@@ -1,4 +1,5 @@
 import React, {  useState } from "react";
+import ReactQuill from "react-quill";
 import { useNavigate, useParams } from "react-router-dom";
 
 const InsertChapter = () => {
@@ -103,14 +104,14 @@ const InsertChapter = () => {
           >
             Chapter Description
           </label>
-          <textarea
-            id="description"
+          <ReactQuill
+           theme="snow"
             value={chapterDescription}
             onChange={(e) => setChapterDescription(e.target.value)}
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter your chapter description"
-            rows="4"
-          ></textarea>
+            
+           
+          />
           {errors.chapterDescription && (
             <p className="text-red-500 text-sm">{errors.chapterDescription}</p>
           )}
