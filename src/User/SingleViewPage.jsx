@@ -1,34 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { RiArrowDropDownLine } from "react-icons/ri";
 import { NavLink, useParams } from "react-router-dom";
 
 const SingleViewPage = () => {
-  const { id } = useParams();
+  const { courseId } = useParams();
   const [record, setRecord] = useState({});
   const [chapters, setChapters] = useState([]);
+  const [selectedChapter, setSelectedChapter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const [openDropdown, setOpenDropdown] = useState(null); // Track which dropdown is open
-
-  const toggleDropdown = (index) => {
-    setOpenDropdown((prev) => (prev === index ? null : index)); // Toggle dropdown
-  };
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/courses/${id}/show`
+          `http://127.0.0.1:8000/api/courses/${courseId}/show`
         );
         const courseData = await response.json();
 
         if (response.ok) {
           setRecord(courseData.data || {});
           setChapters(courseData.data.chapters || []);
+          setSelectedChapter(courseData.data.chapters[0] || null); // Default to first chapter
         } else {
           setError(courseData.message || "Failed to fetch course details.");
-          return;
         }
       } catch (error) {
         setError("Error fetching data.");
@@ -39,82 +33,93 @@ const SingleViewPage = () => {
     };
 
     fetchCourse();
-  }, [id]);
+  }, [courseId]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <>
-      <div className=" w-full h-32 bg-[#4c973d] flex flex-1 mb-5"></div>
+    <div className="max-w-screen-xl mx-auto">
+      {/* Course Banner */}
+      <div className="w-full h-32 flex flex-1 mb-8"></div>
 
-      <div className="w-full flex items-center justify-center  gap-5 flex-col  ">
-        <div className="bg-white  overflow-hidden max-w-3xl text-center  w-4/12 border ">
+      {/* Course Info */}
+      <div className="flex flex-col items-center mb-10">
+        <div className="bg-white overflow-hidden max-w-3xl text-center w-full border rounded-md shadow-md">
           {record.image && (
             <img
               src={record.image}
-              alt=""
-              className="w-full h-64 object-cover shadow rounded-lg hover:shadow-lg"
+              alt={record.title}
+              className="w-full h-64 object-cover shadow-sm"
             />
           )}
-
           <div className="p-6">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+            <h1 className="text-4xl font-extrabold text-neutralDGrey mb-4">
               {record.title}
             </h1>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              {record.description}
-            </p>
-          </div>
-        </div>
-
-        {/* Dropdown Section */}
-        <div className="flex flex-col gap-3 w-full max-w-3xl">
-          <h1 className="text-4xl font-semibold">
-            Beginner's Guide to {record.title}
-          </h1>
-          <p className="text-md">
-            These tutorials will provide you with a solid foundation in Python
-            and prepare you for your career goals.
-          </p>
-          <div className="border bg-white">
-            {chapters.map((chapter, index) => (
-              <div key={chapter.id}>
-                <p
-                  className="px-3 py-4 flex items-center justify-between border-b cursor-pointer"
-                  onClick={() => toggleDropdown(index)}
-                >
-                  <span>{chapter.chapter_name}</span>
-                  <RiArrowDropDownLine
-                    size={22}
-                    className={`transform transition-transform ${
-                      openDropdown === index ? "rotate-180" : "rotate-0"
-                    }`}
-                  />
-                </p>
-
-                {openDropdown === index && (
-                  <div className="px-3 py-2 bg-gray-100">
-                    {chapter.topics && chapter.topics.length > 0 ? (
-                      chapter.topics.map((topic) => (
-                        <NavLink
-                          to={`/allcontents/${topic.id}/${topic.topic_slug}`}
-                          key={topic.id}
-                          className=" rounded cursor-pointer "
-                        >
-                          <p className="px-5 py-3 shadow hover:shadow-lg">
-                            <span>{topic.topic_name}</span>
-                          </p>
-                        </NavLink>
-                      ))
-                    ) : (
-                      <span>No topics available for this chapter.</span>
-                    )}
-                  </div>
-                )}
-              </div>
-            ))}
+            <p className="text-neutralGrey text-lg">{record.description}</p>
           </div>
         </div>
       </div>
-    </>
+
+      {/* Chapters and Topics */}
+      <div className="flex gap-8 mb-8 mt-6">
+        {/* Chapters List */}
+        <div className="w-full md:w-1/3 bg-white p-6 rounded-md shadow-2xl">
+          <h2 className="text-2xl font-bold text-neutralDGrey mb-6">Chapters</h2>
+          <ul className="space-y-4 max-h-[400px] overflow-y-auto">
+            {chapters.map((chapter) => (
+              <li
+                key={chapter.id}
+                className={`p-4 rounded-md cursor-pointer hover:bg-gray-100 ${selectedChapter?.id === chapter.id
+                    ? "bg-[#E8F5E9] border-l-4 border-[#4c973d]"
+                    : "bg-white"
+                  }`}
+                onClick={() => setSelectedChapter(chapter)}
+              >
+                <h3 className="text-lg font-semibold text-neutralDGrey">
+                  {chapter.chapter_name}
+                </h3>
+                <p className="text-sm text-neutralGrey line-clamp-2">
+                  {chapter.chapter_description}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+
+        {/* Topics List */}
+        <div className="w-2/3 bg-white p-6 rounded-md shadow-2xl">
+          <h2 className="text-2xl font-bold text-neutralDGrey mb-6">
+            {selectedChapter?.chapter_name || "Select a Chapter"}
+          </h2>
+          {selectedChapter && selectedChapter.topic?.length > 0 ? (
+            <ul className="space-y-4">
+              {selectedChapter.topic.map((topic) => (
+                <li key={topic.id}>
+                  <NavLink
+                    to={`/allcontents/${topic.id}/${topic.topic_slug}`}
+                    className="block p-4 rounded-md shadow hover:shadow-lg transition-all duration-300 hover:border-b-4 hover:border-indigo-700"
+                  >
+                    <h3 className="text-lg font-semibold text-neutralDGrey">
+                      {topic.topic_name}
+                    </h3>
+                    <p className="text-sm text-neutralGrey line-clamp-2">
+                      {topic.topic_description}
+                    </p>
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-neutralGrey">
+              No topics available for this chapter.
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
