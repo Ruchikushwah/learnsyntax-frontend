@@ -48,7 +48,7 @@ const router = createBrowserRouter(
 
         {/* User Routes */}
         <Route
-          path="/singleviewpage/:id/:course_slug"
+          path="/singleviewpage/:courseId/:course_slug"
           element={<SingleViewPage />}
         />
         <Route path="/allcontents/:id/:slug" element={<AllContents/>}/>
@@ -86,7 +86,7 @@ const router = createBrowserRouter(
 
         <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
         <Route path="/admin/managecourse/chapteredit/:id/:chapter_slug" element={<ChapterEdit/>} />
-2
+
 
         <Route path="/admin/setting" element={<Setting />} />
       </Route>
