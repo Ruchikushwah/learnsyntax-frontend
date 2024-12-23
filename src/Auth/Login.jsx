@@ -105,7 +105,7 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             id="email"
-            className="w-full mt-1 rounded-lg border-gray-300 px-4 py-2 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="w-full mt-1 rounded-lg border-gray-300 px-4 py-2 text-gray-700 shadow-sm focus:border-brandPrimary focus:ring-brandPrimary"
             placeholder="Enter your email"
             required
           />
@@ -125,7 +125,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             id="password"
-            className="w-full mt-1 rounded-lg border-gray-300 px-4 py-2 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="w-full mt-1 rounded-lg border-gray-300 px-4 py-2 text-gray-700 shadow-sm focus:border-brandPrimary focus:ring-brandPrimary"
             placeholder="Enter your password"
             required
           />
@@ -135,7 +135,7 @@ const Login = () => {
         </div>
         <button
           onClick={handleLogin}
-          className="w-full rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 text-lg font-semibold text-white shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 hover:from-blue-600 hover:to-purple-600  bg-brandPrimary"
+          className="w-full rounded-lg  px-4 py-2 text-lg font-semibold text-white shadow-lg transition-transform duration-300 ease-in-out hover:scale-105   bg-brandPrimary"
         >
           Log In
         </button>
@@ -143,7 +143,7 @@ const Login = () => {
           Don’t have an account?{" "}
           <a
             href="register"
-            className="font-medium text-purple-600 hover:underline"
+            className="font-medium text-brandPrimary hover:underline rounded-xl"
           >
             Sign up
           </a>

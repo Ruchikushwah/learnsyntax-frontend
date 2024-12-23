@@ -72,7 +72,7 @@ const Register = () => {
             onChange={(e) => setName(e.target.value)}
             type="name"
             placeholder="Enter Your Name"
-            className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brandPrimary"
             required
           />
           {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
@@ -86,7 +86,7 @@ const Register = () => {
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Enter Your Email"
-            className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brandPrimary"
             required
           />
           {errors.email && (
@@ -102,21 +102,23 @@ const Register = () => {
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Enter Password"
-            className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brandPrimary"
             required
           />
-          {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password}</p>
+          )}
         </div>
         <button
           onClick={() => handleRegister()}
           type="submit"
-          className=" px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+          className=" px-4 py-2 font-semibold text-white bg-brandPrimary rounded-xl"
         >
           Sign up
         </button>
         <p className="text-sm text-center text-gray-600">
           Don’t have an account?{" "}
-          <a href="login" className="text-blue-500 hover:underline">
+          <a href="login" className="text-brandPrimary hover:underline">
             Sign in
           </a>
         </p>

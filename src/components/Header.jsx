@@ -156,10 +156,10 @@ const Header = () => {
                 )}
               </div>
             ) : (
-              <div className="flex gap-3">
+              <div className="flex gap-3 items-center ">
                 <a
                   href="/login"
-                  className="text-brandPrimary hover:text-gray-900"
+                  className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300"
                 >
                   Login
                 </a>
