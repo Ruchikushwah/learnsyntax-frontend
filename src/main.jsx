@@ -29,8 +29,6 @@ import TopicEdit from "./Admin/TopicEdit.jsx";
 
 import ContactForm from "./User/Home_components/ContatctForm.jsx";
 
-
-
 import AllContents from "./User/AllContents.jsx";
 import InsertPost from "./Admin/InsertPost.jsx";
 import ChapterEdit from "./Admin/Chapteredit.jsx";
@@ -51,7 +49,9 @@ const router = createBrowserRouter(
           path="/singleviewpage/:courseId/:course_slug"
           element={<SingleViewPage />}
         />
-        <Route path="/allcontents/:id/:slug" element={<AllContents/>}/>
+        {/* <Route path="/allcontents/:id/:slug" element={<AllContents/>}/> */}
+        <Route path="/allcontents/:id/:course_slug/:chapterId/:chapter_slug/:topicId/:topic_slug" element={<AllContents/>}/>
+
       </Route>
       {/* Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
