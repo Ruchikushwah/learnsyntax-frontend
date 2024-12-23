@@ -1,4 +1,4 @@
-import {  StrictMode } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
@@ -20,19 +20,18 @@ import ViewCourse from "./Admin/ViewCourse.jsx";
 import ViewChapter from "./Admin/ViewChapter.jsx";
 import ManageTopic from "./Admin/ManageTopic.jsx";
 import InsertTopic from "./Admin/InsertTopic.jsx";
-import Dashboard from "./Admin///Dashboard.jsx";
+import Dashboard from "./Admin/Dashboard.jsx";
 import Setting from "./Admin/Setting.jsx";
 import ViewPost from "./Admin/ViewPost.jsx";
 import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
-
 import ContactForm from "./User/Home_components/ContatctForm.jsx";
 
 import AllContents from "./User/AllContents.jsx";
 import InsertPost from "./Admin/InsertPost.jsx";
 import ChapterEdit from "./Admin/Chapteredit.jsx";
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,7 +42,6 @@ const router = createBrowserRouter(
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
         <Route path="contact" element={<ContactForm />} />
-
         {/* User Routes */}
         <Route
           path="/singleviewpage/:courseId/:course_slug"
@@ -53,6 +51,7 @@ const router = createBrowserRouter(
         <Route path="/allcontents/:id/:course_slug/:chapterId/:chapter_slug/:topicId/:topic_slug" element={<AllContents/>}/>
 
       </Route>
+
       {/* Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
@@ -96,6 +95,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <GoogleOAuthProvider clientId="3535758964-6sfc4ba6o3eldvqvfdgc47bclbn4b49n.apps.googleusercontent.com">
+      <RouterProvider router={router} />
+    </GoogleOAuthProvider>
   </StrictMode>
 );

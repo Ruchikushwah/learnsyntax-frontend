@@ -4,6 +4,8 @@ import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 import { MdDelete } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 
+
+
 const ViewChapter = () => {
   const { id } = useParams();
   const [record, setRecord] = useState(null); 

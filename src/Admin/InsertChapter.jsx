@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -7,40 +7,49 @@ const InsertChapter = () => {
   const [chapterName, setChapterName] = useState("");
   const [chapterDescription, setChapterDescription] = useState("");
   const [order, setOrder] = useState("");
-  const [errors,setErrors] = useState({});
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const validateForm = () => {
     let formErrors = {};
     let isValid = true;
 
-    //Validate Chapter Name
-    if(!chapterName){
+    // Validate Chapter Name
+    if (!chapterName) {
       formErrors.chapterName = "Chapter Name is required";
       isValid = false;
     }
-    //Validate Chapter Description
-    if(!chapterDescription){
-      formErrors.chapterDescription = "Chapter Description is required";
-      isValid = false;
-    }
+
+    // Validate Chapter Description
+   
+      if(!chapterDescription){
+        formErrors.chapterDescription = "Chapter Description is required";
+        isValid = false;
+      }
+    
+
     // Validate Chapter Order
-    if(!order){
-      formErrors.order = "Chapter Order is required";
+    if (!order || isNaN(order) || parseInt(order, 10) <= 0) {
+      formErrors.order = "Valid Chapter Order is required";
       isValid = false;
     }
-    setErrors (formErrors);
+
+    setErrors(formErrors);
     return isValid;
-};
+  };
+
+ 
 
   const handleChapter = async () => {
-    if(!validateForm()){
+    if (!validateForm()) {
       return;
     }
+
+    
     const chapterData = {
       chapter_name: chapterName,
       chapter_description: chapterDescription,
-      order: order,
+      order: parseInt(order, 10),
       course_id: id,
     };
 
@@ -54,12 +63,11 @@ const InsertChapter = () => {
       });
 
       const result = await response.json();
-     
 
       if (response.ok) {
-        console.log("Chapter Added Successfully");
+        console.log("Chapter added successfully");
 
-        setChapterName(""); 
+        setChapterName("");
         setChapterDescription("");
         setOrder("");
         navigate(-1);
@@ -68,9 +76,10 @@ const InsertChapter = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error occured while adding chapter");
+      alert("Error occurred while adding chapter");
     }
   };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
       <div className="w-full max-w-md p-6 bg-white rounded shadow-lg">
@@ -89,7 +98,7 @@ const InsertChapter = () => {
             value={chapterName}
             onChange={(e) => setChapterName(e.target.value)}
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter your name"
+            placeholder="Enter chapter name"
             required
           />
           {errors.chapterName && (
@@ -99,23 +108,22 @@ const InsertChapter = () => {
 
         <div className="mb-4">
           <label
-            htmlFor="descrition"
+            htmlFor="description"
             className="block text-sm font-medium text-gray-600 mb-1"
           >
             Chapter Description
           </label>
           <ReactQuill
-           theme="snow"
+            theme="snow"
             value={chapterDescription}
-            onChange={(e) => setChapterDescription(e.target.value)}
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-            
-           
+            onChange={setChapterDescription} // Correct onChange handler
+            className="w-full border rounded focus:outline-none focus:ring focus:ring-blue-200"
           />
           {errors.chapterDescription && (
             <p className="text-red-500 text-sm">{errors.chapterDescription}</p>
           )}
         </div>
+
         <div className="mb-4">
           <label
             htmlFor="order"

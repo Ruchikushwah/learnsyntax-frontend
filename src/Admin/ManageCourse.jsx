@@ -5,7 +5,8 @@ import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
-import Breadcrumbs from "../components/Breadcrumbs";
+
+import parse from 'html-react-parser';
 
 const ManageCourse = () => {
  
@@ -95,7 +96,7 @@ const ManageCourse = () => {
               >
                 <td className="px-6 py-4">{course.id}</td>
                 <td className="px-6 py-4">{course.title}</td>
-                <td className="px-6 py-4">{course.description}</td>
+                <td className="px-6 py-4">{parse (course.description)}</td>
                 <td className="px-6 py-4">
                   <img
                     src={`http://127.0.0.1:8000/storage/${course.image}`}
