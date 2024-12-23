@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { FiDelete, FiEdit } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 import { GrChapterAdd } from "react-icons/gr";
 import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 
-import { MdDelete, MdDeleteForever, MdPreview } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 import parse from 'html-react-parser';
 
 const ManageCourse = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+ 
   const [record, setRecord] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  
   const [courseCount, setCourseCount] = useState(0);
 
 
@@ -123,14 +121,7 @@ const ManageCourse = () => {
                     </button>
                   </Link>
 
-                  <Link
-                    to={`/admin/insertchapter/${course.id}/${course.course_slug}`}
-                    className=" text-white px-2 py-2 bg-teal-500 rounded-md
-                     text-center"
-                    title="add chapter"
-                  >
-                    <GrChapterAdd size={22} />
-                  </Link>
+                  
                   <Link
                     to={`/admin/managecourse/${course.id}/${course.course_slug}`}
                     className="   text-white px-2 py-2 bg-teal-500 rounded-md

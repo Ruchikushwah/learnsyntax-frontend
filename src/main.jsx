@@ -27,6 +27,7 @@ import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
 import ContactForm from "./User/Home_components/ContatctForm.jsx";
+
 import AllContents from "./User/AllContents.jsx";
 import InsertPost from "./Admin/InsertPost.jsx";
 import ChapterEdit from "./Admin/Chapteredit.jsx";
@@ -43,10 +44,12 @@ const router = createBrowserRouter(
         <Route path="contact" element={<ContactForm />} />
         {/* User Routes */}
         <Route
-          path="/singleviewpage/:id/:course_slug"
+          path="/singleviewpage/:courseId/:course_slug"
           element={<SingleViewPage />}
         />
-        <Route path="/allcontents/:id/:slug" element={<AllContents />} />
+        {/* <Route path="/allcontents/:id/:slug" element={<AllContents/>}/> */}
+        <Route path="/allcontents/:id/:course_slug/:chapterId/:chapter_slug/:topicId/:topic_slug" element={<AllContents/>}/>
+
       </Route>
 
       {/* Admin Routes */}
@@ -66,23 +69,25 @@ const router = createBrowserRouter(
         <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
         <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
         <Route path="/admin/setting" element={<Setting />} />
-        <Route
-          path="/admin/managecourse/courseedit/:id/:course_slug"
-          element={<CourseEdit />}
-        />
-        <Route
-          path="/admin/managecourse/topiceedit/:id/:topic_slug"
-          element={<TopicEdit />}
-        />
-        <Route path="/admin/insertpost/:id" element={<InsertPost />} />
-        <Route
-          path="/admin/managecourse/:id/:course_slug/:chapter_id/:chapter_slug/viewpost/:topic_id/:topic_slug"
-          element={<ViewPost />}
-        />
-        <Route
-          path="/admin/managecourse/chapteredit/:id/:chapter_slug"
-          element={<ChapterEdit />}
-        />
+        <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit />}/>
+        <Route path="/admin/managecourse/topiceedit/:id/:topic_slug"element={<TopicEdit />}/>
+        
+        <Route path="/admin/setting" element={<Setting/>}/>
+
+<Route path="/admin/insertpost/:id" element={<InsertPost/>}/>
+
+        {/* route for the posts */}
+        {/* <Route path="/admin/viewpost/:topic_id" element={<ViewPost/>} /> */}
+        {/* to={`/admin/managecourse/${id}/${course_slug}/${selectedChapter.id}/${selectedChapter.chapter_name}/viewpost/${topic.id}/${topic.topic_name}`} */}
+        <Route path="/admin/managecourse/:id/:course_slug/:chapter_id/:chapter_slug/viewpost/:topic_id/:topic_slug" element={<ViewPost/>} />
+
+
+
+        <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
+        <Route path="/admin/managecourse/chapteredit/:id/:chapter_slug" element={<ChapterEdit/>} />
+
+
+        <Route path="/admin/setting" element={<Setting />} />
       </Route>
     </>
   )
