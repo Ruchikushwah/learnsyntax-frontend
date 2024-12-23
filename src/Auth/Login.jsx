@@ -1,53 +1,96 @@
-import React, { useState } from "react";
+import { GoogleLogin } from "@react-oauth/google";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [errors,setErrors] = useState({});
-    const navigate = useNavigate();
-    const validateForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
+  // Check if the user is already logged in when the component mounts
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // If the token exists, redirect to the dashboard or home page
+      navigate("/admin");
+    }
+  }, [navigate]);
+
+  const validateForm = () => {
     let formErrors = {};
     let isValid = true;
-     //Validate Email
-    if(!email){
+
+    // Validate Email
+    if (!email) {
       formErrors.email = "Email is required";
       isValid = false;
     }
-    //Validate Password
-    if(!password){
-      formErrors.password = "Password is required";
-    }
-     setErrors(formErrors);
-     return isValid;
-  }
 
-    const handleLogin = async () => {
-       if (!validateForm()) {
-         return;
-       }
-        const data = {email:email,password:password};
-        let resp = await fetch("http://127.0.0.1:8000/api/auth/login",{
-            method:"POST",
-            body:JSON.stringify(data),
-            headers:{
-                "Content-Type" :"application/json",
-            },
-        });
-        resp = await resp.json();
-        console.log(resp);
-        
+    // Validate Password
+    if (!password) {
+      formErrors.password = "Password is required";
+      isValid = false;
+    }
+
+    setErrors(formErrors);
+    return isValid;
+  };
+
+  const handleLogin = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    const data = { email: email, password: password };
+    try {
+      let resp = await fetch("http://127.0.0.1:8000/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      resp = await resp.json();
+      console.log(resp);
+
+      if (resp.access_token) {
+        // Ensure token and user data are correct
         localStorage.setItem("token", resp.access_token);
-        if (resp.user) {
-          navigate("/");
+        localStorage.setItem("user", JSON.stringify(resp.user)); // Store user info
+
+        // Debug: Log the role to verify it's set correctly
+        console.log("User Role:", resp.user.role);
+
+        // Redirect based on role
+        if (resp.user.is_admin) {
+          navigate("/admin"); // Admin goes to dashboard
+        } else {
+          navigate("/"); // Regular user goes to homepage
         }
-    };
+      } else {
+        alert("Login failed. Please check your credentials.");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-8">
       <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg gap-5 flex flex-col">
-        <div className="flex flex-col ">
-          <p className="mb-4 text-center text-lg font-semibold text-gray-600">
+        <div className="flex flex-col">
+          <p className="mb-2 text-center text-lg font-semibold text-gray-600 flex flex-col ">
             Please log in to continue
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                console.log(credentialResponse);
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
           </p>
         </div>
         <div>
@@ -91,9 +134,8 @@ const Login = () => {
           )}
         </div>
         <button
-          type="submit"
-          onClick={() => handleLogin()}
-          className="w-full rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 text-lg font-semibold text-white shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 hover:from-blue-600 hover:to-purple-600"
+          onClick={handleLogin}
+          className="w-full rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 text-lg font-semibold text-white shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 hover:from-blue-600 hover:to-purple-600  bg-brandPrimary"
         >
           Log In
         </button>

@@ -31,11 +31,11 @@ const InsertTopic = () => {
     setErrors(formErrors);
     return isValid;
   };
-
   const handleSubmit = async () => {
     if (!validateForm()) {
       return;
     }
+   
     const topicData = {
       topic_name: topicName,
       topic_description: topicDescription,
@@ -112,10 +112,9 @@ const InsertTopic = () => {
           <ReactQuill
             theme="snow"
             value={topicDescription}
-            onChange={(e) => setTopicDescription(e.target.value)}
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-           
-            rows="4"
+            onChange={ setTopicDescription}
+            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200 truncate"
+            
           />
           {errors.topicDescription && (
             <p className="text-red-500 text-sm">{errors.topicDescription}</p>

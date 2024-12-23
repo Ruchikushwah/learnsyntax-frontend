@@ -1,4 +1,4 @@
-import {  StrictMode } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
@@ -20,21 +20,17 @@ import ViewCourse from "./Admin/ViewCourse.jsx";
 import ViewChapter from "./Admin/ViewChapter.jsx";
 import ManageTopic from "./Admin/ManageTopic.jsx";
 import InsertTopic from "./Admin/InsertTopic.jsx";
-import Dashboard from "./Admin///Dashboard.jsx";
+import Dashboard from "./Admin/Dashboard.jsx";
 import Setting from "./Admin/Setting.jsx";
 import ViewPost from "./Admin/ViewPost.jsx";
 import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
-
 import ContactForm from "./User/Home_components/ContatctForm.jsx";
-
-
-
 import AllContents from "./User/AllContents.jsx";
 import InsertPost from "./Admin/InsertPost.jsx";
 import ChapterEdit from "./Admin/Chapteredit.jsx";
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,14 +41,14 @@ const router = createBrowserRouter(
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
         <Route path="contact" element={<ContactForm />} />
-
         {/* User Routes */}
         <Route
           path="/singleviewpage/:id/:course_slug"
           element={<SingleViewPage />}
         />
-        <Route path="/allcontents/:id/:slug" element={<AllContents/>}/>
+        <Route path="/allcontents/:id/:slug" element={<AllContents />} />
       </Route>
+
       {/* Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
@@ -70,25 +66,23 @@ const router = createBrowserRouter(
         <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
         <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
         <Route path="/admin/setting" element={<Setting />} />
-        <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit />}/>
-        <Route path="/admin/managecourse/topiceedit/:id/:topic_slug"element={<TopicEdit />}/>
-        
-        <Route path="/admin/setting" element={<Setting/>}/>
-
-<Route path="/admin/insertpost/:id" element={<InsertPost/>}/>
-
-        {/* route for the posts */}
-        {/* <Route path="/admin/viewpost/:topic_id" element={<ViewPost/>} /> */}
-        {/* to={`/admin/managecourse/${id}/${course_slug}/${selectedChapter.id}/${selectedChapter.chapter_name}/viewpost/${topic.id}/${topic.topic_name}`} */}
-        <Route path="/admin/managecourse/:id/:course_slug/:chapter_id/:chapter_slug/viewpost/:topic_id/:topic_slug" element={<ViewPost/>} />
-
-
-
-        <Route path="/admin/managecourse/courseedit/:id/:course_slug" element={<CourseEdit/>} />
-        <Route path="/admin/managecourse/chapteredit/:id/:chapter_slug" element={<ChapterEdit/>} />
-2
-
-        <Route path="/admin/setting" element={<Setting />} />
+        <Route
+          path="/admin/managecourse/courseedit/:id/:course_slug"
+          element={<CourseEdit />}
+        />
+        <Route
+          path="/admin/managecourse/topiceedit/:id/:topic_slug"
+          element={<TopicEdit />}
+        />
+        <Route path="/admin/insertpost/:id" element={<InsertPost />} />
+        <Route
+          path="/admin/managecourse/:id/:course_slug/:chapter_id/:chapter_slug/viewpost/:topic_id/:topic_slug"
+          element={<ViewPost />}
+        />
+        <Route
+          path="/admin/managecourse/chapteredit/:id/:chapter_slug"
+          element={<ChapterEdit />}
+        />
       </Route>
     </>
   )
@@ -96,6 +90,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <GoogleOAuthProvider clientId="3535758964-6sfc4ba6o3eldvqvfdgc47bclbn4b49n.apps.googleusercontent.com">
+      <RouterProvider router={router} />
+    </GoogleOAuthProvider>
   </StrictMode>
 );
