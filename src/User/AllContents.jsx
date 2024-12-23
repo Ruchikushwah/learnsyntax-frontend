@@ -22,15 +22,17 @@ const AllContents = () => {
           `http://127.0.0.1:8000/api/chapters/${id}/show`
         );
         const chapterData = await response.json();
-        console.log(chapterData);
+        
 
         if (response.ok) {
 
           // const mydata = chapterData.data.topics; // This contains the `data` field
           // console.log("Chapter Data: new one", mydata);
 
-          setChapters(chapterData.chapters || []);
+          setChapters(chapterData.data || []);
+
           setTopics(chapterData.data.topics);
+          console.log('ruchi',chapterData.data.topics);
         } else {
           setError(chapterData.message || "Failed to fetch course details.");
           return;
@@ -43,11 +45,12 @@ const AllContents = () => {
       }
     };
 
+
     fetchChapter();
   }, [id]);
 
   return (
-    <div className="w-full flex gap-5">
+    <div className="w-full flex gap-5 m-14">
       <div className="flex w-4/12 bg-gray-100">
         <div className="border bg-white">
           {chapters.map((chapter) => (
@@ -65,21 +68,7 @@ const AllContents = () => {
                 />
               </p>
 
-              {openDropdown === index && (
-                <div className="px-3 py-2 bg-gray-100">
-                  {topics.map((topic) => (
-                    <NavLink
-                      to={`/allcontents/${topic.id}/${topic.topic_slug}`}
-                      key={topic.id}
-                      className=" rounded cursor-pointer "
-                    >
-                      <p className="px-5 py-3 shadow hover:shadow-lg">
-                        <span>{topic.topic_name}</span>
-                      </p>
-                    </NavLink>
-                  ))}
-                </div>
-              )}
+             
             </div>
           ))}
         </div>
