@@ -15,8 +15,10 @@ const AllContents = () => {
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
+
         const response = await fetch(`http://127.0.0.1:8000/api/courses/${id}/show`);
         const courseData = await response.json();
+       
 
         if (response.ok) {
           const chaptersData = courseData.data.chapters || [];
@@ -32,9 +34,12 @@ const AllContents = () => {
           setSelectedTopic(initialTopic);
           setSelectedPost(initialTopic?.post || null);
 
+
           // Open the accordion for the selected chapter
           const chapterIndex = chaptersData.findIndex((ch) => ch.id.toString() === chapterId);
           setOpenDropdown(chapterIndex >= 0 ? chapterIndex : null);
+         
+
         } else {
           setError(courseData.message || "Failed to fetch course details.");
         }
@@ -45,6 +50,7 @@ const AllContents = () => {
         setLoading(false);
       }
     };
+
 
     fetchCourseData();
   }, [id, chapterId, topicId]);
@@ -107,6 +113,7 @@ const AllContents = () => {
             )}
           </div>
         ))}
+
       </div>
 
       {/* Right Panel: Post Content */}

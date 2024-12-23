@@ -47,7 +47,7 @@ const ViewCourse = () => {
         setError(courseData.message || "Failed to fetch course details.");
       }
     } catch (error) {
-      setError("Error fetching data.");
+      setError("Error fetching data .");
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
@@ -213,8 +213,11 @@ const ViewCourse = () => {
                   >
                     <MdDelete size={22} />
                   </button>
-                  <Link to={`/admin/managecourse/topiceedit/${topic.id}/${topic.topic_slug}`}>
-                    <button className=" text-blue-600">Edit</button>
+                  <Link to={`/admin/managecourse/topiceedit/${topic.id}/${topic.topic_slug}`}
+                  className="text-white px-2 py-2 bg-teal-500 rounded-md">
+                    
+                    <FiEdit size={22} />
+                  
                   </Link>
                   <Link
                     to={`/admin/insertpost/${topic.id}`}

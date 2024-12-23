@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { FiEdit } from 'react-icons/fi';
+import { MdDelete } from 'react-icons/md';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 const ViewPost = () => {
-  const { topic_id } = useParams(); // The id here corresponds to the topic id
+  const {id } = useParams(); // The id here corresponds to the topic id
   const navigate = useNavigate();
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -12,12 +14,13 @@ const ViewPost = () => {
   const fetchPost = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/post`);
+      const response = await fetch(`http://127.0.0.1:8000/api/topics/${id}/post`);
       const data = await response.json();
     //   console.log(data);
 
       if (response.ok) {
-        setPost(data.post || null);
+        setPost(data.data || null);
+        console.log('ruchi',data.post)
       } else {
         setError(data.message || 'Failed to fetch post details.');
       }
@@ -29,10 +32,12 @@ const ViewPost = () => {
     }
   };
 
+ 
+
   // Call fetchPost when component mounts
   useEffect(() => {
     fetchPost();
-  }, [topic_id]);
+  }, [id]);
 
   if (loading) {
     return <div className="text-center py-10">Loading post...</div>;
@@ -55,29 +60,85 @@ const ViewPost = () => {
   }
 
   return (
-  <div className="max-w-4xl mx-auto p-10 bg-white shadow-lg rounded-lg">
-    {/* Back Button */}
-    <button 
-      onClick={() => navigate(-1)} 
-      className="text-white bg-teal-500 px-4 py-2 rounded-md mb-6"
-    >
-      Back
-    </button>
-
-    <h1 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h1>
-
-    {post.image_path && (
-      <img 
-        src={`http://127.0.0.1:8000/storage/${post.image_path}`} 
-        alt="Post Image" 
-        className="w-full h-64 object-cover rounded-md mb-6"
-      />
-    )}
-
-    <div className="prose prose-lg">
-      <p>{post.content}</p>
-    </div>
-  </div>
+       <div className="relative overflow-x-auto w-full py-6 px-8">
+         
+         <h2 className="text-lg font-bold text-gray-700 border-l-4 border-teal-600 p-1">
+           Manage Post
+           
+         </h2>
+   
+   
+         <div className="flex flex-col md:flex-row justify-between md:items-center py-4 space-y-4 md:space-y-0">
+           <input
+             type="text"
+             placeholder="Search..."
+             className="p-2 border rounded w-full md:w-64 focus:outline-none"
+           />
+          
+         </div> 
+   
+         <div className="overflow-x-auto">
+           <table className="w-full text-sm text-left text-gray-500">
+             <thead className="text-xs text-gray-400 uppercase bg-gray-100">
+               <tr>
+                 <th scope="col" className="px-6 py-3">
+                   ID
+                 </th>
+                 <th scope="col" className="px-6 py-3">
+                   Title
+                 </th>
+                 <th scope="col" className="px-6 py-3">
+                   content
+                 </th>
+                 <th scope="col" className="px-6 py-3">
+                   Post Image
+                 </th>
+                 <th scope="col" className="px-6 py-3">
+                   Actions
+                 </th>
+               </tr>
+             </thead>
+             <tbody>
+               {post.map((items) => (
+                 <tr
+                   className="bg-white border-b hover:bg-gray-50"
+                   key={items.id}
+                 >
+                   <td className="px-6 py-4">{items.id}</td>
+                   <td className="px-6 py-4">{items.title}</td>
+                   <td className="px-6 py-4">{items.content}</td>
+                   <td className="px-6 py-4">
+                     <img
+                       src={`http://127.0.0.1:8000/storage/post/${items.image}`}
+                       className="w-16 h-16"
+                     />
+                   </td>
+                   <td className="px-6 py-4 flex gap-2">
+                     <button
+                       className="ml-2 text-white bg-red-600 hover:underline p-2 rounded-md "
+                       onClick={() => handleDelete(items.id)}
+                       title="delete"
+                     >
+                       <MdDelete size={22} />
+                     </button>
+                     <Link to={`/admin/managecourse/courseedit/${items.id}`}>
+                       <button
+                         className=" text-white px-2 py-2 bg-teal-500
+                        text-center rounded-md "
+                         title="edit"
+                       >
+                         <FiEdit size={22} />
+                       </button>
+                     </Link>
+   
+                     
+                   </td>
+                 </tr>
+               ))}
+             </tbody>
+           </table>
+         </div>
+       </div>
 );
 
 };

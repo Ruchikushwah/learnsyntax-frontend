@@ -120,14 +120,7 @@ const ManageCourse = () => {
                     </button>
                   </Link>
 
-                  <Link
-                    to={`/admin/insertchapter/${course.id}/${course.course_slug}`}
-                    className=" text-white px-2 py-2 bg-teal-500 rounded-md
-                     text-center"
-                    title="add chapter"
-                  >
-                    <GrChapterAdd size={22} />
-                  </Link>
+                  
                   <Link
                     to={`/admin/managecourse/${course.id}/${course.course_slug}`}
                     className="   text-white px-2 py-2 bg-teal-500 rounded-md
