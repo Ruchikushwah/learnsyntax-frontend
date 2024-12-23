@@ -16,7 +16,7 @@ const SingleViewPage = () => {
           `http://127.0.0.1:8000/api/courses/${courseId}/show`
         );
         const courseData = await response.json();
-
+        // console.log(courseData);
         if (response.ok) {
           setRecord(courseData.data || {});
           setChapters(courseData.data.chapters || []);
@@ -94,12 +94,13 @@ const SingleViewPage = () => {
           <h2 className="text-2xl font-bold text-neutralDGrey mb-6">
             {selectedChapter?.chapter_name || "Select a Chapter"}
           </h2>
-          {selectedChapter && selectedChapter.topic?.length > 0 ? (
+          {selectedChapter && selectedChapter.topics?.length > 0 ? (
             <ul className="space-y-4">
-              {selectedChapter.topic.map((topic) => (
+              {selectedChapter.topics.map((topic) => (
                 <li key={topic.id}>
                   <NavLink
-                    to={`/allcontents/${topic.id}/${topic.topic_slug}`}
+                    to={`/allcontents/${record.id}/${record.course_slug}/${selectedChapter.id}/${selectedChapter.chapter_slug}/${topic.id}/${topic.topic_slug}`}
+
                     className="block p-4 rounded-md shadow hover:shadow-lg transition-all duration-300 hover:border-b-4 hover:border-indigo-700"
                   >
                     <h3 className="text-lg font-semibold text-neutralDGrey">
