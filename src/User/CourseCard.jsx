@@ -1,51 +1,62 @@
 
 import { NavLink } from "react-router-dom";
+import parse from "html-react-parser";
 
 const CourseCard = ({ courses = [] }) => {
   console.log("data what we getting" + courses);
   return (
-
     <div id="course" className="md:px-14 max-w-screen-2xl mx-auto">
-    {/* Header Section */}
-    <div className="mt-20 md:w-1/2 mx-auto text-center">
-        <h2 className="text-4xl tracking-tight font-extrabold text-neutralDGrey mb-2">Popular <span className='text-brandPrimary'>Courses</span></h2>
-        <p className="text-neutralGrey">LearnSyntax will enhance your learning experience the way you interact.</p>
-    </div>
+      {/* Header Section */}
+      <div className="mt-20 md:w-1/2 mx-auto text-center">
+        <h2 className="text-4xl tracking-tight font-extrabold text-neutralDGrey mb-2">
+          Popular <span className="text-brandPrimary">Courses</span>
+        </h2>
+        <p className="text-neutralGrey">
+          LearnSyntax will enhance your learning experience the way you
+          interact.
+        </p>
+      </div>
 
-    {/* Courses Section */}
-    <div className="mt-14 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:w-11/12 mx-auto gap-12">
+      {/* Courses Section */}
+      <div className="mt-14 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:w-11/12 mx-auto gap-12">
         {courses.length > 0 ? (
-            courses.map((course) => (
-              <NavLink
-               to={`/singleviewpage/${course.id}/${course.course_slug}`}
+          courses.map((course) => (
+            <NavLink
+              to={`/singleviewpage/${course.id}/${course.course_slug}`}
               key={course.id}
               className="p-5 shadow rounded cursor-pointer hover:shadow-lg"
             >
-                <div
-                    key={course.id}
-                    className="px-4 py-8 text-center md:w-[300px] mx-auto md:h-80 rounded-md shadow cursor-pointer 
+              <div
+                key={course.id}
+                className="px-4 py-8 text-center md:w-[300px] mx-auto md:h-80 rounded-md shadow cursor-pointer 
                     hover:-translate-y-5 hover:border-b-4 hover:border-brandPrimary transition-all duration-300 flex items-center justify-center h-full"
-                >
-                    <div>
-                        <div className="bg-[#E8F5E9] mb-4 h-14 w-14 mx-auto rounded-tl-3xl rounded-br-3xl">
-                          {/* note below we have to give the image from db like course.image in src */}
-                            <img src='/iconreact.png' alt={course.title} className="-ml-5" />
-                        </div>
-                        <h4 className="text-2xl font-bold text-neutralDGrey mb-2 px-2">{course.title}</h4>
-                        <p className="text-sm text-neutralGrey">{course.description}</p>
-                    </div>
+              >
+                <div>
+                  <div className="bg-[#E8F5E9] mb-4 h-14 w-14 mx-auto rounded-tl-3xl rounded-br-3xl">
+                    {/* note below we have to give the image from db like course.image in src */}
+                    <img
+                      src={course.image }
+                      alt={course.title || "Course Icon"}
+                      className="-ml-5 h-full object-contain"
+                    />
+                  </div>
+                  <h4 className="text-2xl font-bold text-neutralDGrey mb-2 px-2">
+                    {course.title}
+                  </h4>
+                  <p className="text-sm text-neutralGrey">
+                    { parse (course.description)}
+                  </p>
                 </div>
-                </NavLink>
-            ))
+              </div>
+            </NavLink>
+          ))
         ) : (
-            <p className="col-span-full text-center text-white bg-slate-500 py-4 text-2xl">
-                No Courses Available.
-            </p>
+          <p className="col-span-full text-center text-white bg-slate-500 py-4 text-2xl">
+            No Courses Available.
+          </p>
         )}
+      </div>
     </div>
-</div>
-
-
   );
 };
 

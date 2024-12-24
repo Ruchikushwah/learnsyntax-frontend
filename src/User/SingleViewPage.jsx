@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
+import parse from "html-react-parser";
 
 const SingleViewPage = () => {
   const { courseId } = useParams();
@@ -57,7 +58,7 @@ const SingleViewPage = () => {
             <h1 className="text-4xl font-extrabold text-neutralDGrey mb-4">
               {record.title}
             </h1>
-            <p className="text-neutralGrey text-lg">{record.description}</p>
+            <p className="text-neutralGrey text-lg">{ parse (record.description)}</p>
           </div>
         </div>
       </div>

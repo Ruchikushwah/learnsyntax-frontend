@@ -35,7 +35,8 @@ const InsertPost = () => {
     return isValid;
   };
 
-  const handlePost = async (status = "published") => {
+  const handlePost = async (status = false) => {
+    // Boolean status: true for draft, false for published
     if (!validateForm()) {
       return;
     }
@@ -43,16 +44,18 @@ const InsertPost = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
-    if (imagePath) formData.append("image", imagePath); // Append image only if it's new
-    formData.append("status", status);
+    if (imagePath) formData.append("image", imagePath);
+    // formData.append("status", status);
+    formData.append("status", status  ? true : false);
+     // Send status as boolean (true for draft, false for published)
 
     try {
       const response = await fetch(
         postId
-          ? `http://127.0.0.1:8000/api/posts/${postId}` // Update existing draft
+          ? `http://127.0.0.1:8000/api/posts/${postId}` // Update existing post
           : `http://127.0.0.1:8000/api/topics/${id}/post`, // Create new post
         {
-          method: postId ? "PUT" : "POST", // Use PUT for updating drafts
+          method: postId ? "PUT" : "POST",
           body: formData,
         }
       );
@@ -60,29 +63,22 @@ const InsertPost = () => {
       const result = await response.json();
 
       if (response.ok) {
-        console.log(
-          `${status === "draft" ? "Draft" : "Post"} ${
-            postId ? "updated" : "added"
-          } successfully`
-        );
-
-        if (status === "draft" && !postId) {
-          // Save the post ID if it was a new draft
-          setPostId(result.id);
+        if (status && !postId) {
+          // If draft and no postId, save postId
+          setPostId(result.post.id); // Save post ID for drafts
         } else {
-          // Clear form and navigate back after publishing
           setTitle("");
           setContent("");
           setImagePath("");
           setPostId(null);
-          navigate(-1);
+          navigate(-1); // Navigate back
         }
       } else {
-        alert("Failed to save post");
+        setErrors(result.errors || { general: "Failed to save post" });
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error occurred while saving post");
+      setErrors({ general: "An error occurred while saving the post" });
     }
   };
 
@@ -132,14 +128,14 @@ const InsertPost = () => {
           )}
         </div>
 
-        <div class="flex items-center justify-center w-full mb-4">
+        <div className="flex items-center justify-center w-full mb-4">
           <label
-            for="dropzone-file"
+            htmlFor="dropzone-file"
             className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
           >
-            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <svg
-                className="w-8 h-8  text-gray-500 dark:text-gray-400"
+                className="w-8 h-8 text-gray-500 dark:text-gray-400"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -147,13 +143,13 @@ const InsertPost = () => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                 />
               </svg>
-              <p class=" text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 <span className="font-semibold">Select Post Image</span>
               </p>
             </div>
@@ -167,7 +163,7 @@ const InsertPost = () => {
               <img
                 src={URL.createObjectURL(imagePath)} // For Live Image
                 alt="Preview"
-                className=" w-auto  h-modal  flex justify-center items-center top-16 mb-2"
+                className="w-auto h-modal flex justify-center items-center top-16 mb-2"
               />
             )}
             {errors.imagePath && (
@@ -178,13 +174,13 @@ const InsertPost = () => {
 
         <div className="flex justify-end gap-2">
           <button
-            onClick={() => handlePost("draft")}
+            onClick={() => handlePost(true)} // Pass true for draft status
             className="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600"
           >
             Save as Draft
           </button>
           <button
-            onClick={() => handlePost("published")}
+            onClick={() => handlePost(false)} // Pass false for published status
             className="px-4 py-2 text-white bg-teal-500 rounded hover:bg-teal-600"
           >
             {postId ? "Publish Draft" : "Submit"}

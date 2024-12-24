@@ -4,9 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { GrView } from "react-icons/gr"; // Import the view icon
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
-import parse from 'html-react-parser';
 
- 
 const ViewCourse = () => {
   const { id, course_slug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,7 +13,7 @@ const ViewCourse = () => {
   const [selectedChapter, setSelectedChapter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
- 
+
   const fetchCourseAndChapters = async (preserveSelectedChapterId = null) => {
     setLoading(true);
     try {
@@ -23,7 +21,7 @@ const ViewCourse = () => {
         `http://127.0.0.1:8000/api/courses/${id}`
       );
       const courseData = await courseResponse.json();
- 
+
       if (courseResponse.ok) {
         const chaptersWithTopics = await Promise.all(
           courseData.data.chapters.map(async (chapter) => {
@@ -34,10 +32,10 @@ const ViewCourse = () => {
             return { ...chapter, topics: topicsData.data || [] };
           })
         );
- 
+
         setRecord(courseData.data || null);
         setChapters(chaptersWithTopics);
- 
+
         const chapterIdFromURL = searchParams.get("chapterId");
         const currentChapter = chaptersWithTopics.find(
           (chapter) =>
@@ -55,11 +53,11 @@ const ViewCourse = () => {
       setLoading(false);
     }
   };
- 
+
   useEffect(() => {
     fetchCourseAndChapters();
   }, [id]);
- 
+
   const handleDelete = async (chapterId) => {
     try {
       const resp = await fetch(
@@ -81,12 +79,12 @@ const ViewCourse = () => {
       console.error("Error deleting chapter:", error);
     }
   };
- 
+
   const handleDeleteTopic = async (chapterId, topicId) => {
     try {
       const url = `http://127.0.0.1:8000/api/chapters/${chapterId}/topics/${topicId}`;
       const response = await fetch(url, { method: "DELETE" });
- 
+
       if (response.ok) {
         console.log(`Topic ${topicId} deleted successfully`);
         fetchCourseAndChapters(selectedChapter?.id);
@@ -97,11 +95,11 @@ const ViewCourse = () => {
       console.error("Error deleting topic:", error);
     }
   };
- 
+
   if (loading) {
     return <div className="text-center py-10">Loading...</div>;
   }
- 
+
   if (error) {
     return (
       <div className="text-center py-10 text-red-500">
@@ -109,7 +107,7 @@ const ViewCourse = () => {
       </div>
     );
   }
- 
+
   if (!record) {
     return (
       <div className="text-center py-10 text-gray-600">
@@ -117,7 +115,7 @@ const ViewCourse = () => {
       </div>
     );
   }
- 
+
   return (
     <div className="w-full bg-gray-100 p-10 flex">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex-1 max-w-sm">
@@ -130,7 +128,7 @@ const ViewCourse = () => {
             <GrChapterAdd size={22} />
           </Link>
         </div>
- 
+
         {chapters.map((chapter) => (
           <div
             key={chapter.id}
@@ -144,31 +142,31 @@ const ViewCourse = () => {
           >
             <h3 className="text-lg font-semibold">{chapter.chapter_name}</h3>
             <p className="text-gray-600 line-clamp-3 mb-3">
-              { parse (chapter.chapter_description)}
+              {chapter.chapter_description}
             </p>
-           <div className="flex gap-2">
-           <button
-              className="text-white bg-red-600 p-2 rounded-md"
-              onClick={() => handleDelete(chapter.id)}
-            >
-              <MdDelete size={22} />
-            </button>
-            <Link
-              to={`/admin/managecourse/chapteredit/${chapter.id}/${chapter.chapter_slug}`}
-            >
+            <div className="flex gap-2">
               <button
-                className=" text-white px-2 py-2 bg-teal-500
-                                 text-center rounded-md "
-                title="edit"
+                className="text-white bg-red-600 p-2 rounded-md"
+                onClick={() => handleDelete(chapter.id)}
               >
-                <FiEdit size={22} />
+                <MdDelete size={22} />
               </button>
-            </Link>
-           </div>
+              <Link
+                to={`/admin/managecourse/chapteredit/${chapter.id}/${chapter.chapter_slug}`}
+              >
+                <button
+                  className=" text-white px-2 py-2 bg-teal-500
+                                 text-center rounded-md "
+                  title="edit"
+                >
+                  <FiEdit size={22} />
+                </button>
+              </Link>
+            </div>
           </div>
         ))}
       </div>
- 
+
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex-1 ml-6">
         {selectedChapter ? (
           <div>
@@ -183,7 +181,7 @@ const ViewCourse = () => {
                 Add Topic
               </Link>
             </div>
- 
+
             {selectedChapter.topics.map((topic) => (
               <div
                 key={topic.id}
@@ -191,11 +189,11 @@ const ViewCourse = () => {
               >
                 <div>
                   <h4 className="font-semibold">{topic.topic_name}</h4>
-                  <p className="text-gray-600 mb-2  line-clamp-2">
-                    { parse (topic.topic_description)}
+                  <p className="text-gray-600 mb-2">
+                    {topic.topic_description}
                   </p>
                 </div>
- 
+
                 <div className="flex space-x-2">
                   <Link
                     // to={`/admin/viewpost/${topic.id}`}
@@ -205,7 +203,7 @@ const ViewCourse = () => {
                   >
                     <GrView size={22} />
                   </Link>
- 
+
                   <button
                     className="text-white bg-red-600 p-2 rounded-md"
                     onClick={() =>
@@ -215,11 +213,11 @@ const ViewCourse = () => {
                   >
                     <MdDelete size={22} />
                   </button>
-                  <Link to={`/admin/managecourse/topiceedit/${topic.id}/${topic.topic_slug}`}
-                  className="text-white px-2 py-2 bg-teal-500 rounded-md">
-                    
+                  <Link
+                    to={`/admin/managecourse/topiceedit/${topic.id}/${topic.topic_slug}`}
+                    className="text-white px-2 py-2 bg-teal-500 rounded-md"
+                  >
                     <FiEdit size={22} />
-                  
                   </Link>
                   <Link
                     to={`/admin/insertpost/${topic.id}`}
@@ -240,5 +238,5 @@ const ViewCourse = () => {
     </div>
   );
 };
- 
+
 export default ViewCourse;

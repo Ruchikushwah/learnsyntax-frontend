@@ -14,12 +14,12 @@ const InsertCourse = () => {
     let formErrors = {};
     let isValid = true;
 
-    if (!title.trim()) {
+    if (!title) {
       formErrors.title = "Course title is required";
       isValid = false;
     }
 
-    if (!description.trim()) {
+    if (!description) {
       formErrors.description = "Course description is required";
       isValid = false;
     }

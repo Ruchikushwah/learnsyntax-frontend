@@ -4,16 +4,13 @@ import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 import { MdDelete } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 
-
-
 const ViewChapter = () => {
   const { id } = useParams();
-  const [record, setRecord] = useState(null); 
-  const [topics, setTopics] = useState([]); 
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState(null); 
-const [topicCount, setTopicCount] = useState(0);
-
+  const [record, setRecord] = useState(null);
+  const [topics, setTopics] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [topicCount, setTopicCount] = useState(0);
 
   useEffect(() => {
     const fetchChaptersAndTopic = async () => {
@@ -26,10 +23,9 @@ const [topicCount, setTopicCount] = useState(0);
 
         if (Response.ok) {
           setRecord(chapterData.data || null);
-          
+
           setTopics(chapterData.data.topic || []);
           setTopicCount(chapterData.data.topic.length);
-          
         } else {
           setError(chapterData.message || "Failed to fetch chapter details.");
           return;
@@ -76,15 +72,10 @@ const [topicCount, setTopicCount] = useState(0);
   }
 
   return (
-
     <div className="w-full bg-gray-100 p-10 ">
       {/* Left Side: Chapters Details */}
 
-   
-
       <div className="mx-auto bg-white shadow-lg rounded-lg overflow-hidden flex-1">
-        
-
         <div className="p-6">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">
             {record.chapter_name}
@@ -96,7 +87,8 @@ const [topicCount, setTopicCount] = useState(0);
       {/* Right Side: chpters */}
       <div className="bg-gray-300 flex-1 p-6">
         <div className="border-b-2  px-6 py-2 flex  justify-between items-center ">
-          <h2 className="text-xl font-bold text-gray-700 ">Topics
+          <h2 className="text-xl font-bold text-gray-700 ">
+            Topics
             <span>({topicCount})</span>
           </h2>
           <Link
@@ -113,9 +105,7 @@ const [topicCount, setTopicCount] = useState(0);
             {topics.map((topic, index) => (
               <li key={index} className="text-gray-800 mb-4 ">
                 <span>{topic.order}</span>
-                <h3 className="text-lg font-semibold">
-                  {topic.topic_name}
-                </h3>
+                <h3 className="text-lg font-semibold">{topic.topic_name}</h3>
                 <p className="text-gray-600 line-clamp-3 mb-3">
                   {topic.topic_description}
                 </p>
@@ -140,9 +130,7 @@ const [topicCount, setTopicCount] = useState(0);
             ))}
           </ul>
         ) : (
-          <p className="text-gray-600">
-            No Topics Available for this Chapter.
-          </p>
+          <p className="text-gray-600">No Topics Available for this Chapter.</p>
         )}
       </div>
     </div>

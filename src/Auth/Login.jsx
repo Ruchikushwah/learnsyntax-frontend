@@ -58,11 +58,7 @@ const Login = () => {
         // Ensure token and user data are correct
         localStorage.setItem("token", resp.access_token);
         localStorage.setItem("user", JSON.stringify(resp.user)); // Store user info
-
-        // Debug: Log the role to verify it's set correctly
-        console.log("User Role:", resp.user.role);
-
-        // Redirect based on role
+        // // Redirect based on role
         if (resp.user.is_admin) {
           navigate("/admin"); // Admin goes to dashboard
         } else {
@@ -85,10 +81,13 @@ const Login = () => {
             Please log in to continue
             <GoogleLogin
               onSuccess={(credentialResponse) => {
-                console.log(credentialResponse);
+                console.log("Login Success:", credentialResponse);
+                const { credential } = credentialResponse;
+
+                
               }}
               onError={() => {
-                console.log("Login Failed");
+                console.error("Google Login Failed");
               }}
             />
           </p>

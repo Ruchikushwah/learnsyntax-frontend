@@ -10,7 +10,7 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
   const fetchUserInfo = async () => {
     const token = localStorage.getItem("token");
@@ -82,7 +82,7 @@ const Header = () => {
                   spy={true}
                   smooth={true}
                   offset={-100}
-                  className="block text-base text-gray-900 hover:text-brandPrimary first:font-medium"
+                  className="block text-base text-gray-900 hover:text-brandPrimary first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -105,13 +105,15 @@ const Header = () => {
           <div className="space-x-12 hidden lg:flex items-center">
             {isLoggedIn ? (
               <div className="relative">
-                <img
-                  id="avatarButton"
-                  src={userInfo?.avatar || "/default-avatar.png"}
-                  alt="User Avatar"
-                  className="w-10 h-10 rounded-full cursor-pointer"
+                <button
                   onClick={toggleDropdown}
-                />
+                  className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-200  rounded-full dark:bg-gray-600"
+                  aria-expanded={isDropdownOpen}
+                >
+                  <span className="font-medium text-brandPrimary text-xl dark:text-gray-300">
+                    {userInfo?.name?.charAt(0).toUpperCase() || "U"}
+                  </span>
+                </button>
                 {isDropdownOpen && (
                   <div
                     id="userDropdown"
@@ -123,13 +125,10 @@ const Header = () => {
                         {userInfo?.email}
                       </div>
                     </div>
-                    <ul
-                      className="py-2 text-sm text-gray-700"
-                      aria-labelledby="avatarButton"
-                    >
+                    <ul className="py-2 text-sm text-gray-700">
                       <li>
                         <a
-                          href="/dashboard"
+                          href="/admin"
                           className="block px-4 py-2 hover:bg-gray-100"
                         >
                           Dashboard
@@ -137,7 +136,7 @@ const Header = () => {
                       </li>
                       <li>
                         <a
-                          href="/settings"
+                          href="/admin/settings"
                           className="block px-4 py-2 hover:bg-gray-100"
                         >
                           Settings
@@ -147,7 +146,7 @@ const Header = () => {
                     <div className="py-1">
                       <button
                         onClick={logout}
-                        className="block w-full px-4 py-2 text-left text-sm text-brandPrimary bg-brandPrimary "
+                        className="block w-full px-4 py-2 text-left text-sm text-white bg-brandPrimary"
                       >
                         Logout
                       </button>
@@ -156,7 +155,7 @@ const Header = () => {
                 )}
               </div>
             ) : (
-              <div className="flex gap-3 items-center ">
+              <div className="flex gap-3 items-center">
                 <a
                   href="/login"
                   className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300"
