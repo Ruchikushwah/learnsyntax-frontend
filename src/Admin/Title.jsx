@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 const Title = ({ label, field }) => {
   const [edit, setEdit] = useState(true);
   const [title, setTitle] = useState(field);
-
   const { id } = useParams();
 
 const handleUpdate = async () => {
