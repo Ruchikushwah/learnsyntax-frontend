@@ -16,7 +16,7 @@ const ViewPost = () => {
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/topics/${id}/post`);
       const data = await response.json();
-    //   console.log(data);
+      console.log("mydata",data);
 
       if (response.ok) {
         setPost(data.data || null);

@@ -15,10 +15,8 @@ const AllContents = () => {
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
-
         const response = await fetch(`http://127.0.0.1:8000/api/courses/${id}/show`);
         const courseData = await response.json();
-       
 
         if (response.ok) {
           const chaptersData = courseData.data.chapters || [];
@@ -32,14 +30,11 @@ const AllContents = () => {
           const initialTopic =
             initialChapter?.topics.find((tp) => tp.id.toString() === topicId) || null;
           setSelectedTopic(initialTopic);
-          setSelectedPost(initialTopic?.post || null);
-
+          setSelectedPost(initialTopic?.post?.[0] || null); // Use the first post from the array
 
           // Open the accordion for the selected chapter
           const chapterIndex = chaptersData.findIndex((ch) => ch.id.toString() === chapterId);
           setOpenDropdown(chapterIndex >= 0 ? chapterIndex : null);
-         
-
         } else {
           setError(courseData.message || "Failed to fetch course details.");
         }
@@ -51,7 +46,6 @@ const AllContents = () => {
       }
     };
 
-
     fetchCourseData();
   }, [id, chapterId, topicId]);
 
@@ -61,7 +55,7 @@ const AllContents = () => {
 
   const handleTopicClick = (topic) => {
     setSelectedTopic(topic);
-    setSelectedPost(topic.post || null); // Update post when a topic is selected
+    setSelectedPost(topic.post?.[0] || null); // Update post when a topic is selected
   };
 
   if (loading) return <p>Loading...</p>;
@@ -113,7 +107,6 @@ const AllContents = () => {
             )}
           </div>
         ))}
-
       </div>
 
       {/* Right Panel: Post Content */}
@@ -123,11 +116,13 @@ const AllContents = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               {selectedPost.title}
             </h2>
-            <img
-              src={selectedPost.image_path}
-              alt={selectedPost.title}
-              className="w-full h-64 object-cover rounded-md mb-4"
-            />
+            {selectedPost.image_path && (
+              <img
+                src={selectedPost.image_path}
+                alt={selectedPost.title}
+                className="w-full h-64 object-cover rounded-md mb-4"
+              />
+            )}
             <p className="text-gray-700">{selectedPost.content}</p>
           </div>
         ) : (
