@@ -60,86 +60,77 @@ const ViewPost = () => {
   }
 
   return (
-       <div className="relative overflow-x-auto w-full py-6 px-8">
-         
-         <h2 className="text-lg font-bold text-gray-700 border-l-4 border-teal-600 p-1">
-           Manage Post
-           
-         </h2>
-   
-   
-         <div className="flex flex-col md:flex-row justify-between md:items-center py-4 space-y-4 md:space-y-0">
-           <input
-             type="text"
-             placeholder="Search..."
-             className="p-2 border rounded w-full md:w-64 focus:outline-none"
-           />
-          
-         </div> 
-   
-         <div className="overflow-x-auto">
-           <table className="w-full text-sm text-left text-gray-500">
-             <thead className="text-xs text-gray-400 uppercase bg-gray-100">
-               <tr>
-                 <th scope="col" className="px-6 py-3">
-                   ID
-                 </th>
-                 <th scope="col" className="px-6 py-3">
-                   Title
-                 </th>
-                 <th scope="col" className="px-6 py-3">
-                   content
-                 </th>
-                 <th scope="col" className="px-6 py-3">
-                   Post Image
-                 </th>
-                 <th scope="col" className="px-6 py-3">
-                   Actions
-                 </th>
-               </tr>
-             </thead>
-             <tbody>
-               {post.map((items) => (
-                 <tr
-                   className="bg-white border-b hover:bg-gray-50"
-                   key={items.id}
-                 >
-                   <td className="px-6 py-4">{items.id}</td>
-                   <td className="px-6 py-4">{items.title}</td>
-                   <td className="px-6 py-4">{items.content}</td>
-                   <td className="px-6 py-4">
-                     <img
-                       src={`http://127.0.0.1:8000/storage/post/${items.image}`}
-                       className="w-16 h-16"
-                     />
-                   </td>
-                   <td className="px-6 py-4 flex gap-2">
-                     <button
-                       className="ml-2 text-white bg-red-600 hover:underline p-2 rounded-md "
-                       onClick={() => handleDelete(items.id)}
-                       title="delete"
-                     >
-                       <MdDelete size={22} />
-                     </button>
-                     <Link to={`/admin/managecourse/courseedit/${items.id}`}>
-                       <button
-                         className=" text-white px-2 py-2 bg-teal-500
+    <div className="relative overflow-x-auto w-full py-6 px-8">
+      <h2 className="text-lg font-bold text-gray-700 border-l-4 border-teal-600 p-1">
+        Manage Post
+      </h2>
+
+      <div className="flex flex-col md:flex-row justify-between md:items-center py-4 space-y-4 md:space-y-0">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="p-2 border rounded w-full md:w-64 focus:outline-none"
+        />
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm text-left text-gray-500">
+          <thead className="text-xs text-gray-400 uppercase bg-gray-100">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                ID
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Title
+              </th>
+              <th scope="col" className="px-6 py-3">
+                content
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Post Image
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {post.map((items) => (
+              <tr className="bg-white border-b hover:bg-gray-50" key={items.id}>
+                <td className="px-6 py-4">{items.id}</td>
+                <td className="px-6 py-4">{items.title}</td>
+                <td className="px-6 py-4 line-clamp-1">{items.content}</td>
+                <td className="px-6 py-4">
+                  <img
+                    src={`http://127.0.0.1:8000/storage/post/${items.image}`}
+                    className="w-16 h-16"
+                  />
+                </td>
+                <td className="px-6 py-4 flex gap-2">
+                  <button
+                    className="ml-2 text-white bg-red-600 hover:underline p-2 rounded-md "
+                    onClick={() => handleDelete(items.id)}
+                    title="delete"
+                  >
+                    <MdDelete size={22} />
+                  </button>
+                  <Link to={`/admin/viewcourse/viewpost/${items.id}`}>
+                    <button
+                      className=" text-white px-2 py-2 bg-teal-500
                         text-center rounded-md "
-                         title="edit"
-                       >
-                         <FiEdit size={22} />
-                       </button>
-                     </Link>
-   
-                     
-                   </td>
-                 </tr>
-               ))}
-             </tbody>
-           </table>
-         </div>
-       </div>
-);
+                      title="edit"
+                    >
+                      <FiEdit size={22} />
+                    </button>
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 
 };
 
