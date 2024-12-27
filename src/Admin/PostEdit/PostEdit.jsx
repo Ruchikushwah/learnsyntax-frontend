@@ -5,18 +5,22 @@ import Image from '../Image'
 import { useParams } from 'react-router-dom'
 
 const PostEdit = () => {
-  const { id } = useParams();
+  const { topic_id } = useParams();
   const [record, setRecord] = useState(null);
   useEffect (() => {
     const fetchPosts = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/topics/${id}/posts/${id}`
+          `http://127.0.0.1:8000/api/topics/${topic_id}/posts/${id}`
         );
         const data = await response.json();
-        console.log('data',response);
-        if(data && data.data) {
-          setRecord(data.data);
+        console.log(data)
+        
+       
+        if(data && data.post) {
+          setRecord(data.post);
+         
+
 
         } else {
           console.error("Unexpected data structure:", data);

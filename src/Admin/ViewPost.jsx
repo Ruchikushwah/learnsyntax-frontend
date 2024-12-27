@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { MdDelete } from 'react-icons/md';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams,  Link } from 'react-router-dom';
 
 const ViewPost = () => {
-  const {id } = useParams(); // The id here corresponds to the topic id
-  const navigate = useNavigate();
+  const {id,topic_id } = useParams(); // The id here corresponds to the topic id
+ 
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,13 +14,13 @@ const ViewPost = () => {
   const fetchPost = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/topics/${id}/post`);
+      const response = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/post`);
       const data = await response.json();
       console.log("mydata",data);
 
       if (response.ok) {
         setPost(data.data || null);
-        console.log('ruchi',data.post)
+        console.log('ruchi',data.data)
       } else {
         setError(data.message || 'Failed to fetch post details.');
       }
@@ -32,12 +32,20 @@ const ViewPost = () => {
     }
   };
 
- 
-
   // Call fetchPost when component mounts
   useEffect(() => {
     fetchPost();
   }, [id]);
+  const handleDelete = async () => {
+    let resp = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/post/${id}`, {
+      method: "DELETE",
+    });
+    if (resp.ok) {
+      console.log(`post ${id} deleted successfully`);
+    } else {
+      console.error("failed to delete post", resp);
+    }
+  };
 
   if (loading) {
     return <div className="text-center py-10">Loading post...</div>;
@@ -64,7 +72,6 @@ const ViewPost = () => {
       <h2 className="text-lg font-bold text-gray-700 border-l-4 border-teal-600 p-1">
         Manage Post
       </h2>
-
       <div className="flex flex-col md:flex-row justify-between md:items-center py-4 space-y-4 md:space-y-0">
         <input
           type="text"
@@ -72,7 +79,6 @@ const ViewPost = () => {
           className="p-2 border rounded w-full md:w-64 focus:outline-none"
         />
       </div>
-
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left text-gray-500">
           <thead className="text-xs text-gray-400 uppercase bg-gray-100">
