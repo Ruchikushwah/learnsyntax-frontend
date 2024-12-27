@@ -19,8 +19,8 @@ const ViewPost = () => {
       console.log("mydata",data);
 
       if (response.ok) {
-        setPost(data.data || null);
-        console.log('ruchi',data.data)
+        setPost(data.post || null);
+        console.log('ruchi',data.post)
       } else {
         setError(data.message || 'Failed to fetch post details.');
       }
@@ -36,6 +36,7 @@ const ViewPost = () => {
   useEffect(() => {
     fetchPost();
   }, [id]);
+
   const handleDelete = async () => {
     let resp = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/post/${id}`, {
       method: "DELETE",
@@ -137,7 +138,7 @@ const ViewPost = () => {
       </div>
     </div>
   );
-
+  
 };
 
 export default ViewPost;
