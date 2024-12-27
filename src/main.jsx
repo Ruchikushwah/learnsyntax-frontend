@@ -32,6 +32,7 @@ import AllContents from "./User/AllContents.jsx";
 import InsertPost from "./Admin/InsertPost.jsx";
 import ChapterEdit from "./Admin/Chapteredit.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import PostEdit from "./Admin/PostEdit/PostEdit.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -95,6 +96,10 @@ const router = createBrowserRouter(
         <Route
           path="/admin/managecourse/chapteredit/:id/:chapter_slug"
           element={<ChapterEdit />}
+        />
+        <Route
+          path="/admin/viewcourse/viewpost/:id"
+          element={<PostEdit />}
         />
 
         <Route path="/admin/setting" element={<Setting />} />
