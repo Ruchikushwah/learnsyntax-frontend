@@ -4,7 +4,7 @@ import { MdDelete } from 'react-icons/md';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
 const ViewPost = () => {
-  const {id } = useParams(); // The id here corresponds to the topic id
+  const {id ,topic_id} = useParams(); // The id here corresponds to the topic id
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,12 +14,12 @@ const ViewPost = () => {
   const fetchPost = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/topics/${id}/post`);
+      const response = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/post`);
       const data = await response.json();
       console.log("mydata",data);
 
       if (response.ok) {
-        setPost(data.data || null);
+        setPost(data.post || null);
         console.log('ruchi',data.post)
       } else {
         setError(data.message || 'Failed to fetch post details.');
@@ -37,7 +37,7 @@ const ViewPost = () => {
   // Call fetchPost when component mounts
   useEffect(() => {
     fetchPost();
-  }, [id]);
+  }, [id,topic_id]);
 
   if (loading) {
     return <div className="text-center py-10">Loading post...</div>;

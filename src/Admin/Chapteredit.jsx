@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const ChapterEdit = () => {
-  const { id,course_slug } = useParams();
+  const { course_id,chapter_id,course_slug } = useParams();
+  
   const [values, setValues] = useState({
-    id: id,
+    id: chapter_id,
     chapter_name: "",
     chapter_description: "",
     order: "",
@@ -20,7 +21,7 @@ const ChapterEdit = () => {
       setError("");
 
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/chapters/${id}`);
+        const response = await fetch(`http://127.0.0.1:8000/api/chapters/${chapter_id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch chapter details");
         }
@@ -28,7 +29,7 @@ const ChapterEdit = () => {
         const result = await response.json();
 
         setValues({
-          id: id,
+          id: chapter_id,
           chapter_name: result.data.chapter_name || "",
           chapter_description: result.data.chapter_description || "",
           order: result.data.order || "",
@@ -41,7 +42,7 @@ const ChapterEdit = () => {
     };
 
     fetchChapterDetails();
-  }, [id]);
+  }, [course_id,chapter_id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,7 +56,7 @@ const ChapterEdit = () => {
     setError("");
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/courses/${id}/chapters/${id}`, {
+      const response = await fetch(`http://127.0.0.1:8000/api/courses/${course_id}/chapters/${chapter_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -69,11 +70,12 @@ const ChapterEdit = () => {
 
       if (!response.ok) {
         const result = await response.json();
+        console.log(result);
         throw new Error(result.message || "Failed to update chapter.");
       }
 
       console.log("Chapter updated successfully");
-      navigate(-1); // Navigate back
+      navigate(-2); // Navigate back
     } catch (err) {
       setError(err.message || "An error occurred while updating the chapter.");
     } finally {
