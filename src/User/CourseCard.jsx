@@ -42,8 +42,10 @@ const CourseCard = ({ courses = [] }) => {
               >
                 <div>
                   <div className="bg-[#E8F5E9] mb-4 h-14 w-14 mx-auto rounded-tl-3xl rounded-br-3xl">
+
                     <img
                       src={course.image}
+
                       alt={course.title || "Course Icon"}
                       className="-ml-5 h-full object-contain"
                     />
@@ -64,6 +66,7 @@ const CourseCard = ({ courses = [] }) => {
           </p>
         )}
       </div>
+
       {/* Show More and Show Less Buttons */}
       <div className="text-center mt-8">
         {courses.length > visibleCount ? (

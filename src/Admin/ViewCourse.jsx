@@ -21,7 +21,7 @@ const ViewCourse = () => {
         `http://127.0.0.1:8000/api/courses/${id}`
       );
       const courseData = await courseResponse.json();
-
+  
       if (courseResponse.ok) {
         const chaptersWithTopics = await Promise.all(
           courseData.data.chapters.map(async (chapter) => {
@@ -32,27 +32,36 @@ const ViewCourse = () => {
             return { ...chapter, topics: topicsData.data || [] };
           })
         );
-
+  
         setRecord(courseData.data || null);
         setChapters(chaptersWithTopics);
-
+  
         const chapterIdFromURL = searchParams.get("chapterId");
         const currentChapter = chaptersWithTopics.find(
           (chapter) =>
             chapter.id ===
             (preserveSelectedChapterId || parseInt(chapterIdFromURL, 10))
         );
-        setSelectedChapter(currentChapter || chaptersWithTopics[0] || null);
+  
+        const defaultChapter = currentChapter || chaptersWithTopics[0] || null;
+  
+        setSelectedChapter(defaultChapter);
+  
+        // Update URL with the default chapter ID if not already set
+        if (!chapterIdFromURL && defaultChapter) {
+          setSearchParams({ chapterId: defaultChapter.id });
+        }
       } else {
         setError(courseData.message || "Failed to fetch course details.");
       }
     } catch (error) {
-      setError("Error fetching data .");
+      setError("Error fetching data.");
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchCourseAndChapters();
