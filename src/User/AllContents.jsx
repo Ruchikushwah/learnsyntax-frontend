@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import FlowbiteStepper from './FlowbiteStepper'; // Assuming you are using the FlowbiteStepper as a separate component
+
+import FlowbiteStepper from './FlowbiteStepper'; 
+
 
 const AllContents = () => {
   const { id, chapterId, topicId } = useParams();

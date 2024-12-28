@@ -42,9 +42,10 @@ const CourseCard = ({ courses = [] }) => {
               >
                 <div>
                   <div className="bg-[#E8F5E9] mb-4 h-14 w-14 mx-auto rounded-tl-3xl rounded-br-3xl">
-                    <img 
-                    //here we have to write **course.image** in the src
+
+                    <img
                       src={course.image}
+
                       alt={course.title || "Course Icon"}
                       className="-ml-5 h-full object-contain"
                     />

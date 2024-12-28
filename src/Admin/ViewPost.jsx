@@ -4,8 +4,10 @@ import { MdDelete } from 'react-icons/md';
 import { useParams,  Link } from 'react-router-dom';
 
 const ViewPost = () => {
-  const {id,topic_id } = useParams(); // The id here corresponds to the topic id
- 
+
+  const {id ,topic_id} = useParams(); // The id here corresponds to the topic id
+  const navigate = useNavigate();
+
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,7 +37,7 @@ const ViewPost = () => {
   // Call fetchPost when component mounts
   useEffect(() => {
     fetchPost();
-  }, [id]);
+  }, [id,topic_id]);
 
   const handleDelete = async () => {
     let resp = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/post/${id}`, {
