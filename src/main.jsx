@@ -33,6 +33,8 @@ import InsertPost from "./Admin/InsertPost.jsx";
 import ChapterEdit from "./Admin/Chapteredit.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import PostEdit from "./Admin/PostEdit/PostEdit.jsx";
+import AuthLayout from "./Auth/AuthLayout.jsx";
+import ProtectedAdmin from "./utils/ProtectedAdmin.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,8 +42,7 @@ const router = createBrowserRouter(
       {/* Main Routes */}
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
+
         <Route path="contact" element={<ContactForm />} />
         {/* User Routes */}
         <Route
@@ -53,57 +54,65 @@ const router = createBrowserRouter(
           element={<AllContents />}
         />
       </Route>
+      <Route path="/" element={<AuthLayout />}>
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+      </Route>
 
       {/* Admin Routes */}
+
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route
-          path="/admin/managecourse/:id/:course_slug/:chapterId/:chapter_slug/managetopic"
-          element={<ManageTopic />}
-        />
-        <Route path="/admin/inserttopic/:chapterId" element={<InsertTopic />} />
-        <Route path="/admin/insertcourse" element={<InsertCourse />} />
-        <Route path="/admin/managecourse" element={<ManageCourse />} />
-        <Route
-          path="/admin/managecourse/:id/:course_slug"
-          element={<ViewCourse />}
-        />
-        <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
-        <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
-        <Route path="/admin/setting" element={<Setting />} />
-        <Route
-          path="/admin/managecourse/courseedit/:id/:course_slug"
-          element={<CourseEdit />}
-        />
-        <Route
-          path="/admin/managecourse/topiceedit/:id/:topic_slug"
-          element={<TopicEdit />}
-        />
-
-        <Route path="/admin/setting" element={<Setting />} />
-
-        <Route path="/admin/insertpost/:id" element={<InsertPost />} />
-
-        <Route
-          path="/admin/managecourse/:id/:course_slug/:chapter_id/:chapter_slug/viewpost/:topic_id/:topic_slug"
-          element={<ViewPost />}
-        />
-
-        <Route
-          path="/admin/managecourse/courseedit/:id/:course_slug"
-          element={<CourseEdit />}
-        />
-        <Route
-          path="/admin/managecourse/chapteredit/:id/:chapter_slug"
-          element={<ChapterEdit />}
-        />
-        <Route
-          path="/admin/viewcourse/viewpost/:id"
-          element={<PostEdit />}
-        />
-
-        <Route path="/admin/setting" element={<Setting />} />
+        <Route element={<ProtectedAdmin />}>
+          <Route index element={<Dashboard />} />
+          <Route
+            path="/admin/managecourse/:id/:course_slug/:chapterId/:chapter_slug/managetopic"
+            element={<ManageTopic />}
+          />
+          <Route
+            path="/admin/inserttopic/:chapterId"
+            element={<InsertTopic />}
+          />
+          <Route path="/admin/insertcourse" element={<InsertCourse />} />
+          <Route path="/admin/managecourse" element={<ManageCourse />} />
+          <Route
+            path="/admin/managecourse/:id/:course_slug"
+            element={<ViewCourse />}
+          />
+        </Route>
       </Route>
+
+      <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
+      <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
+      <Route path="/admin/setting" element={<Setting />} />
+      <Route
+        path="/admin/managecourse/courseedit/:id/:course_slug"
+        element={<CourseEdit />}
+      />
+      <Route
+        path="/admin/managecourse/topiceedit/:id/:topic_slug"
+        element={<TopicEdit />}
+      />
+
+      <Route path="/admin/setting" element={<Setting />} />
+
+      <Route path="/admin/insertpost/:id" element={<InsertPost />} />
+
+      <Route
+        path="/admin/managecourse/:id/:course_slug/:chapter_id/:chapter_slug/viewpost/:topic_id/:topic_slug"
+        element={<ViewPost />}
+      />
+
+      <Route
+        path="/admin/managecourse/courseedit/:id/:course_slug"
+        element={<CourseEdit />}
+      />
+      <Route
+        path="/admin/managecourse/chapteredit/:id/:chapter_slug"
+        element={<ChapterEdit />}
+      />
+      <Route path="/admin/viewcourse/viewpost/:id" element={<PostEdit />} />
+
+      <Route path="/admin/setting" element={<Setting />} />
     </>
   )
 );

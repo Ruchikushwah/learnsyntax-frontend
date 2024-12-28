@@ -7,12 +7,12 @@ const CompanyStats = () => {
                 <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                     {/* Left Side: Text Content */}
                     <div className="md:w-1/2">
-                        <h2 className="text-4xl text-neutralDGrey font-semibold mb-4 md:w-2/3">
-                            Lorem ipsum sukaj sjkll <br />
-                            <span className="text-brandPrimary">arlm ghost has in the town</span>
+                        <h2 className="text-4xl text-neutralDGrey font-semibold mb-4 md:w-3/4">
+                        LearnSyntax, a platform focused  <br />
+                            <span className="text-brandPrimary"> on teaching programming </span>
                         </h2>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos ut, quasi
+                        The design focuses on presenting the member count for each technology in a neat and organized way, with clear iconography and text styling.
                         </p>
                     </div>
 

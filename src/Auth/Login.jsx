@@ -59,7 +59,10 @@ const Login = () => {
         localStorage.setItem("token", resp.access_token);
         localStorage.setItem("user", JSON.stringify(resp.user)); // Store user info
         // // Redirect based on role
-        if (resp.user.is_admin) {
+        const userdata = localStorage.getItem("user");
+        
+
+        if (userdata.is_admin) {
           navigate("/admin"); // Admin goes to dashboard
         } else {
           navigate("/"); // Regular user goes to homepage
@@ -83,8 +86,6 @@ const Login = () => {
               onSuccess={(credentialResponse) => {
                 console.log("Login Success:", credentialResponse);
                 const { credential } = credentialResponse;
-
-                
               }}
               onError={() => {
                 console.error("Google Login Failed");
