@@ -94,7 +94,7 @@ const router = createBrowserRouter(
           element={<CourseEdit />}
         />
         <Route
-          path="/admin/managecourse/chapteredit/:id/:chapter_slug"
+          path="/admin/managecourse/chapteredit/:course_id/:chapter_id/:chapter_slug"
           element={<ChapterEdit />}
         />
         <Route

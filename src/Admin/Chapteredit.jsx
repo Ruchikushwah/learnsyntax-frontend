@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const ChapterEdit = () => {
-  const { id ,chapter_slug } = useParams();
+
+  const { course_id,chapter_id,course_slug } = useParams();
+  
   const [values, setValues] = useState({
+    id: chapter_id,
     chapter_name: "",
     chapter_description: "",
     order: "",
-    id : ""
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -22,15 +24,19 @@ const ChapterEdit = () => {
       setError("");
 
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/chapters/${id}`);
-        if (!response.ok) throw new Error("Failed to fetch chapter details.");
+
+        const response = await fetch(`http://127.0.0.1:8000/api/chapters/${chapter_id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch chapter details");
+        }
 
         const result = await response.json();
         setValues({
+          id: chapter_id,
           chapter_name: result.data.chapter_name || "",
           chapter_description: result.data.chapter_description || "",
           order: result.data.order || "",
-          id : result.data.id || ""
+         
         });
       } catch (err) {
         setError(err.message || "An error occurred while fetching chapter details.");
@@ -40,7 +46,7 @@ const ChapterEdit = () => {
     };
 
     fetchChapterDetails();
-  }, [id]);
+  }, [course_id,chapter_id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,33 +61,27 @@ const ChapterEdit = () => {
 
     try {
 
-      const data = {
-        chapter_name: values.chapter_name,
-        chapter_description: values.chapter_description,
-        order: parseInt(values.order, 10),
+      const response = await fetch(`http://127.0.0.1:8000/api/courses/${course_id}/chapters/${chapter_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chapter_name: values.chapter_name,
+          chapter_description: values.chapter_description,
+          order: parseInt(values.order, 10),
+        }),
+      });
 
-      };  
-// course/{courseId}/chapter/{chapterId}
 
-// http://127.0.0.1:8000/api/courses/2/chapters/2
-
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/course/${id}/chapter/${values.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
+     
       if (!response.ok) {
         const result = await response.json();
+        console.log(result);
         throw new Error(result.message || "Failed to update chapter.");
       }
-      setSuccess("Chapter updated successfully!");
-      setTimeout(() => navigate(-1), 2000);
+      console.log("Chapter updated successfully");
+      navigate(-2); // Navigate back     
     } catch (err) {
       setError(err.message || "An error occurred while updating the chapter.");
     } finally {

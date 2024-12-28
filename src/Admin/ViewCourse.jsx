@@ -161,7 +161,7 @@ const ViewCourse = () => {
                 <MdDelete size={22} />
               </button>
               <Link
-                to={`/admin/managecourse/chapteredit/${chapter.id}/${chapter.chapter_slug}`}
+                to={`/admin/managecourse/chapteredit/${id}/${chapter.id}/${chapter.chapter_slug}`}
               >
                 <button
                   className=" text-white px-2 py-2 bg-teal-500
