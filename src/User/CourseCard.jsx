@@ -1,9 +1,18 @@
-
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import parse from "html-react-parser";
 
 const CourseCard = ({ courses = [] }) => {
-  console.log("data what we getting" + courses);
+  const [visibleCount, setVisibleCount] = useState(6); // Initial visible courses count
+
+  const showMoreCourses = () => {
+    setVisibleCount(visibleCount + 6); // Increase visible courses by 6
+  };
+
+  const showLessCourses = () => {
+    setVisibleCount(6); // Reset to initial count
+  };
+
   return (
     <div id="course" className="md:px-14 max-w-screen-2xl mx-auto">
       {/* Header Section */}
@@ -20,7 +29,7 @@ const CourseCard = ({ courses = [] }) => {
       {/* Courses Section */}
       <div className="mt-14 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:w-11/12 mx-auto gap-12">
         {courses.length > 0 ? (
-          courses.map((course) => (
+          courses.slice(0, visibleCount).map((course) => (
             <NavLink
               to={`/singleviewpage/${course.id}/${course.course_slug}`}
               key={course.id}
@@ -33,9 +42,10 @@ const CourseCard = ({ courses = [] }) => {
               >
                 <div>
                   <div className="bg-[#E8F5E9] mb-4 h-14 w-14 mx-auto rounded-tl-3xl rounded-br-3xl">
-                    {/* note below we have to give the image from db like course.image in src */}
+
                     <img
-                      src={course.image }
+                      src={course.image}
+
                       alt={course.title || "Course Icon"}
                       className="-ml-5 h-full object-contain"
                     />
@@ -44,7 +54,7 @@ const CourseCard = ({ courses = [] }) => {
                     {course.title}
                   </h4>
                   <p className="text-sm text-neutralGrey">
-                    { parse (course.description)}
+                    {parse(course.description)}
                   </p>
                 </div>
               </div>
@@ -56,49 +66,27 @@ const CourseCard = ({ courses = [] }) => {
           </p>
         )}
       </div>
+
+      {/* Show More and Show Less Buttons */}
+      <div className="text-center mt-8">
+        {courses.length > visibleCount ? (
+          <button
+            onClick={showMoreCourses}
+            className="px-6 py-2 bg-brandPrimary text-white rounded hover:bg-brandSecondary transition-all mx-2"
+          >
+            Show More
+          </button>
+        ) : visibleCount > 6 ? (
+          <button
+            onClick={showLessCourses}
+            className="px-6 py-2 bg-brandPrimary text-white rounded hover:bg-brandSecondary transition-all mx-2"
+          >
+            Show Less
+          </button>
+        ) : null}
+      </div>
     </div>
   );
 };
 
 export default CourseCard;
-
-
-//   image,
-//   Button,
-//   CardDescription,
-//   CardTitle,
-//   titleHref,
-//   btnHref,
-// }) => {
-//   return (
-//     <>
-//       {/*  */}
-//       <div className="mb-10 overflow-hidden rounded-lg bg-white shadow-1 duration-300 hover:shadow-3 dark:bg-dark-2 dark:shadow-card dark:hover:shadow-3">
-//         <img src={image} alt="" className="w-full" />
-//         <div className="p-8 text-center sm:p-9 md:p-7 xl:p-9">
-//           <h3>
-//             <a
-//               href={titleHref ? titleHref : "/#"}
-//               className="mb-4 block text-xl font-semibold text-dark hover:text-primary dark:text-white sm:text-[22px] md:text-xl lg:text-[22px] xl:text-xl 2xl:text-[22px]"
-//             >
-//               {CardTitle}
-//             </a>
-//           </h3>
-//           <p className="mb-7 text-base leading-relaxed text-body-color dark:text-dark-6">
-//             {CardDescription}
-//           </p>
-
-//           {Button && (
-//             <a
-//               href={btnHref ? btnHref : "#"}
-//               className="inline-block rounded-full border border-gray-3 px-7 py-2 text-base font-medium text-body-color transition hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-dark-6"
-//             >
-//               {Button}
-//             </a>
-//           )}
-//         </div>
-//       </div>
-//       {/*  */}
-//     </>
-//   );
-// };

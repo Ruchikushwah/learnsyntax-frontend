@@ -11,12 +11,12 @@ const AboutUs = () => {
             {/* Right-Aligned Text and Button */}
             <div className="w-full md:w-1/2">
                 <h2 className="text-4xl text-neutralDGrey font-semibold mb-4 md:w-4/5">
-                    Lorem ipsum sukaj sjkll arlm
+                LearnSyntax Online Learning 
                 </h2>
-                <p className="md:w-3/4 text-sm text-neutralGrey mb-8">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos ut, quasi 
-                    exercitationem ratione veniam nihil error recusandae officia, aliquam quis dolor, unde tempore saepe 
-                    in praesentium necessitatibus repellendus nulla! Voluptates!
+                <p className="md:w-3/4 text-md text-neutralGrey mb-8">
+                LearnSyntax is an innovative online learning platform focused on delivering high-quality programming and technical education to learners of all levels. The content strategy is designed to engage, educate, and empower users, fostering a community of aspiring and seasoned developers.
+
+
                 </p>
                 <button className="btn-primary">Learn More</button>
             </div>
