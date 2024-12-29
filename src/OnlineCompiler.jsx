@@ -90,7 +90,7 @@ const OnlineCompiler = () => {
         </label>
 
         <button
-          className="p-2 bg-blue-500 text-white rounded ml-4 self-center mt-2"
+          className="p-2 bg-brandPrimary text-white rounded ml-4 self-center mt-2"
           onClick={handleRunCode}
           disabled={isLoading}
         >
