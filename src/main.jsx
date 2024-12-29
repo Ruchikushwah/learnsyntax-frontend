@@ -27,14 +27,17 @@ import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
 import ContactForm from "./User/Home_components/ContatctForm.jsx";
-
 import AllContents from "./User/AllContents.jsx";
 import InsertPost from "./Admin/InsertPost.jsx";
 import ChapterEdit from "./Admin/Chapteredit.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import PostEdit from "./Admin/PostEdit/PostEdit.jsx";
+
+import OnlineCompiler from "./OnlineCompiler.jsx";
+
 import AuthLayout from "./Auth/AuthLayout.jsx";
 import ProtectedAdmin from "./utils/ProtectedAdmin.jsx";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -111,6 +114,9 @@ const router = createBrowserRouter(
         <Route path="/admin/setting" element={<Setting />} />
       </Route>
 
+      <Route path="online-compiler" element={<OnlineCompiler/>}/>
+
+
       <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
       <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
       <Route path="/admin/setting" element={<Setting />} />
@@ -143,6 +149,7 @@ const router = createBrowserRouter(
       <Route path="/admin/viewcourse/viewpost/:id" element={<PostEdit />} />
 
       <Route path="/admin/setting" element={<Setting />} />
+
     </>
   )
 );
