@@ -27,12 +27,12 @@ import CourseEdit from "./Admin/CourseEdit.jsx";
 import SingleViewPage from "./User/SingleViewPage.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
 import ContactForm from "./User/Home_components/ContatctForm.jsx";
-
 import AllContents from "./User/AllContents.jsx";
 import InsertPost from "./Admin/InsertPost.jsx";
 import ChapterEdit from "./Admin/Chapteredit.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import PostEdit from "./Admin/PostEdit/PostEdit.jsx";
+import OnlineCompiler from "./OnlineCompiler.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -104,6 +104,7 @@ const router = createBrowserRouter(
 
         <Route path="/admin/setting" element={<Setting />} />
       </Route>
+      <Route path="online-compiler" element={<OnlineCompiler/>}/>
     </>
   )
 );
