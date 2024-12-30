@@ -233,12 +233,12 @@ const ViewCourse = () => {
                   >
                     <FiEdit size={22} />
                   </Link>
-                  <Link
+                  {/* <Link
                     to={`/admin/insertpost/${topic.id}`}
                     className="text-white px-2 py-2 bg-teal-500 rounded-md"
                   >
                     <GrChapterAdd size={22} />
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             ))}

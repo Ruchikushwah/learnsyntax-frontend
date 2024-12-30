@@ -134,7 +134,7 @@ const router = createBrowserRouter(
 
       <Route path="/admin/setting" element={<Setting />} />
 
-      <Route path="/admin/insertpost/:id" element={<InsertPost />} />
+      <Route path="/admin/insertpost/:topic_id" element={<InsertPost />} />
 
       <Route
         path="/admin/managecourse/:id/:course_slug/:chapter_id/:chapter_slug/viewpost/:topic_id/:topic_slug"
