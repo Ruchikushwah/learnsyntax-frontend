@@ -4,7 +4,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 const ChapterEdit = () => {
 
   const { course_id,chapter_id,course_slug } = useParams();
-  
+  console.log(chapter_id);
   const [values, setValues] = useState({
     id: chapter_id,
     chapter_name: "",

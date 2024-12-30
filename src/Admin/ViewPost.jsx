@@ -5,9 +5,7 @@ import { useParams,  Link } from 'react-router-dom';
 
 const ViewPost = () => {
 
-  const {id ,topic_id} = useParams(); // The id here corresponds to the topic id
-  const navigate = useNavigate();
-
+  const {id ,topic_id} = useParams(); // The id here corresponds to the post id
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,12 +37,14 @@ const ViewPost = () => {
     fetchPost();
   }, [id,topic_id]);
 
-  const handleDelete = async () => {
-    let resp = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/post/${id}`, {
+  const handleDelete = async (post_id) => {
+    let resp = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/posts/${post_id}`, {
       method: "DELETE",
     });
     if (resp.ok) {
-      console.log(`post ${id} deleted successfully`);
+      console.log(`post deleted successfully`);
+      // Update the state to remove the deleted post
+      setPost((prevPosts) => prevPosts.filter((item) => item.id !== post_id));
     } else {
       console.error("failed to delete post", resp);
     }
@@ -123,7 +123,8 @@ const ViewPost = () => {
                   >
                     <MdDelete size={22} />
                   </button>
-                  <Link to={`/admin/viewcourse/viewpost/${items.id}`}>
+                  <Link to={`/admin/viewcourse/editpost/${topic_id}/${items.id}`}>
+                  {/* here we will send the chapter_id as well */}
                     <button
                       className=" text-white px-2 py-2 bg-teal-500
                         text-center rounded-md "
