@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
+import { GrChapterAdd } from 'react-icons/gr';
 import { MdDelete } from 'react-icons/md';
-import { useParams,  Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 const ViewPost = () => {
 
-  const {id ,topic_id} = useParams(); // The id here corresponds to the post id
+  const { id, topic_id } = useParams(); // The id here corresponds to the post id
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,11 +17,11 @@ const ViewPost = () => {
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/post`);
       const data = await response.json();
-      console.log("mydata",data);
+      console.log("mydata", data);
 
       if (response.ok) {
         setPost(data.post || null);
-        console.log('ruchi',data.post)
+        console.log('ruchi', data.post)
       } else {
         setError(data.message || 'Failed to fetch post details.');
       }
@@ -35,7 +36,7 @@ const ViewPost = () => {
   // Call fetchPost when component mounts
   useEffect(() => {
     fetchPost();
-  }, [id,topic_id]);
+  }, [id, topic_id]);
 
   const handleDelete = async (post_id) => {
     let resp = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/posts/${post_id}`, {
@@ -81,7 +82,15 @@ const ViewPost = () => {
           placeholder="Search..."
           className="p-2 border rounded w-full md:w-64 focus:outline-none"
         />
+        <Link
+          to={`/admin/insertpost/${topic_id}`}
+          // /admin/insertpost/:topic_id
+          className="text-white px-4 py-2 bg-teal-500 rounded-md md:ml-auto"
+        >
+          Add Post
+        </Link>
       </div>
+
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left text-gray-500">
           <thead className="text-xs text-gray-400 uppercase bg-gray-100">
@@ -124,7 +133,7 @@ const ViewPost = () => {
                     <MdDelete size={22} />
                   </button>
                   <Link to={`/admin/viewcourse/editpost/${topic_id}/${items.id}`}>
-                  {/* here we will send the chapter_id as well */}
+                    {/* here we will send the chapter_id as well */}
                     <button
                       className=" text-white px-2 py-2 bg-teal-500
                         text-center rounded-md "
@@ -141,7 +150,7 @@ const ViewPost = () => {
       </div>
     </div>
   );
-  
+
 };
 
 export default ViewPost;
