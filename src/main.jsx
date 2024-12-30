@@ -76,7 +76,7 @@ const router = createBrowserRouter(
           element={<CourseEdit />}
         />
         <Route
-          path="/admin/managecourse/topiceedit/:id/:topic_slug"
+          path="/admin/managecourse/topiceedit/:chapter_id/:chapter_slug/:topic_id/:topic_slug"
           element={<TopicEdit />}
         />
 
@@ -98,7 +98,7 @@ const router = createBrowserRouter(
           element={<ChapterEdit />}
         />
         <Route
-          path="/admin/viewcourse/viewpost/:id"
+          path="/admin/viewcourse/editpost/:topic_id/:post_id"
           element={<PostEdit />}
         />
 
