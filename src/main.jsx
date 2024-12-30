@@ -74,6 +74,7 @@ const router = createBrowserRouter(
         <Route path="/admin/inserttopic/:chapterId" element={<InsertTopic />} />
         <Route path="/admin/insertcourse" element={<InsertCourse />} />
         <Route path="/admin/managecourse" element={<ManageCourse />} />
+        
         <Route
           path="/admin/managecourse/:id/:course_slug"
           element={<ViewCourse />}

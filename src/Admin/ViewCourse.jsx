@@ -68,13 +68,15 @@ const ViewCourse = () => {
   }, [id]);
 
   const handleDelete = async (chapterId) => {
+   
     try {
       const resp = await fetch(
-        `http://127.0.0.1:8000/api/chapter/${chapterId}`,
+        `http://127.0.0.1:8000/api/chapters/${chapterId}`,
         {
           method: "DELETE",
         }
       );
+  
       if (resp.ok) {
         console.log(`Chapter ${chapterId} deleted successfully`);
         setChapters(chapters.filter((chapter) => chapter.id !== chapterId));
@@ -83,11 +85,14 @@ const ViewCourse = () => {
         }
       } else {
         console.error("Failed to delete chapter", resp);
+
+        
       }
     } catch (error) {
       console.error("Error deleting chapter:", error);
     }
   };
+  
 
   const handleDeleteTopic = async (chapterId, topicId) => {
     try {

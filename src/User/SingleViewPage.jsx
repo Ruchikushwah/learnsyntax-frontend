@@ -46,12 +46,12 @@ const SingleViewPage = () => {
 
       {/* Course Info */}
       <div className="flex flex-col items-center mb-10">
-        <div className="bg-white overflow-hidden max-w-3xl text-center w-full border rounded-md shadow-md">
+        <div className="bg-white overflow-hidden max-w-3xl text-center w-full border rounded-md shadow-md flex justify-center items-center flex-col">
           {record.image && (
             <img
-              src={record.image}
-              alt={record.title}
-              className="w-full h-64 object-cover shadow-sm"
+            src={`http://127.0.0.1:8000/storage/${record.image}`}
+            alt={record.title}
+              className="   w-32 h-28 object-contain shadow-sm"
             />
           )}
           <div className="p-6">
