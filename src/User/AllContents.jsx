@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
-
 import FlowbiteStepper from './FlowbiteStepper'; 
-
+import parse from 'html-react-parser';
 
 const AllContents = () => {
   const { id, chapterId, topicId } = useParams();
@@ -117,12 +116,12 @@ const AllContents = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">{selectedPost.title}</h2>
             {selectedPost.image_path && (
               <img
-                src={selectedPost.image_path}
+              src={`http://127.0.0.1:8000/storage/${selectedPost.image_path}`}
                 alt={selectedPost.title}
-                className="w-full h-64 object-cover rounded-md mb-4"
+                className="w-[460px] h-[400px] object-contain rounded-md mb-4"
               />
             )}
-            <p className="text-gray-700">{selectedPost.content}</p>
+            <p className="text-gray-700">{parse(selectedPost.content)}</p>
           </div>
         ) : (
           <p className="text-gray-500 text-center">Select a topic to view its content.</p>

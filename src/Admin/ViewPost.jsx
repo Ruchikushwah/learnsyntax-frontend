@@ -1,3 +1,4 @@
+import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { GrChapterAdd } from 'react-icons/gr';
@@ -10,6 +11,7 @@ const ViewPost = () => {
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const[searchPost ,setSearchPost] = useState("");
 
   // Fetch post based on topic ID
   const fetchPost = async () => {
@@ -37,6 +39,14 @@ const ViewPost = () => {
   useEffect(() => {
     fetchPost();
   }, [id, topic_id]);
+
+const haldleSearchChange = (e) =>{
+  setSearchPost(e.target.value);
+}
+
+const filteredPost = post.filter(items =>
+   items.title.toLowerCase().includes(searchPost.toLowerCase()) ||
+  items.content.toLowerCase().includes(searchPost.toLowerCase()));
 
   const handleDelete = async (post_id) => {
     let resp = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/posts/${post_id}`, {
@@ -79,6 +89,8 @@ const ViewPost = () => {
       <div className="flex flex-col md:flex-row justify-between md:items-center py-4 space-y-4 md:space-y-0">
         <input
           type="text"
+          value={searchPost}
+          onChange={haldleSearchChange}
           placeholder="Search..."
           className="p-2 border rounded w-full md:w-64 focus:outline-none"
         />
@@ -113,14 +125,14 @@ const ViewPost = () => {
             </tr>
           </thead>
           <tbody>
-            {post.map((items) => (
+            {filteredPost.map((items) => (
               <tr className="bg-white border-b hover:bg-gray-50" key={items.id}>
                 <td className="px-6 py-4">{items.id}</td>
                 <td className="px-6 py-4">{items.title}</td>
-                <td className="px-6 py-4 line-clamp-1">{items.content}</td>
+                <td className="px-6 py-4 line-clamp-1">{parse(items.content)}</td>
                 <td className="px-6 py-4">
                   <img
-                    src={`http://127.0.0.1:8000/storage/post/${items.image}`}
+                    src={`http://127.0.0.1:8000/storage/${items.image_path}`}
                     className="w-16 h-16"
                   />
                 </td>
