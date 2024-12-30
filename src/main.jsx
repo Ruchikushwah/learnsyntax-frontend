@@ -86,7 +86,7 @@ const router = createBrowserRouter(
           element={<CourseEdit />}
         />
         <Route
-          path="/admin/managecourse/topiceedit/:id/:topic_slug"
+          path="/admin/managecourse/topiceedit/:chapter_id/:chapter_slug/:topic_id/:topic_slug"
           element={<TopicEdit />}
         />
 
@@ -107,7 +107,10 @@ const router = createBrowserRouter(
           path="/admin/managecourse/chapteredit/:course_id/:chapter_id/:chapter_slug"
           element={<ChapterEdit />}
         />
-        <Route path="/admin/viewcourse/viewpost/:id" element={<PostEdit />} />
+        <Route
+          path="/admin/viewcourse/editpost/:topic_id/:post_id"
+          element={<PostEdit />}
+        />
 
         <Route path="/admin/setting" element={<Setting />} />
         </Route>

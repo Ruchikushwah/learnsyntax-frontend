@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const TopicEdit = () => {
-  const { id } = useParams();
+  const { chapter_id,topic_id } = useParams();
   const [values, setValues] = useState({
     topic_name: "",
     topic_description: "",
     order: "",
     id : ""
-  });
+  }); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -22,9 +22,9 @@ const TopicEdit = () => {
       setError("");
 
       try {
-        const response = await fetch(`${API_BASE_URL}/chapters/${id}/topics`);
+        const response = await fetch(`${API_BASE_URL}/chapters/${chapter_id}/topics/${topic_id}/show`);
+        // chapters/{chapterId}/topics/{topicId}/show
         if (!response.ok) throw new Error("Failed to fetch chapter details.");
-
         const result = await response.json();
         setValues({
           topic_name: result.data.topic_name || "",
@@ -40,7 +40,7 @@ const TopicEdit = () => {
     };
 
     fetchTopicDetails();
-  }, [id, API_BASE_URL]);
+  }, [topic_id, API_BASE_URL]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,7 +67,7 @@ const TopicEdit = () => {
 // http://127.0.0.1:8000/api/courses/2/chapters/2
 
       const response = await fetch(
-        `${API_BASE_URL}/chapters/${id}/topics/${values.id}`,
+        `${API_BASE_URL}/chapters/${chapter_id}/topics/${topic_id}`,
         {
           method: "PUT",
           headers: {

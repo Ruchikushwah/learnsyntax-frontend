@@ -223,7 +223,7 @@ const ViewCourse = () => {
                     <MdDelete size={22} />
                   </button>
                   <Link
-                    to={`/admin/managecourse/topiceedit/${topic.id}/${topic.topic_slug}`}
+                    to={`/admin/managecourse/topiceedit/${selectedChapter.id}/${selectedChapter.chapter_slug}/${topic.id}/${topic.topic_slug}`}
                     className="text-white px-2 py-2 bg-teal-500 rounded-md"
                   >
                     <FiEdit size={22} />
