@@ -75,10 +75,10 @@ const AdminHeader = () => {
 
   return (
     <>
-      <header className="flex items-center justify-between p-4 bg-gray-900">
+      <header className="flex items-center justify-between p-4 bg-gray-900 ">
         <span className="text-2xl font-bold text-white">Learn Syntax</span>
 
-        <div className="relative">
+        <div className="relative ">
           {admin ? (
             <button
               onClick={() => setIsOpen(!isOpen)}

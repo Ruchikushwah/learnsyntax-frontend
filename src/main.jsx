@@ -38,7 +38,6 @@ import OnlineCompiler from "./OnlineCompiler.jsx";
 import AuthLayout from "./Auth/AuthLayout.jsx";
 import ProtectedAdmin from "./utils/ProtectedAdmin.jsx";
 
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -65,7 +64,9 @@ const router = createBrowserRouter(
       {/* Admin Routes */}
 
       <Route path="/admin" element={<AdminLayout />}>
+      <Route element={<ProtectedAdmin/>}>
         <Route index element={<Dashboard />} />
+        
         <Route
           path="/admin/managecourse/:id/:course_slug/:chapterId/:chapter_slug/managetopic"
           element={<ManageTopic />}
@@ -106,16 +107,14 @@ const router = createBrowserRouter(
           path="/admin/managecourse/chapteredit/:course_id/:chapter_id/:chapter_slug"
           element={<ChapterEdit />}
         />
-        <Route
-          path="/admin/viewcourse/viewpost/:id"
-          element={<PostEdit />}
-        />
+        <Route path="/admin/viewcourse/viewpost/:id" element={<PostEdit />} />
 
         <Route path="/admin/setting" element={<Setting />} />
+        </Route>
       </Route>
 
-      <Route path="online-compiler" element={<OnlineCompiler/>}/>
 
+      <Route path="online-compiler" element={<OnlineCompiler />} />
 
       <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
       <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
@@ -149,7 +148,6 @@ const router = createBrowserRouter(
       <Route path="/admin/viewcourse/viewpost/:id" element={<PostEdit />} />
 
       <Route path="/admin/setting" element={<Setting />} />
-
     </>
   )
 );

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-// Utility function for token verification
-const verifyToken = async (token) => {
+const fetchAdminData = async (token) => {
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/auth/login', {
-            method: 'POST',
+        const response = await fetch('http://127.0.0.1:8000/api/user', {
+            method: 'GET', // Or 'POST' depending on your API
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
@@ -13,20 +12,22 @@ const verifyToken = async (token) => {
         });
 
         if (!response.ok) {
-            throw new Error('Token verification failed');
+            throw new Error('Failed to fetch admin data');
         }
-
+        
         const data = await response.json();
-        console.log('API response:', data);  // Log the response to verify the role
-        return data.role === 'admin'; // Ensure the response has role: 'admin'
+        console.log('Admin Data:', data);
+
+        // Check if the user is an admin
+        return data.role && data.role.toLowerCase() === 'admin' ? data : null;
     } catch (error) {
-        console.error('Error verifying token:', error);
-        return false;
+        console.error('Error fetching admin data:', error);
+        return null;
     }
 };
 
 const ProtectedAdmin = () => {
-    const [admin, setAdmin] = useState(false);
+    const [adminData, setAdminData] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -34,9 +35,8 @@ const ProtectedAdmin = () => {
 
         if (token) {
             (async () => {
-                const isValidAdmin = await verifyToken(token);
-                console.log('Admin check result:', isValidAdmin); // Log the result
-                setAdmin(isValidAdmin);
+                const admin = await fetchAdminData(token);
+                setAdminData(admin);
                 setLoading(false);
             })();
         } else {
@@ -46,8 +46,7 @@ const ProtectedAdmin = () => {
 
     if (loading) return <div>Loading...</div>;
 
-    console.log('Is Admin:', admin);
-    return admin ? <Outlet /> : <Navigate to="/" />;
+    return adminData ? <Outlet context={adminData} /> : <Navigate to="/" />;
 };
 
 export default ProtectedAdmin;

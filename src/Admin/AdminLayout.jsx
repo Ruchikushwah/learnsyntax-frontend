@@ -13,10 +13,8 @@ const AdminLayout = () => {
         <div>
           <div className=" flex">
             <Sidebar />
-            <div className=" flex flex-col w-full">
+            <div className=" flex flex-col w-full ">
               <Breadcrumbs />
-
-              
                
                 <Outlet />
              

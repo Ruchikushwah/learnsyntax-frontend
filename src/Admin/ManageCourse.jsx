@@ -46,7 +46,7 @@ const ManageCourse = () => {
     }
   };
   return (
-    <div className="relative overflow-x-auto w-full py-6 px-8">
+    <div className="relative overflow-x-auto w-full py-6 px-8 overflow-scroll h-screen" >
       
       <h2 className="text-lg font-bold text-gray-700 border-l-4 border-teal-600 p-1">
         Manage Course

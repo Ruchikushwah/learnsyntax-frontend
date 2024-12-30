@@ -5,7 +5,7 @@ const AboutUs = () => {
         <div className="md:w-11/12 mx-auto flex flex-col  md:flex-row justify-between items-center gap-12">
             {/* Left-Aligned Image */}
             <div className="w-full md:w-1/2 flex justify-center md:justify-start">
-                <img src="/aboutus.png" alt="About Us" className="w-full md:w-auto max-w-md h-auto object-contain" />
+                <img src="/aboutus-removebg-preview.png" alt="About Us" className="w-full md:w-auto max-w-md h-auto object-contain" />
             </div>
 
             {/* Right-Aligned Text and Button */}
