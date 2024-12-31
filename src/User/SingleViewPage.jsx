@@ -82,7 +82,7 @@ const SingleViewPage = () => {
                   {chapter.chapter_name}
                 </h3>
                 <p className="text-sm text-neutralGrey line-clamp-2">
-                  {chapter.chapter_description}
+                  {parse(chapter.chapter_description)}
                 </p>
               </li>
             ))}
@@ -108,7 +108,7 @@ const SingleViewPage = () => {
                       {topic.topic_name}
                     </h3>
                     <p className="text-sm text-neutralGrey line-clamp-2">
-                      {topic.topic_description}
+                      {parse(topic.topic_description)}
                     </p>
                   </NavLink>
                 </li>
