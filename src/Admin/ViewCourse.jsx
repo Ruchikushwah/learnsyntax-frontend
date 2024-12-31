@@ -4,6 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { GrView } from "react-icons/gr"; // Import the view icon
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
+import parse from 'html-react-parser';
 
 const ViewCourse = () => {
   const { id, course_slug } = useParams();
@@ -156,7 +157,7 @@ const ViewCourse = () => {
           >
             <h3 className="text-lg font-semibold">{chapter.chapter_name}</h3>
             <p className="text-gray-600 line-clamp-3 mb-3">
-              {chapter.chapter_description}
+              {parse(chapter.chapter_description)}
             </p>
             <div className="flex gap-2">
               <button
@@ -204,7 +205,7 @@ const ViewCourse = () => {
                 <div>
                   <h4 className="font-semibold">{topic.topic_name}</h4>
                   <p className="text-gray-600 mb-2">
-                    {topic.topic_description}
+                    {parse(topic.topic_description)}
                   </p>
                 </div>
 
