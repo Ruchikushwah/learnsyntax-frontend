@@ -69,13 +69,14 @@ const Header = () => {
           isSticky ? "sticky top-0 border bg-white duration-300" : ""
         }`}
       >
-        <div className="flex justify-between items-center text-base gap-8">
+        <div className="flex justify-between items-center">
+          {/* Brand Logo */}
           <a href="/" className="text-2xl font-semibold text-gray-900">
             LearnSyntax
           </a>
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex space-x-12">
+          <ul className="hidden md:flex space-x-8 items-center">
             {navItems.map(({ link, path, type }) =>
               type === "scroll" ? (
                 <Link
@@ -84,7 +85,7 @@ const Header = () => {
                   spy={true}
                   smooth={true}
                   offset={-100}
-                  className="block text-base text-gray-900 hover:text-brandPrimary first:font-medium cursor-pointer"
+                  className="text-base text-gray-900 hover:text-brandPrimary font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -93,88 +94,83 @@ const Header = () => {
                   key={path}
                   to={path}
                   className={({ isActive }) =>
-                    `block text-base ${
+                    `text-base ${
                       isActive ? "text-brandPrimary" : "text-gray-900"
-                    } hover:text-brandPrimary first:font-medium`
+                    } hover:text-brandPrimary font-medium`
                   }
                 >
                   {link}
                 </NavLink>
               )
             )}
+          </ul>
 
-            {/* Display Login/Register if not logged in, or user's name if logged in */}
-            <div className="flex items-center space-x-8">
-              {isLoggedIn ? (
-                <div className="relative">
-                  {/* User's Initial in the Button */}
-                  <button
-                    onClick={toggleDropdown}
-                    className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-200 rounded-full dark:bg-gray-600"
-                    aria-expanded={isDropdownOpen}
-                  >
-                    <span className="font-medium text-brandPrimary text-xl dark:text-gray-300">
-                      {userInfo?.name?.charAt(0).toUpperCase() || "U"}
-                    </span>
-                  </button>
-
-                  {/* Dropdown Menu */}
-                  {isDropdownOpen && (
-                    <div
-                      id="userDropdown"
-                      className="absolute right-0 mt-2 w-48 bg-white divide-y divide-gray-100 rounded-lg shadow z-10"
-                    >
-                      <div className="px-4 py-3 text-sm text-gray-900">
-                        <div>{userInfo?.name}</div>
-                        <div className="font-medium truncate">{userInfo?.email}</div>
-                      </div>
-                      <ul className="py-2 text-sm text-gray-700">
-                        <li>
-                          <a
-                            href="/admin"
-                            className="block px-4 py-2 hover:bg-gray-100"
-                          >
-                            Dashboard
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="/admin/settings"
-                            className="block px-4 py-2 hover:bg-gray-100"
-                          >
-                            Settings
-                          </a>
-                        </li>
-                      </ul>
-                      <div className="py-1">
-                        <button
-                          onClick={logout}
-                          className="block w-full px-4 py-2 text-left text-sm text-white bg-brandPrimary"
-                        >
-                          Logout
-                        </button>
+          {/* Login/Register or User Info */}
+          <div className="hidden md:flex items-center space-x-8">
+            {isLoggedIn ? (
+              <div className="relative">
+                <button
+                  onClick={toggleDropdown}
+                  className="relative w-10 h-10 bg-gray-200 rounded-full flex justify-center items-center"
+                >
+                  <span className="font-medium text-brandPrimary text-xl">
+                    {userInfo?.name?.charAt(0).toUpperCase() || "U"}
+                  </span>
+                </button>
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10">
+                    <div className="px-4 py-3 text-sm text-gray-900">
+                      <div>{userInfo?.name}</div>
+                      <div className="font-medium truncate">
+                        {userInfo?.email}
                       </div>
                     </div>
-                  )}
-                </div>
-              ) : (
-                <div className="flex items-center space-x-3">
-                  <a
-                    href="/login"
-                    className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300"
-                  >
-                    Login
-                  </a>
-                  <a
-                    href="/register"
-                    className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300"
-                  >
-                    Register
-                  </a>
-                </div>
-              )}
-            </div>
-          </ul>
+                    <ul className="py-2 text-sm text-gray-700">
+                      <li>
+                        <a
+                          href="/admin"
+                          className="block px-4 py-2 hover:bg-gray-100"
+                        >
+                          Dashboard
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="/admin/settings"
+                          className="block px-4 py-2 hover:bg-gray-100"
+                        >
+                          Settings
+                        </a>
+                      </li>
+                    </ul>
+                    <div className="py-1">
+                      <button
+                        onClick={logout}
+                        className="block w-full px-4 py-2 text-left text-sm bg-brandPrimary text-white"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <a
+                  href="/login"
+                  className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300"
+                >
+                  Login
+                </a>
+                <a
+                  href="/register"
+                  className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300"
+                >
+                  Register
+                </a>
+              </div>
+            )}
+          </div>
 
           {/* Mobile Navigation */}
           <div className="flex md:hidden">
@@ -187,7 +183,7 @@ const Header = () => {
             </button>
             {isMenuOpen && (
               <div className="absolute top-16 left-0 w-full bg-white shadow-md z-50">
-                <ul className="flex flex-col space-y-4 px-4 py-2">
+                <ul className="flex flex-col items-center space-y-4 px-4 py-2">
                   {navItems.map(({ link, path, type }) =>
                     type === "scroll" ? (
                       <Link
@@ -197,7 +193,7 @@ const Header = () => {
                         smooth={true}
                         offset={-100}
                         onClick={toggleMenu}
-                        className="block text-base text-gray-900 hover:text-brandPrimary cursor-pointer"
+                        className="text-base text-gray-900 hover:text-brandPrimary cursor-pointer"
                       >
                         {link}
                       </Link>
@@ -207,7 +203,7 @@ const Header = () => {
                         to={path}
                         onClick={toggleMenu}
                         className={({ isActive }) =>
-                          `block text-base ${
+                          `text-base ${
                             isActive ? "text-brandPrimary" : "text-gray-900"
                           } hover:text-brandPrimary`
                         }
@@ -216,20 +212,20 @@ const Header = () => {
                       </NavLink>
                     )
                   )}
-
-                  {/* Display Login/Register or user's name in mobile */}
                   {isLoggedIn ? (
-                    <div className="flex justify-between  items-center space-y-2">
-                      <span className="text-gray-900 font-semibold">{userInfo?.name}</span>
+                    <div className="flex flex-col items-center space-y-2">
+                      <span className="text-gray-900 font-semibold">
+                        {userInfo?.name}
+                      </span>
                       <button
                         onClick={logout}
-                        className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300 "
+                        className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300 w-full"
                       >
                         Logout
                       </button>
                     </div>
                   ) : (
-                    <div className="flex flex-col items-start space-y-2">
+                    <div className="flex flex-col items-center space-y-2">
                       <a
                         href="/login"
                         className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300 w-full text-center"
