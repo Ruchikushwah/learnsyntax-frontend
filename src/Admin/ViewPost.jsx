@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { MdDelete } from 'react-icons/md';
 import { useParams,  Link } from 'react-router-dom';
+import { BeatLoader } from 'react-spinners';
 
 const ViewPost = () => {
 
   const {id ,topic_id} = useParams(); // The id here corresponds to the topic id
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +52,13 @@ const ViewPost = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-10">Loading post...</div>;
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="  w-16 h-16 ">
+          <BeatLoader color=" #14b8a6" />
+        </div>
+      </div>
+    );
   }
 
   if (error) {

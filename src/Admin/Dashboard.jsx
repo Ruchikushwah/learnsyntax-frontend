@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import Chart from "../components/Chart";
+import { BeatLoader, BounceLoader } from "react-spinners";
+
 const Dashboard = () => {
   const [data, setData] = useState({
     totalCourses: 0,
     totalChapters: 0,
     totalTopics: 0,
   });
+  const [loading, setLoading] = useState(true); // State for lazy loader
+
   useEffect(() => {
     async function fetchData() {
       try {
+        setLoading(true); // Show loader
         const response = await fetch(
           "http://127.0.0.1:8000/api/dashboard-count"
         );
@@ -22,74 +27,82 @@ const Dashboard = () => {
           totalTopics: result.data.totalTopics,
         });
       } catch (error) {
-        console.error("Error fetching dashboard statics:", error);
+        console.error("Error fetching dashboard statistics:", error);
+      } finally {
+        setLoading(false); // Hide loader
       }
     }
     fetchData();
   }, []);
+
   return (
     <div
       id="card section"
-      className=" grid lg:grid-cols-2 grid-cols-1 w-full h-screen p-4  overflow-scroll "
+      className="grid lg:grid-cols-2 grid-cols-1 w-full h-screen p-4 overflow-scroll"
     >
-      <div
-        id=" left"
-        className=" col-span-2 p-2 gap-3 flex flex-col justify-between items-center h-full"
-      >
-        <div className=" grid lg:grid-cols-3 grid-cols-1 gap-4 w-full ">
-          <div className=" w-full flex flex-col justify-center items-center bg-blue-200 p-5 rounded-xl gap-5  cursor-pointer">
-            <div className=" w-full flex justify-between items-center">
-              <h1 className=" text-md text-black font-semibold">
-                Total Courses
-              </h1>
-              <h1 className=" text-green-600 font-semibold">12</h1>
-            </div>
-            <div className=" w-full flex justify-between items-center">
-              <div className=" flex flex-col justify-center items-start gap-1">
-                <h1 className=" text-3xl text-black font-semibold">
-                  {data.totalCourses}
-                </h1>
-                <p></p>
-              </div>
-            </div>
+      {loading ? (
+        <div className="flex justify-center items-center h-full w-full">
+          <div className="  w-16 h-16 ">
+            <BeatLoader color="#14b8a6" />
           </div>
-          <div className=" w-full flex flex-col justify-center items-center bg-blue-200 p-5 rounded-xl gap-5  cursor-pointer">
-            <div className=" w-full flex justify-between items-center">
-              <h1 className=" text-md text-black font-semibold">
-                Total Chapters
-              </h1>
-              <h1 className=" text-green-600 font-semibold">12</h1>
-            </div>
-            <div className=" w-full flex justify-between items-center">
-              <div className=" flex flex-col justify-center items-start gap-1">
-                <h1 className=" text-3xl text-black font-semibold">
-                  {data.totalChapters}
-                </h1>
-                <p></p>
-              </div>
-            </div>
-          </div>
-          <div className=" w-full flex flex-col justify-center items-center bg-blue-200 p-5 rounded-xl gap-5  cursor-pointer">
-            <div className=" w-full flex justify-between items-center">
-              <h1 className=" text-md text-black font-semibold">
-                Total Topics
-              </h1>
-              <h1 className=" text-green-600 font-semibold">12</h1>
-            </div>
-            <div className=" w-full flex justify-between items-center">
-              <div className=" flex flex-col justify-center items-start gap-1">
-                <h1 className=" text-3xl text-black font-semibold">
-                  {data.totalTopics}
-                </h1>
-                <p></p>
-              </div>
-            </div>
-          </div>
-
-          {/**grid layouts ends here */}
-          <Chart />
+          {/* Replace with your preferred loader */}
         </div>
-      </div>
+      ) : (
+        <div
+          id="left"
+          className="col-span-2 p-2 gap-3 flex flex-col justify-between items-center h-full"
+        >
+          <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 w-full">
+            <div className="w-full flex flex-col justify-center items-center bg-blue-200 p-5 rounded-xl gap-5 cursor-pointer">
+              <div className="w-full flex justify-between items-center">
+                <h1 className="text-md text-black font-semibold">
+                  Total Courses
+                </h1>
+                <h1 className="text-green-600 font-semibold">12</h1>
+              </div>
+              <div className="w-full flex justify-between items-center">
+                <div className="flex flex-col justify-center items-start gap-1">
+                  <h1 className="text-3xl text-black font-semibold">
+                    {data.totalCourses}
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex flex-col justify-center items-center bg-blue-200 p-5 rounded-xl gap-5 cursor-pointer">
+              <div className="w-full flex justify-between items-center">
+                <h1 className="text-md text-black font-semibold">
+                  Total Chapters
+                </h1>
+                <h1 className="text-green-600 font-semibold">12</h1>
+              </div>
+              <div className="w-full flex justify-between items-center">
+                <div className="flex flex-col justify-center items-start gap-1">
+                  <h1 className="text-3xl text-black font-semibold">
+                    {data.totalChapters}
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex flex-col justify-center items-center bg-blue-200 p-5 rounded-xl gap-5 cursor-pointer">
+              <div className="w-full flex justify-between items-center">
+                <h1 className="text-md text-black font-semibold">
+                  Total Topics
+                </h1>
+                <h1 className="text-green-600 font-semibold">12</h1>
+              </div>
+              <div className="w-full flex justify-between items-center">
+                <div className="flex flex-col justify-center items-start gap-1">
+                  <h1 className="text-3xl text-black font-semibold">
+                    {data.totalTopics}
+                  </h1>
+                </div>
+              </div>
+            </div>
+            {/* Grid layouts end here */}
+            <Chart />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

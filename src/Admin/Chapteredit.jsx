@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 
 const ChapterEdit = () => {
 
@@ -96,7 +97,13 @@ const ChapterEdit = () => {
 
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         {success && <p className="text-green-500 text-sm mb-4">{success}</p>}
-        {loading && <p className="text-gray-600">Loading...</p>}
+        {loading && (
+          <div className="flex justify-center items-center h-64">
+            <div className="  w-16 h-16 ">
+              <BeatLoader color=" #14b8a6" />
+            </div>
+          </div>
+        )}
 
         {!loading && (
           <form onSubmit={handleSubmit}>

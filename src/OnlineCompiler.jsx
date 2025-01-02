@@ -55,70 +55,86 @@ const OnlineCompiler = () => {
     }
   };
 
+  const languages = [
+    { label: "JavaScript", value: "javascript" },
+    { label: "Python", value: "python" },
+    { label: "C", value: "c" },
+    { label: "C++", value: "c++" },
+    { label: "HTML", value: "html" },
+    { label: "PHP", value: "php" },
+    { label: "Java", value: "java" },
+    {label: "C#", value: "csharp"},
+    {label:"SQL", value: "sql"},
+    {label:"Rust", value: "rust"},
+  ];
+
   return (
-    <div className="p-20 flex w-full flex-col">
-      <h2 className="text-2xl mb-4">Online Compiler</h2>
-
-      <div className="mb-10 text-center flex">
-        <label>
-          Select Theme
-          <select
-            className="p-2 border border-gray-500 ml-2"
-            value={theme}
-            onChange={(e) => setTheme(e.target.value)}
-          >
-            <option value="monokai">Monokai</option>
-            <option value="github">Github</option>
-            <option value="solarized_dark">Solarized Dark</option>
-          </select>
-        </label>
-
-        <label className="ml-4">
-          Select Language
-          <select
-            className="p-2 border border-gray-500 ml-2"
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-          >
-            <option value="javascript">Javascript</option>
-            <option value="html">HTML</option>
-            <option value="php">PHP</option>
-            <option value="python">Python</option>
-            <option value="c">C</option>
-            <option value="c++">C++</option>
-          </select>
-        </label>
-
-        <button
-          className="p-2 bg-brandPrimary text-white rounded ml-4 self-center mt-2"
-          onClick={handleRunCode}
-          disabled={isLoading}
-        >
-          {isLoading ? "Running..." : "Run Code"}
-        </button>
+    <div className="flex w-full h-500 p-4">
+     
+      <div className="w-1/6 bg-gray-200 p-4 border-r border-gray-300">
+        <h2 className="text-xl font-bold mb-4">Languages</h2>
+        <ul>
+          {languages.map((lang) => (
+            <li
+              key={lang.value}
+              className={`p-2 cursor-pointer rounded ${
+                language === lang.value ? "bg-gray-300 font-bold" : ""
+              }`}
+              onClick={() => setLanguage(lang.value)}
+            >
+              {lang.label}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div className="flex flex-1 gap-5">
-        <AceEditor
-          mode={language === "c++" ? "c_cpp" : language}
-          theme={theme}
-          onChange={handleCodeChange}
-          width="50%"
-          height="500px"
-          fontSize={20}
-          value={code}
-          setOptions={{
-            showLineNumbers: true,
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
-            enableSnippets: true,
-            tabSize: 2,
-          }}
-        />
+     
+      <div className="flex-1 p-4 flex flex-col">
+        <div className="mb-4 flex justify-start items-center gap-4">
+          <label>
+            Select Theme
+            <select
+              className="p-2 border border-gray-500 ml-2"
+              value={theme}
+              onChange={(e) => setTheme(e.target.value)}
+            >
+              <option value="monokai">Monokai</option>
+              <option value="github">Github</option>
+              <option value="solarized_dark">Solarized Dark</option>
+            </select>
+          </label>
 
-        <div className="mt-5 flex flex-1 flex-col">
-          <h3>Output:</h3>
-          <div className="bg-gray-100 p-5 overflow-auto h-64 border border-gray-300">
+          <button
+            className="p-2 bg-brandPrimary text-white rounded"
+            onClick={handleRunCode}
+            disabled={isLoading}
+          >
+            {isLoading ? "Running..." : "Run Code"}
+          </button>
+        </div>
+
+        <div className="flex gap-5 flex-1">
+         
+          <AceEditor
+            mode={language === "c++" ? "c_cpp" : language}
+            theme={theme}
+            onChange={handleCodeChange}
+            width="50%"
+            height="500px"
+            fontSize={20}
+            value={code}
+            setOptions={{
+              showLineNumbers: true,
+              enableBasicAutocompletion: true,
+              enableLiveAutocompletion: true,
+              enableSnippets: true,
+              tabSize: 2,
+            }}
+          />
+
+         
+          <div className="flex-1 bg-gray-100 p-4 border border-gray-300 overflow-auto">
+            <h3 className="text-lg font-bold mb-2">Output:</h3>
             <pre>{output}</pre>
           </div>
         </div>
