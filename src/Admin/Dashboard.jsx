@@ -90,7 +90,10 @@ const Dashboard = () => {
           </div>
 
           {/**grid layouts ends here */}
-          <Chart />
+          
+          <Chart  />
+          
+         
         </div>
       </div>
     </div>

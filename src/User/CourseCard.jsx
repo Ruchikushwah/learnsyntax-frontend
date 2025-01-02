@@ -55,7 +55,7 @@ const CourseCard = ({ courses = [] }) => {
                   <h4 className="text-2xl font-bold text-neutralDGrey mb-2 px-2">
                     {course.title}
                   </h4>
-                  <p className="text-sm text-neutralGrey">
+                  <p className="text-sm text-neutralGrey line-clamp-4">
                     {parse(course.description)}
                   </p>
                 </div>

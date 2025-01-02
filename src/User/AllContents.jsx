@@ -117,6 +117,8 @@ const AllContents = () => {
         {selectedPost ? (
           <div>
             <h2 className="text-2xl font-bold text-gray-800 mb-4">{selectedPost.title}</h2>
+
+            <p className="text-gray-700">{parse(selectedPost.content)}</p>
             {selectedPost.image_path && (
               <img
               src={`${APP_URL}/storage/${selectedPost.image_path}`}
@@ -124,7 +126,7 @@ const AllContents = () => {
                 className="w-[460px] h-[400px] object-contain rounded-md mb-4"
               />
             )}
-            <p className="text-gray-700">{parse(selectedPost.content)}</p>
+           
           </div>
         ) : (
           <p className="text-gray-500 text-center">Select a topic to view its content.</p>
