@@ -6,8 +6,10 @@ const Title = ({ label, field }) => {
   const [title, setTitle] = useState(field);
   const { id } = useParams();
 
+  const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const handleUpdate = async () => {
-    let resp = await fetch(`http://127.0.0.1:8000/api/courses/${id}`, {
+    let resp = await fetch(`${APP_URL}/api/courses/${id}`, {
       method: "PUT",
       body: JSON.stringify({title}),
       headers: {

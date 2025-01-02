@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
@@ -17,7 +19,7 @@ const Header = () => {
     if (!token) return;
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/user", {
+      const response = await fetch(`${APP_URL}/api/user`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

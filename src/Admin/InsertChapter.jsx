@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import { useNavigate, useParams } from "react-router-dom";
 
+
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const InsertChapter = () => {
   const { id } = useParams();
   const [chapterName, setChapterName] = useState("");
@@ -54,7 +57,7 @@ const InsertChapter = () => {
     };
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/chapters", {
+      const response = await fetch(`${APP_URL}/api/chapters`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

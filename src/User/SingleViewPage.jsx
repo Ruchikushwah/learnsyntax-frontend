@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import parse from "html-react-parser";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const SingleViewPage = () => {
   const { courseId } = useParams();
   const [record, setRecord] = useState({});
@@ -9,12 +11,11 @@ const SingleViewPage = () => {
   const [selectedChapter, setSelectedChapter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/courses/${courseId}/show`
+          `${APP_URL}/api/courses/${courseId}/show`
         );
         const courseData = await response.json();
         // console.log(courseData);

@@ -6,6 +6,8 @@ import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import parse from 'html-react-parser';
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const ManageCourse = () => {
   const [record, setRecord] = useState([]);
   const [courseCount, setCourseCount] = useState(0);
@@ -14,7 +16,7 @@ const ManageCourse = () => {
   useEffect(() => {
     async function fetchCourse() {
       try {
-        const url = `http://127.0.0.1:8000/api/courses`;
+        const url = `${APP_URL}/api/courses`;
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -43,7 +45,7 @@ const ManageCourse = () => {
   // Handle delete request
   const handleDelete = async (id) => {
     try {
-      const resp = await fetch(`http://127.0.0.1:8000/api/courses/${id}`, {
+      const resp = await fetch(`${APP_URL}/api/courses/${id}`, {
         method: "DELETE",
       });
       if (resp.ok) {
@@ -99,7 +101,7 @@ const ManageCourse = () => {
                   <td className="px-6 py-4">{parse(course.description)}</td>
                   <td className="px-6 py-4">
                     <img
-                      src={`http://127.0.0.1:8000/storage/${course.image}`}
+                      src={`${APP_URL}/storage/${course.image}`}
                       className="w-16 h-16"
                       alt="Course Thumbnail"
                     />

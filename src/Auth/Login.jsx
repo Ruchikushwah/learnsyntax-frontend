@@ -2,6 +2,8 @@ import { GoogleLogin } from "@react-oauth/google";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +46,7 @@ const Login = () => {
 
     const data = { email: email, password: password };
     try {
-      let resp = await fetch("http://127.0.0.1:8000/api/auth/login", {
+      let resp = await fetch(`${APP_URL}/api/auth/login`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {

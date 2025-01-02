@@ -4,6 +4,8 @@ import Title from "./Title";
 import Description from "./Description";
 import Image from "./Image";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const CourseEdit = () => {
   const { id } = useParams();
   const [record, setRecord] = useState(null); 
@@ -11,7 +13,7 @@ const CourseEdit = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/courses/${id}`);
+        const response = await fetch(`${APP_URL}/api/courses/${id}`);
         const data = await response.json();
 
         console.log(data);
@@ -42,7 +44,7 @@ const CourseEdit = () => {
 
         <Image
           label="Image"
-          src={`http://127.0.0.1:8000/storage/images/${record.image}`}
+          src={`${APP_URL}/storage/images/${record.image}`}
           field={record.image}
         />
       

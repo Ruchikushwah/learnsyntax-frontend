@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import { useNavigate, useParams } from "react-router-dom";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const InsertPost = () => {
   const { id } = useParams();
   const [postId, setPostId] = useState(null); // Track if this is a draft (saved post ID)
@@ -52,8 +54,8 @@ const InsertPost = () => {
     try {
       const response = await fetch(
         postId
-          ? `http://127.0.0.1:8000/api/posts/${postId}` // Update existing post
-          : `http://127.0.0.1:8000/api/topics/${id}/post`, // Create new post
+          ? `${APP_URL}/api/posts/${postId}` // Update existing post
+          : `${APP_URL}/api/topics/${id}/post`, // Create new post
         {
           method: postId ? "PUT" : "POST",
           body: formData,

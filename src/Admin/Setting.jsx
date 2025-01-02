@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const Setting = () => {
   const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -15,7 +17,7 @@ const Setting = () => {
           throw new Error("Authentication token is missing.");
         }
 
-        const response = await fetch("http://127.0.0.1:8000/api/user", {
+        const response = await fetch(`${APP_URL}/api/user`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

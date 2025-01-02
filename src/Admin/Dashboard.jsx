@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import Chart from "../components/Chart";
+
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const Dashboard = () => {
   const [data, setData] = useState({
     totalCourses: 0,
@@ -10,7 +13,7 @@ const Dashboard = () => {
     async function fetchData() {
       try {
         const response = await fetch(
-          "http://127.0.0.1:8000/api/dashboard-count"
+          `${APP_URL}/api/dashboard-count`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
+
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const fetchAdminData = async (token) => {
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/user', {
+        const response = await fetch(`${APP_URL}/api/user`, {
             method: 'GET', // Or 'POST' depending on your API
             headers: {
                 'Content-Type': 'application/json',

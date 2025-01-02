@@ -9,12 +9,14 @@ import HeroSection from './Home_components/HeroSection';
 import AboutUs from './Home_components/AboutUs';
 import CompanyStats from './Home_components/CompanyStats';
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const Home = () => {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     async function fetchCourses() {
-      let url = `http://127.0.0.1:8000/api/courses`;
+      let url = `${APP_URL}/api/courses`;
       const response = await fetch(url);
       const data = await response.json();
       setCourses(data.data);

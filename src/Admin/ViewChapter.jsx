@@ -12,12 +12,14 @@ const ViewChapter = () => {
   const [error, setError] = useState(null);
   const [topicCount, setTopicCount] = useState(0);
 
+  const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
   useEffect(() => {
     const fetchChaptersAndTopic = async () => {
       try {
         // Fetch chapters details
         const Response = await fetch(
-          `http://127.0.0.1:8000/api/chapters/${id}/show`
+          `${APP_URL}/api/chapters/${id}/show`
         );
         const chapterData = await Response.json();
 
@@ -41,7 +43,7 @@ const ViewChapter = () => {
     fetchChaptersAndTopic();
   }, [id]);
   const handleDelete = async (id) => {
-    let resp = await fetch(`http://127.0.0.1:8000/api/topic/${id}`, {
+    let resp = await fetch(`${APP_URL}/api/topic/${id}`, {
       method: "DELETE",
     });
     if (resp.ok) {

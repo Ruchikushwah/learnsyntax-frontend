@@ -4,6 +4,9 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import FlowbiteStepper from './FlowbiteStepper'; 
 import parse from 'html-react-parser';
 
+
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const AllContents = () => {
   const { id, chapterId, topicId } = useParams();
   const [chapters, setChapters] = useState([]);
@@ -18,7 +21,7 @@ const AllContents = () => {
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/courses/${id}/show`);
+        const response = await fetch(`${APP_URL}/api/courses/${id}/show`);
         const courseData = await response.json();
 
         if (response.ok) {
@@ -116,7 +119,7 @@ const AllContents = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">{selectedPost.title}</h2>
             {selectedPost.image_path && (
               <img
-              src={`http://127.0.0.1:8000/storage/${selectedPost.image_path}`}
+              src={`${APP_URL}/storage/${selectedPost.image_path}`}
                 alt={selectedPost.title}
                 className="w-[460px] h-[400px] object-contain rounded-md mb-4"
               />

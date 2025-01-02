@@ -7,6 +7,7 @@ import { MdOutlinePostAdd } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
+
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
 

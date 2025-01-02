@@ -2,6 +2,8 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import parse from "html-react-parser";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const CourseCard = ({ courses = [] }) => {
   const [visibleCount, setVisibleCount] = useState(6); // Initial visible courses count
 
@@ -44,7 +46,7 @@ const CourseCard = ({ courses = [] }) => {
                   <div className="bg-[#E8F5E9] mb-4 h-14 w-14 mx-auto rounded-tl-3xl rounded-br-3xl">
 
                     <img
-                      src={`http://127.0.0.1:8000/storage/${course.image}`}
+                      src={`${APP_URL}/storage/${course.image}`}
 
                       alt={course.title || "Course Icon"}
                       className="-ml-5 h-full object-contain"

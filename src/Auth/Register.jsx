@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -35,7 +37,7 @@ const Register = () => {
     const data = { name, email, password };
 
     try {
-      let resp = await fetch("http://127.0.0.1:8000/api/auth/register", {
+      let resp = await fetch(`${APP_URL}/api/auth/register`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {

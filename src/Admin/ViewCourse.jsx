@@ -4,7 +4,8 @@ import { MdDelete } from "react-icons/md";
 import { GrView } from "react-icons/gr"; // Import the view icon
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
-import parse from 'html-react-parser';
+
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 
 const ViewCourse = () => {
   const { id, course_slug } = useParams();
@@ -19,7 +20,7 @@ const ViewCourse = () => {
     setLoading(true);
     try {
       const courseResponse = await fetch(
-        `http://127.0.0.1:8000/api/courses/${id}`
+        `${APP_URL}/api/courses/${id}`
       );
       const courseData = await courseResponse.json();
   
@@ -27,7 +28,7 @@ const ViewCourse = () => {
         const chaptersWithTopics = await Promise.all(
           courseData.data.chapters.map(async (chapter) => {
             const topicsResponse = await fetch(
-              `http://127.0.0.1:8000/api/chapters/${chapter.id}/topics`
+              `${APP_URL}/api/chapters/${chapter.id}/topics`
             );
             const topicsData = await topicsResponse.json();
             return { ...chapter, topics: topicsData.data || [] };
@@ -69,15 +70,13 @@ const ViewCourse = () => {
   }, [id]);
 
   const handleDelete = async (chapterId) => {
-   
     try {
       const resp = await fetch(
-        `http://127.0.0.1:8000/api/chapters/${chapterId}`,
+        `${APP_URL}/api/chapter/${chapterId}`,
         {
           method: "DELETE",
         }
       );
-  
       if (resp.ok) {
         console.log(`Chapter ${chapterId} deleted successfully`);
         setChapters(chapters.filter((chapter) => chapter.id !== chapterId));
@@ -86,18 +85,15 @@ const ViewCourse = () => {
         }
       } else {
         console.error("Failed to delete chapter", resp);
-
-        
       }
     } catch (error) {
       console.error("Error deleting chapter:", error);
     }
   };
-  
 
   const handleDeleteTopic = async (chapterId, topicId) => {
     try {
-      const url = `http://127.0.0.1:8000/api/chapters/${chapterId}/topics/${topicId}`;
+      const url = `${APP_URL}/api/chapters/${chapterId}/topics/${topicId}`;
       const response = await fetch(url, { method: "DELETE" });
 
       if (response.ok) {
@@ -157,7 +153,7 @@ const ViewCourse = () => {
           >
             <h3 className="text-lg font-semibold">{chapter.chapter_name}</h3>
             <p className="text-gray-600 line-clamp-3 mb-3">
-              {parse(chapter.chapter_description)}
+              {chapter.chapter_description}
             </p>
             <div className="flex gap-2">
               <button
@@ -205,7 +201,7 @@ const ViewCourse = () => {
                 <div>
                   <h4 className="font-semibold">{topic.topic_name}</h4>
                   <p className="text-gray-600 mb-2">
-                    {parse(topic.topic_description)}
+                    {topic.topic_description}
                   </p>
                 </div>
 

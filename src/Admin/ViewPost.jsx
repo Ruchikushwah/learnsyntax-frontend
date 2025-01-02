@@ -5,6 +5,8 @@ import { GrChapterAdd } from 'react-icons/gr';
 import { MdDelete } from 'react-icons/md';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const ViewPost = () => {
 
   const { id, topic_id } = useParams(); // The id here corresponds to the post id
@@ -17,7 +19,7 @@ const ViewPost = () => {
   const fetchPost = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/post`);
+      const response = await fetch(`${APP_URL}/api/topics/${topic_id}/post`);
       const data = await response.json();
       console.log("mydata", data);
 
@@ -49,7 +51,7 @@ const filteredPost = post.filter(items =>
   items.content.toLowerCase().includes(searchPost.toLowerCase()));
 
   const handleDelete = async (post_id) => {
-    let resp = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/posts/${post_id}`, {
+    let resp = await fetch(`${APP_URL}/api/topics/${topic_id}/posts/${post_id}`, {
       method: "DELETE",
     });
     if (resp.ok) {
@@ -132,7 +134,7 @@ const filteredPost = post.filter(items =>
                 <td className="px-6 py-4 line-clamp-1">{parse(items.content)}</td>
                 <td className="px-6 py-4">
                   <img
-                    src={`http://127.0.0.1:8000/storage/${items.image_path}`}
+                    src={`${APP_URL}/storage/${items.image_path}`}
                     className="w-16 h-16"
                   />
                 </td>

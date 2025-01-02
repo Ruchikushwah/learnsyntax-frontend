@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 const ChapterEdit = () => {
 
   const { course_id,chapter_id,course_slug } = useParams();
@@ -25,7 +26,7 @@ const ChapterEdit = () => {
 
       try {
 
-        const response = await fetch(`http://127.0.0.1:8000/api/chapters/${chapter_id}`);
+        const response = await fetch(`${APP_URL}/api/chapters/${chapter_id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch chapter details");
         }
@@ -61,7 +62,7 @@ const ChapterEdit = () => {
 
     try {
 
-      const response = await fetch(`http://127.0.0.1:8000/api/courses/${course_id}/chapters/${chapter_id}`, {
+      const response = await fetch(`${APP_URL}/api/courses/${course_id}/chapters/${chapter_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

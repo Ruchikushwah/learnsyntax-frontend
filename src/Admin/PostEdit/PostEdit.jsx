@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 const PostEdit = () => {
   const { topic_id, post_id } = useParams();
   const [values, setValues] = useState({
@@ -19,7 +20,7 @@ const PostEdit = () => {
       setError("");
 
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/posts/${post_id}`);
+        const response = await fetch(`${APP_URL}/api/topics/${topic_id}/posts/${post_id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch post details");
         }
@@ -53,7 +54,7 @@ const PostEdit = () => {
     setSuccess("");
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/topics/${topic_id}/posts/${post_id}`, {
+      const response = await fetch(`${APP_URL}/api/topics/${topic_id}/posts/${post_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
