@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import { useNavigate, useParams } from "react-router-dom";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const InsertTopic = () => {
   const { id, course_slug, chapterId } = useParams(); // Fetch the chapterId from URL params
   const [topicName, setTopicName] = useState("");
@@ -45,7 +47,7 @@ const InsertTopic = () => {
     try {
       // this will give all the topics related to the chapterid
       const response = await fetch(
-        `http://127.0.0.1:8000/api/chapters/${chapterId}/topics`,
+        `${APP_URL}/api/chapters/${chapterId}/topics`,
         {
           method: "POST",
           headers: {

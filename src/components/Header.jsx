@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
@@ -17,7 +19,7 @@ const Header = () => {
     if (!token) return;
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/user", {
+      const response = await fetch(`${APP_URL}/api/user`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -63,18 +65,20 @@ const Header = () => {
   ];
 
   return (
-    <header className="w-full bg-white md:bg-transparent fixed top-0 left-0 right-0">
+    <header className="w-full bg-white md:bg-transparent fixed top-0 left-0 right-0 z-50">
       <nav
         className={`py-4 lg:px-14 px-4 ${
           isSticky ? "sticky top-0 border bg-white duration-300" : ""
         }`}
       >
-        <div className="flex justify-between items-center text-base gap-8">
+        <div className="flex justify-between items-center">
+          {/* Brand Logo */}
           <a href="/" className="text-2xl font-semibold text-gray-900">
             LearnSyntax
           </a>
 
-          <ul className="md:flex space-x-12 hidden">
+          {/* Desktop Navigation */}
+          <ul className="hidden md:flex space-x-8 items-center">
             {navItems.map(({ link, path, type }) =>
               type === "scroll" ? (
                 <Link
@@ -83,7 +87,7 @@ const Header = () => {
                   spy={true}
                   smooth={true}
                   offset={-100}
-                  className="block text-base text-gray-900 hover:text-brandPrimary first:font-medium cursor-pointer"
+                  className="text-base text-gray-900 hover:text-brandPrimary font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -92,9 +96,9 @@ const Header = () => {
                   key={path}
                   to={path}
                   className={({ isActive }) =>
-                    `block text-base ${
+                    `text-base ${
                       isActive ? "text-brandPrimary" : "text-gray-900"
-                    } hover:text-brandPrimary first:font-medium`
+                    } hover:text-brandPrimary font-medium`
                   }
                 >
                   {link}
@@ -103,23 +107,20 @@ const Header = () => {
             )}
           </ul>
 
-          <div className="space-x-12 hidden lg:flex items-center">
+          {/* Login/Register or User Info */}
+          <div className="hidden md:flex items-center space-x-8">
             {isLoggedIn ? (
               <div className="relative">
                 <button
                   onClick={toggleDropdown}
-                  className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-200  rounded-full dark:bg-gray-600"
-                  aria-expanded={isDropdownOpen}
+                  className="relative w-10 h-10 bg-gray-200 rounded-full flex justify-center items-center"
                 >
-                  <span className="font-medium text-brandPrimary text-xl dark:text-gray-300">
+                  <span className="font-medium text-brandPrimary text-xl">
                     {userInfo?.name?.charAt(0).toUpperCase() || "U"}
                   </span>
                 </button>
                 {isDropdownOpen && (
-                  <div
-                    id="userDropdown"
-                    className="absolute right-0 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow z-10"
-                  >
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10">
                     <div className="px-4 py-3 text-sm text-gray-900">
                       <div>{userInfo?.name}</div>
                       <div className="font-medium truncate">
@@ -147,7 +148,7 @@ const Header = () => {
                     <div className="py-1">
                       <button
                         onClick={logout}
-                        className="block w-full px-4 py-2 text-left text-sm text-white bg-brandPrimary"
+                        className="block w-full px-4 py-2 text-left text-sm bg-brandPrimary text-white"
                       >
                         Logout
                       </button>
@@ -156,7 +157,7 @@ const Header = () => {
                 )}
               </div>
             ) : (
-              <div className="flex gap-3 items-center">
+              <div className="flex items-center space-x-4">
                 <a
                   href="/login"
                   className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300"
@@ -169,6 +170,79 @@ const Header = () => {
                 >
                   Register
                 </a>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="flex md:hidden">
+            <button
+              onClick={toggleMenu}
+              className="text-gray-900 focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              ☰
+            </button>
+            {isMenuOpen && (
+              <div className="absolute top-16 left-0 w-full bg-white shadow-md z-50">
+                <ul className="flex flex-col items-center space-y-4 px-4 py-2">
+                  {navItems.map(({ link, path, type }) =>
+                    type === "scroll" ? (
+                      <Link
+                        key={path}
+                        to={path}
+                        spy={true}
+                        smooth={true}
+                        offset={-100}
+                        onClick={toggleMenu}
+                        className="text-base text-gray-900 hover:text-brandPrimary cursor-pointer"
+                      >
+                        {link}
+                      </Link>
+                    ) : (
+                      <NavLink
+                        key={path}
+                        to={path}
+                        onClick={toggleMenu}
+                        className={({ isActive }) =>
+                          `text-base ${
+                            isActive ? "text-brandPrimary" : "text-gray-900"
+                          } hover:text-brandPrimary`
+                        }
+                      >
+                        {link}
+                      </NavLink>
+                    )
+                  )}
+                  {isLoggedIn ? (
+                    <div className="flex flex-col items-center space-y-2">
+                      <span className="text-gray-900 font-semibold">
+                        {userInfo?.name}
+                      </span>
+                      <button
+                        onClick={logout}
+                        className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300 w-full"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center space-y-2">
+                      <a
+                        href="/login"
+                        className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300 w-full text-center"
+                      >
+                        Login
+                      </a>
+                      <a
+                        href="/register"
+                        className="bg-brandPrimary text-white py-2 px-4 rounded hover:bg-gray-300 w-full text-center"
+                      >
+                        Register
+                      </a>
+                    </div>
+                  )}
+                </ul>
               </div>
             )}
           </div>

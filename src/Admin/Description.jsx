@@ -1,13 +1,16 @@
 import React, {  useState } from "react";
 import { useParams } from "react-router-dom";
 
+
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const Description = ({ label, field }) => {
   const [edit, setEdit] = useState(true);
   const [description, setDescription] = useState(field);
 
   const { id } = useParams();
   const handleUpdate = async () => {
-    let resp = await fetch(`http://127.0.0.1:8000/api/courses/${id}`, {
+    let resp = await fetch(`${APP_URL}/api/courses/${id}`, {
       method: "PUT",
       body: JSON.stringify({description}),
       headers: {

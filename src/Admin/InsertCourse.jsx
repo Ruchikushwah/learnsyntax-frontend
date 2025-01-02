@@ -3,6 +3,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const InsertCourse = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -44,7 +46,7 @@ const InsertCourse = () => {
     formData.append("image", image);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/courses", {
+      const response = await fetch(`${APP_URL}/api/courses`, {
         method: "POST",
         body: formData,
       });

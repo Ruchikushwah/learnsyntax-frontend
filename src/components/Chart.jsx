@@ -1,64 +1,67 @@
-import React from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top' ,
-    },
-    title: {
-      display: true,
-      text: 'Overall All Data',
-    },
-  },
-};
+import React, { useEffect, useState } from "react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 
-const labels = ['Courses', 'Chapters', 'Topics'];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Courses',
-      data: [10,20,30,50],
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Chapters',
-      data: [40,70,90],
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-    {
-      label: 'Topics',
-      data: [40,70,100],
-      backgroundColor: 'rgba(50, 170, 200, 0.9)',
-    },
-  ],
-};
 const Chart = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/dashboard-count");
+        const result = await response.json();
+
+        if (response.ok) {
+          setData([
+            {
+              name: "Courses",
+              uv: result.data.totalCourses,
+              pv: result.data.totalTopics,
+              vb: result.data.totalChapters,
+            },
+            {
+              name: "Chapters",
+              uv: result.data.totalChapters,
+              pv: result.data.totalTopics,
+              vb: result.data.totalCourses,
+            },
+            {
+              name: "Topics",
+              uv: result.data.totalTopics,
+              pv: result.data.totalCourses,
+              vb: result.data.totalChapters,
+            },
+          ]);
+        } else {
+          setError(result.message || "Failed to fetch course details.");
+        }
+      } catch (error) {
+        setError("Error fetching data.");
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourse();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
-    <Bar options={options} data={data} />
-  )
-}
+    <BarChart width={730} height={250} data={data}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Bar dataKey="pv" fill="#8884d8" />
+      <Bar dataKey="uv" fill="#82ca9d" />
+      <Bar dataKey="vb" fill="#19376D" />
+    </BarChart>
+  );
+};
 
-export default Chart
-
-
-
+export default Chart;

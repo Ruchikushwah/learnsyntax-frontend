@@ -6,6 +6,8 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
 import { BeatLoader } from "react-spinners";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const ViewCourse = () => {
   const { id, course_slug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,7 +21,7 @@ const ViewCourse = () => {
     setLoading(true);
     try {
       const courseResponse = await fetch(
-        `http://127.0.0.1:8000/api/courses/${id}`
+        `${APP_URL}/api/courses/${id}`
       );
       const courseData = await courseResponse.json();
   
@@ -27,7 +29,7 @@ const ViewCourse = () => {
         const chaptersWithTopics = await Promise.all(
           courseData.data.chapters.map(async (chapter) => {
             const topicsResponse = await fetch(
-              `http://127.0.0.1:8000/api/chapters/${chapter.id}/topics`
+              `${APP_URL}/api/chapters/${chapter.id}/topics`
             );
             const topicsData = await topicsResponse.json();
             return { ...chapter, topics: topicsData.data || [] };
@@ -71,7 +73,7 @@ const ViewCourse = () => {
   const handleDelete = async (chapterId) => {
     try {
       const resp = await fetch(
-        `http://127.0.0.1:8000/api/chapter/${chapterId}`,
+        `${APP_URL}/api/chapter/${chapterId}`,
         {
           method: "DELETE",
         }
@@ -92,7 +94,7 @@ const ViewCourse = () => {
 
   const handleDeleteTopic = async (chapterId, topicId) => {
     try {
-      const url = `http://127.0.0.1:8000/api/chapters/${chapterId}/topics/${topicId}`;
+      const url = `${APP_URL}/api/chapters/${chapterId}/topics/${topicId}`;
       const response = await fetch(url, { method: "DELETE" });
 
       if (response.ok) {
@@ -231,19 +233,19 @@ const ViewCourse = () => {
                     <MdDelete size={22} />
                   </button>
                   <Link
-                    to={`/admin/managecourse/topiceedit/${topic.id}/${topic.topic_slug}`}
+                    to={`/admin/managecourse/topiceedit/${selectedChapter.id}/${selectedChapter.chapter_slug}/${topic.id}/${topic.topic_slug}`}
                     className="text-white px-2 py-2 bg-teal-500 rounded-md"
                     title="Edit Topic"
                   >
                     <FiEdit size={22} />
                   </Link>
-                  <Link
+                  {/* <Link
                     to={`/admin/insertpost/${topic.id}`}
                     className="text-white px-2 py-2 bg-teal-500 rounded-md"
                     title="Add Post"
                   >
                     <GrChapterAdd size={22} />
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             ))}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const ManageTopic = () => {
   const { chapterId,topicId } = useParams(); // Get the chapterId from the URL params
   const [topics, setTopics] = useState([]);
@@ -11,7 +13,7 @@ const ManageTopic = () => {
   useEffect(() => {
     async function fetchTopics() {
       try {
-        const url = `http://127.0.0.1:8000/api/chapters/${chapterId}/topics`;
+        const url = `${APP_URL}/api/chapters/${chapterId}/topics`;
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -30,7 +32,7 @@ const ManageTopic = () => {
   // Handle the deletion of a topic
   const handleDelete = async (topicId) => {
     try {
-      const url = `http://127.0.0.1:8000/api/chapters/${chapterId}/topics/${topicId}`;
+      const url = `${APP_URL}/api/chapters/${chapterId}/topics/${topicId}`;
       const response = await fetch(url, {
         method: "DELETE",
       });

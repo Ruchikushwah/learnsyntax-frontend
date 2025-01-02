@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import parse from "html-react-parser";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const SingleViewPage = () => {
   const { courseId } = useParams();
   const [record, setRecord] = useState({});
@@ -9,12 +11,11 @@ const SingleViewPage = () => {
   const [selectedChapter, setSelectedChapter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/courses/${courseId}/show`
+          `${APP_URL}/api/courses/${courseId}/show`
         );
         const courseData = await response.json();
         // console.log(courseData);
@@ -46,12 +47,12 @@ const SingleViewPage = () => {
 
       {/* Course Info */}
       <div className="flex flex-col items-center mb-10">
-        <div className="bg-white overflow-hidden max-w-3xl text-center w-full border rounded-md shadow-md">
+        <div className="bg-white overflow-hidden max-w-3xl text-center w-full border rounded-md shadow-md flex justify-center items-center flex-col">
           {record.image && (
             <img
-              src={record.image}
-              alt={record.title}
-              className="w-full h-64 object-cover shadow-sm"
+            src={`http://127.0.0.1:8000/storage/${record.image}`}
+            alt={record.title}
+              className="   w-32 h-28 object-contain shadow-sm"
             />
           )}
           <div className="p-6">
@@ -82,7 +83,7 @@ const SingleViewPage = () => {
                   {chapter.chapter_name}
                 </h3>
                 <p className="text-sm text-neutralGrey line-clamp-2">
-                  {chapter.chapter_description}
+                  {parse(chapter.chapter_description)}
                 </p>
               </li>
             ))}
@@ -108,7 +109,7 @@ const SingleViewPage = () => {
                       {topic.topic_name}
                     </h3>
                     <p className="text-sm text-neutralGrey line-clamp-2">
-                      {topic.topic_description}
+                      {parse(topic.topic_description)}
                     </p>
                   </NavLink>
                 </li>

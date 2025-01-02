@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Chart from "../components/Chart";
 import { BeatLoader, BounceLoader } from "react-spinners";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const Dashboard = () => {
   const [data, setData] = useState({
     totalCourses: 0,
@@ -15,7 +17,7 @@ const Dashboard = () => {
       try {
         setLoading(true); // Show loader
         const response = await fetch(
-          "http://127.0.0.1:8000/api/dashboard-count"
+          `${APP_URL}/api/dashboard-count`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -45,7 +47,45 @@ const Dashboard = () => {
           <div className="  w-16 h-16 ">
             <BeatLoader color="#14b8a6" />
           </div>
-          {/* Replace with your preferred loader */}
+          
+          <div className=" w-full flex flex-col justify-center items-center bg-blue-200 p-5 rounded-xl gap-5  cursor-pointer">
+            <div className=" w-full flex justify-between items-center">
+              <h1 className=" text-md text-black font-semibold">
+                Total Chapters
+              </h1>
+              <h1 className=" text-green-600 font-semibold">12</h1>
+            </div>
+            <div className=" w-full flex justify-between items-center">
+              <div className=" flex flex-col justify-center items-start gap-1">
+                <h1 className=" text-3xl text-black font-semibold">
+                  {data.totalChapters}
+                </h1>
+                <p></p>
+              </div>
+            </div>
+          </div>
+          <div className=" w-full flex flex-col justify-center items-center bg-blue-200 p-5 rounded-xl gap-5  cursor-pointer">
+            <div className=" w-full flex justify-between items-center">
+              <h1 className=" text-md text-black font-semibold">
+                Total Topics
+              </h1>
+              <h1 className=" text-green-600 font-semibold">12</h1>
+            </div>
+            <div className=" w-full flex justify-between items-center">
+              <div className=" flex flex-col justify-center items-start gap-1">
+                <h1 className=" text-3xl text-black font-semibold">
+                  {data.totalTopics}
+                </h1>
+                <p></p>
+              </div>
+            </div>
+          </div>
+
+          {/**grid layouts ends here */}
+          
+          <Chart  />
+          
+         
         </div>
       ) : (
         <div

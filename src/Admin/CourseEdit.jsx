@@ -5,6 +5,8 @@ import Description from "./Description";
 import Image from "./Image";
 import { BeatLoader } from "react-spinners";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
+
 const CourseEdit = () => {
   const { id } = useParams();
   const [record, setRecord] = useState(null);
@@ -13,8 +15,7 @@ const CourseEdit = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        setLoading(true); // Set loading to true before fetching
-        const response = await fetch(`http://127.0.0.1:8000/api/courses/${id}`);
+        const response = await fetch(`${APP_URL}/api/courses/${id}`);
         const data = await response.json();
 
         if (data && data.data) {
@@ -51,11 +52,13 @@ const CourseEdit = () => {
     <div className="grid grid-cols-2 gap-4 px-6 py-4 w-full">
       <Title label="Title" field={record.title} />
       <Description label="Description" field={record.description} />
-      <Image
-        label="Image"
-        src={`http://127.0.0.1:8000/storage/images/${record.image}`}
-        field={record.image}
-      />
+
+        <Image
+          label="Image"
+          src={`${APP_URL}/storage/images/${record.image}`}
+          field={record.image}
+        />
+      
     </div>
   );
 };

@@ -38,7 +38,6 @@ import OnlineCompiler from "./OnlineCompiler.jsx";
 import AuthLayout from "./Auth/AuthLayout.jsx";
 import ProtectedAdmin from "./utils/ProtectedAdmin.jsx";
 
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -65,7 +64,9 @@ const router = createBrowserRouter(
       {/* Admin Routes */}
 
       <Route path="/admin" element={<AdminLayout />}>
+      <Route element={<ProtectedAdmin/>}>
         <Route index element={<Dashboard />} />
+        
         <Route
           path="/admin/managecourse/:id/:course_slug/:chapterId/:chapter_slug/managetopic"
           element={<ManageTopic />}
@@ -73,6 +74,7 @@ const router = createBrowserRouter(
         <Route path="/admin/inserttopic/:chapterId" element={<InsertTopic />} />
         <Route path="/admin/insertcourse" element={<InsertCourse />} />
         <Route path="/admin/managecourse" element={<ManageCourse />} />
+        
         <Route
           path="/admin/managecourse/:id/:course_slug"
           element={<ViewCourse />}
@@ -85,7 +87,7 @@ const router = createBrowserRouter(
           element={<CourseEdit />}
         />
         <Route
-          path="/admin/managecourse/topiceedit/:id/:topic_slug"
+          path="/admin/managecourse/topiceedit/:chapter_id/:chapter_slug/:topic_id/:topic_slug"
           element={<TopicEdit />}
         />
 
@@ -107,15 +109,16 @@ const router = createBrowserRouter(
           element={<ChapterEdit />}
         />
         <Route
-          path="/admin/viewcourse/viewpost/:id"
+          path="/admin/viewcourse/editpost/:topic_id/:post_id"
           element={<PostEdit />}
         />
 
         <Route path="/admin/setting" element={<Setting />} />
+        </Route>
       </Route>
 
-      <Route path="online-compiler" element={<OnlineCompiler/>}/>
 
+      <Route path="online-compiler" element={<OnlineCompiler />} />
 
       <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
       <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
@@ -131,7 +134,7 @@ const router = createBrowserRouter(
 
       <Route path="/admin/setting" element={<Setting />} />
 
-      <Route path="/admin/insertpost/:id" element={<InsertPost />} />
+      <Route path="/admin/insertpost/:topic_id" element={<InsertPost />} />
 
       <Route
         path="/admin/managecourse/:id/:course_slug/:chapter_id/:chapter_slug/viewpost/:topic_id/:topic_slug"
@@ -149,7 +152,6 @@ const router = createBrowserRouter(
       <Route path="/admin/viewcourse/viewpost/:id" element={<PostEdit />} />
 
       <Route path="/admin/setting" element={<Setting />} />
-
     </>
   )
 );

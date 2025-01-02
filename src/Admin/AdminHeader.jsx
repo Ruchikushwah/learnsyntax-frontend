@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 const AdminHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,7 +15,7 @@ const AdminHeader = () => {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Authentication token is missing.");
 
-        const response = await fetch("http://127.0.0.1:8000/api/user", {
+        const response = await fetch(`${APP_URL}/api/user`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,7 +53,7 @@ const AdminHeader = () => {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Authentication token is missing.");
 
-      const response = await fetch("http://127.0.0.1:8000/api/user", {
+      const response = await fetch(`${APP_URL}/api/user`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -75,10 +76,10 @@ const AdminHeader = () => {
 
   return (
     <>
-      <header className="flex items-center justify-between p-4 bg-gray-900">
+      <header className="flex items-center justify-between p-4 bg-gray-900 ">
         <span className="text-2xl font-bold text-white">Learn Syntax</span>
 
-        <div className="relative">
+        <div className="relative ">
           {admin ? (
             <button
               onClick={() => setIsOpen(!isOpen)}
