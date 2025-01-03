@@ -5,11 +5,6 @@ import { GrChapterAdd } from 'react-icons/gr';
 import { MdDelete } from 'react-icons/md';
 import { useParams,  Link } from 'react-router-dom';
 import { BeatLoader } from 'react-spinners';
-
-
-
-import { useParams, Link, useNavigate } from 'react-router-dom';
-
 const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 
 const ViewPost = () => {

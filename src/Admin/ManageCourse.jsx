@@ -5,6 +5,7 @@ import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import parse from 'html-react-parser';
+import { BeatLoader } from "react-spinners";
 
 const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 
@@ -12,6 +13,7 @@ const ManageCourse = () => {
   const [record, setRecord] = useState([]);
   const [courseCount, setCourseCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchCourse() {
