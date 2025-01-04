@@ -69,8 +69,8 @@ const AllContents = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="w-full flex gap-5 px-8 py-6 mt-12">
-      <div className="w-4/12 bg-gray-50 p-4 rounded-md shadow-2xl">
+    <div className="flex flex-col lg:flex-row w-full flex gap-5 px-8 py-6 mt-12">
+      <div className="lg:w-4/12 w-full bg-gray-50 p-4 rounded-md shadow-2xl">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Chapters</h2>
         {chapters.map((chapter, index) => (
           <div key={chapter.id} className="mb-4">
@@ -113,7 +113,7 @@ const AllContents = () => {
           </div>
         ))}
       </div>
-      <div className="w-8/12 bg-white p-6 rounded-md shadow-2xl">
+      <div className="lg:w-8/12 bg-white p-6 rounded-md shadow-2xl">
         {selectedPost ? (
           <div>
             <h2 className="text-2xl font-bold text-gray-800 mb-4">{selectedPost.title}</h2>
