@@ -7,31 +7,31 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors,setErrors] = useState({});
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const validateForm = () => {
     let formErrors = {};
     let isValid = true;
 
     //Validate Name
-    if(!name){
+    if (!name) {
       formErrors.name = "Name is required";
       isValid = false;
     }
     //Validate Email
-    if(!email){
+    if (!email) {
       formErrors.email = "Email is required";
       isValid = false;
     }
     //Validate Password
-    if(!password){
+    if (!password) {
       formErrors.password = "Password is required";
     }
-     setErrors(formErrors);
-     return isValid;
-  }
+    setErrors(formErrors);
+    return isValid;
+  };
   const handleRegister = async () => {
-    if(!validateForm()){
+    if (!validateForm()) {
       return;
     }
     const data = { name, email, password };
@@ -49,8 +49,7 @@ const Register = () => {
       alert(resp.message);
 
       if (resp.user) {
-        
-        navigate("/login"); 
+        navigate("/login");
       }
     } catch (error) {
       console.error("Error during registration:", error);

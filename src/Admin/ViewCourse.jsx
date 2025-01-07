@@ -4,6 +4,8 @@ import { MdDelete } from "react-icons/md";
 import { GrView } from "react-icons/gr"; // Import the view icon
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
+import parse from 'html-react-parser';
+import { BeatLoader } from "react-spinners";
 
 const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 
@@ -108,7 +110,13 @@ const ViewCourse = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="  w-16 h-16 ">
+          <BeatLoader color=" #14b8a6" />
+        </div>
+      </div>
+    );
   }
 
   if (error) {
@@ -135,6 +143,7 @@ const ViewCourse = () => {
           <Link
             to={`/admin/insertchapter/${record.id}`}
             className="text-white px-2 py-2 bg-teal-500 rounded-md"
+            title="Add Chapter"
           >
             <GrChapterAdd size={22} />
           </Link>
@@ -153,7 +162,7 @@ const ViewCourse = () => {
           >
             <h3 className="text-lg font-semibold">{chapter.chapter_name}</h3>
             <p className="text-gray-600 line-clamp-3 mb-3">
-              {chapter.chapter_description}
+              {parse(chapter.chapter_description)}
             </p>
             <div className="flex gap-2">
               <button
@@ -168,7 +177,7 @@ const ViewCourse = () => {
                 <button
                   className=" text-white px-2 py-2 bg-teal-500
                                  text-center rounded-md "
-                  title="edit"
+                  title="Edit Chapter"
                 >
                   <FiEdit size={22} />
                 </button>
@@ -201,10 +210,9 @@ const ViewCourse = () => {
                 <div>
                   <h4 className="font-semibold">{topic.topic_name}</h4>
                   <p className="text-gray-600 mb-2">
-                    {topic.topic_description}
+                    {parse(topic.topic_description)}
                   </p>
                 </div>
-
                 <div className="flex space-x-2">
                   <Link
                     // to={`/admin/viewpost/${topic.id}`}
@@ -214,7 +222,6 @@ const ViewCourse = () => {
                   >
                     <GrView size={22} />
                   </Link>
-
                   <button
                     className="text-white bg-red-600 p-2 rounded-md"
                     onClick={() =>
@@ -227,12 +234,14 @@ const ViewCourse = () => {
                   <Link
                     to={`/admin/managecourse/topiceedit/${selectedChapter.id}/${selectedChapter.chapter_slug}/${topic.id}/${topic.topic_slug}`}
                     className="text-white px-2 py-2 bg-teal-500 rounded-md"
+                    title="Edit Topic"
                   >
                     <FiEdit size={22} />
                   </Link>
                   {/* <Link
                     to={`/admin/insertpost/${topic.id}`}
                     className="text-white px-2 py-2 bg-teal-500 rounded-md"
+                    title="Add Post"
                   >
                     <GrChapterAdd size={22} />
                   </Link> */}

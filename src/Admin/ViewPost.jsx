@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { GrChapterAdd } from 'react-icons/gr';
 import { MdDelete } from 'react-icons/md';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-
+import { useParams,  Link } from 'react-router-dom';
+import { BeatLoader } from 'react-spinners';
 const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 
 const ViewPost = () => {
@@ -64,7 +64,13 @@ const filteredPost = post.filter(items =>
   };
 
   if (loading) {
-    return <div className="text-center py-10">Loading post...</div>;
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="  w-16 h-16 ">
+          <BeatLoader color=" #14b8a6" />
+        </div>
+      </div>
+    );
   }
 
   if (error) {
