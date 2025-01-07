@@ -29,24 +29,24 @@ const ManageCourse = () => {
       } catch (error) {
         console.error("Error fetching courses:", error);
       } finally {
-        setLoading(false); // Hide loader
+        setLoading(false); 
       }
     }
     fetchCourse();
   }, []);
 
-  // Handle the search input change
+ 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  // Filter the courses based on the search query
+  
   const filteredCourses = record.filter(course =>
     course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     course.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Handle delete request
+  
   const handleDelete = async (id) => {
     try {
       const resp = await fetch(`${APP_URL}/api/courses/${id}`, {
