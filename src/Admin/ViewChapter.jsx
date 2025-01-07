@@ -3,6 +3,7 @@ import { GrChapterAdd } from "react-icons/gr";
 import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 import { MdDelete } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 
 const ViewChapter = () => {
   const { id } = useParams();
@@ -54,7 +55,13 @@ const ViewChapter = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="  w-16 h-16 ">
+          <BeatLoader color=" #14b8a6" />
+        </div>
+      </div>
+    );
   }
 
   if (error) {

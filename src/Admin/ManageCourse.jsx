@@ -5,6 +5,7 @@ import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import parse from 'html-react-parser';
+import { BeatLoader } from "react-spinners";
 
 const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 
@@ -12,6 +13,7 @@ const ManageCourse = () => {
   const [record, setRecord] = useState([]);
   const [courseCount, setCourseCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchCourse() {
@@ -26,6 +28,8 @@ const ManageCourse = () => {
         setCourseCount(data.data.length);
       } catch (error) {
         console.error("Error fetching courses:", error);
+      } finally {
+        setLoading(false); // Hide loader
       }
     }
     fetchCourse();
@@ -137,6 +141,85 @@ const ManageCourse = () => {
           </tbody>
         </table>
       </div>
+
+      {loading ? (
+      <div className="flex justify-center items-center h-64">
+          <div className="  w-16 h-16 ">
+            <BeatLoader color=" #14b8a6" />
+          </div>
+          
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left text-gray-500">
+            <thead className="text-xs text-gray-400 uppercase bg-gray-100">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  ID
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Course Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Course Description
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Course Image
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {record.map((course) => (
+                <tr
+                  className="bg-white border-b hover:bg-gray-50"
+                  key={course.id}
+                >
+                  <td className="px-6 py-4">{course.id}</td>
+                  <td className="px-6 py-4">{course.title}</td>
+                  <td className="px-6 py-4">{parse(course.description)}</td>
+                  <td className="px-6 py-4">
+                    <img
+                      src={`http://127.0.0.1:8000/storage/${course.image}`}
+                      className="w-16 h-16"
+                      alt="Course"
+                    />
+                  </td>
+                  <td className="px-6 py-4 flex gap-2">
+                    <button
+                      className="ml-2 text-white bg-red-600 hover:underline p-2 rounded-md"
+                      onClick={() => handleDelete(course.id)}
+                      title="Delete"
+                    >
+                      <MdDelete size={22} />
+                    </button>
+                    <Link
+                      to={`/admin/managecourse/courseedit/${course.id}/${course.course_slug}`}
+                    >
+                      <button
+                        className="text-white px-2 py-2 bg-teal-500 text-center rounded-md"
+                        title="Course Edit"
+                      >
+                        <FiEdit size={22} />
+                      </button>
+                    </Link>
+
+                    <Link
+                      to={`/admin/managecourse/${course.id}/${course.course_slug}`}
+                      className="text-white px-2 py-2 bg-teal-500 rounded-md text-center"
+                      title="View Chapter Or Topic in a Course"
+                    >
+                      <HiOutlineViewfinderCircle size={22} />
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
