@@ -100,12 +100,14 @@ const InsertCourse = () => {
           >
             Course Description
           </label>
-          <ReactQuill
-            theme="snow"
-            value={description}
-            onChange={setDescription}
-            className="bg-white"
-          />
+          
+            <ReactQuill
+              theme="snow"
+              value={description}
+              onChange={setDescription}
+              className="bg-white "
+              
+            />
           {errors.description && (
             <p className="text-red-500 text-sm">{errors.description}</p>
           )}

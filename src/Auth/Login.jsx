@@ -54,7 +54,7 @@ const Login = () => {
         },
       });
       resp = await resp.json();
-      console.log(resp);
+      
 
       if (resp.access_token) {
         // Ensure token and user data are correct
