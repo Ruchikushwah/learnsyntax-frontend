@@ -6,7 +6,7 @@ const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -30,8 +30,12 @@ const Header = () => {
       if (!response.ok) throw new Error("Failed to fetch user info");
 
       const data = await response.json();
-      setUserInfo(data.user || data.adminData);
+      console.log("hi",data.role);
+      setUserInfo(data.user || data.adminData ||data.role);
+      console.log("hgf",data.role);
+
       setIsLoggedIn(true);
+
     } catch (error) {
       console.error("Error fetching user info:", error);
       logout();
@@ -125,17 +129,30 @@ const Header = () => {
                       <div>{userInfo?.name}</div>
                       <div className="font-medium truncate">
                         {userInfo?.email}
+                       
                       </div>
                     </div>
                     <ul className="py-2 text-sm text-gray-700">
-                      <li>
-                        <a
-                          href="/admin"
-                          className="block px-4 py-2 hover:bg-gray-100"
-                        >
-                          Dashboard
-                        </a>
-                      </li>
+                      {userInfo?.role === "admin" ? (
+                        <li>
+                
+                          <a
+                            href="/admin"
+                            className="block px-4 py-2 hover:bg-gray-100"
+                          >
+                            Admin Dashboard
+                          </a>
+                        </li>
+                      ) : (
+                        <li>
+                          <a
+                            href="/"
+                            className="block px-4 py-2 hover:bg-gray-100"
+                          >
+                            User Dashboard
+                          </a>
+                        </li>
+                      )}
                       <li>
                         <a
                           href="/admin/settings"

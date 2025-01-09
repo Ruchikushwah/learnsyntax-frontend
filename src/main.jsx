@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -41,8 +40,7 @@ import ProtectedAdmin from "./utils/ProtectedAdmin.jsx";
 import ManageCourse from "./Admin/ManageCourse.jsx";
 import CourseCard from "./User/CourseCard.jsx";
 
-
-
+import ManageCourse from "./Admin/ManageCourse.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,7 +56,7 @@ const router = createBrowserRouter(
           element={<SingleViewPage />}
         />
         <Route
-          path="/allcontents/:id/:course_slug/:chapterId/:chapter_slug/:topicId/:topic_slug"
+          path="/:id/:course_slug/:chapterId/:chapter_slug/:topicId/:topic_slug"
           element={<AllContents />}
         />
       </Route>
@@ -72,9 +70,8 @@ const router = createBrowserRouter(
      
 
       {/* Admin Routes */}
-
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route element={<ProtectedAdmin />}>
+      <Route element={<ProtectedAdmin />}>
+        <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route
             path="/admin/managecourse/:id/:course_slug/:chapterId/:chapter_slug/managetopic"
@@ -85,9 +82,7 @@ const router = createBrowserRouter(
             element={<InsertTopic />}
           />
           <Route path="/admin/insertcourse" element={<InsertCourse />} />
-          
-            <Route path="/admin/managecourse" element={<ManageCourse />} />
-          
+          <Route path="/admin/managecourse" element={<ManageCourse />} />
            
           <Route
             path="/admin/managecourse/:id/:course_slug"

@@ -105,7 +105,7 @@ const SingleViewPage = () => {
             {selectedChapter.topics.map((topic) => (
               <li key={topic.id}>
                 <NavLink
-                  to={`/allcontents/${record.id}/${record.course_slug}/${selectedChapter.id}/${selectedChapter.chapter_slug}/${topic.id}/${topic.topic_slug}`}
+                  to={`/${record.id}/${record.course_slug}/${selectedChapter.id}/${selectedChapter.chapter_slug}/${topic.id}/${topic.topic_slug}`}
                   className="block p-4 rounded-md shadow hover:shadow-lg transition-all duration-300 hover:border-b-4 hover:border-indigo-700"
                 >
                   <h3 className="text-md sm:text-lg font-semibold text-neutralDGrey">

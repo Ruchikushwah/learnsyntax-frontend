@@ -69,8 +69,8 @@ const InsertCourse = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-3xl p-6 bg-white rounded shadow-lg">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 ">
+      <div className="w-full max-w-3xl p-6 bg-white rounded shadow-lg ">
         <h2 className="text-xl font-bold text-gray-700 mb-4">Insert Course</h2>
 
         <div className="mb-4">
@@ -93,7 +93,7 @@ const InsertCourse = () => {
           )}
         </div>
 
-        <div className="mb-4">
+        <div className="mb-10">
           <label
             htmlFor="description"
             className="block text-sm font-medium text-gray-600 mb-1"
@@ -105,7 +105,7 @@ const InsertCourse = () => {
               theme="snow"
               value={description}
               onChange={setDescription}
-              className="bg-white "
+              className="bg-white  w-full h-36"
               
             />
           {errors.description && (
@@ -113,10 +113,10 @@ const InsertCourse = () => {
           )}
         </div>
 
-        <div class="flex items-center justify-center w-full mb-4">
+        <div class="flex items-center justify-center w-full mb-4 py-2">
           <label
             for="dropzone-file"
-            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+            className="flex flex-col items-center justify-center w-full h-36 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 "
           >
             <div class="flex flex-col items-center justify-center pt-5 pb-6">
               <svg

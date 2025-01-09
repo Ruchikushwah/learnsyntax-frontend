@@ -15,8 +15,8 @@ const Sidebar = () => {
     <div className="flex">
       <div
         className={`${
-          isOpen ? "w-64" : "w-16"
-        } bg-gray-900 h-screen p-5 pt-8 duration-300 relative`}
+          isOpen ? "w-64" : "w-20"
+        } bg-gray-900 h-screen p-5 pt-8  duration-300 relative `}
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -30,7 +30,7 @@ const Sidebar = () => {
           <NavLink to="/admin">
             <li
               className={`text-gray-300 text-sm flex items-center gap-x-4 p-2 rounded-md cursor-pointer hover:bg-gray-700 ${
-                isOpen && "pl-4"
+                isOpen && "pl-5"
               }`}
             >
               <span className="material-icons">
