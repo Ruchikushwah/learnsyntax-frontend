@@ -73,7 +73,7 @@ const SingleViewPage = () => {
         <h2 className="text-xl sm:text-2xl font-bold text-neutralDGrey mb-6">
           Chapters
         </h2>
-        <ul className="space-y-4 max-h-[300px] sm:max-h-[400px] overflow-y-auto">
+        <ul className="space-y-4  overflow-y-auto">
           {chapters.map((chapter) => (
             <li
               key={chapter.id}

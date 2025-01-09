@@ -59,7 +59,7 @@ const Header = () => {
     { link: "Home", path: "/", type: "route" },
     { link: "Services", path: "service", type: "scroll" },
     { link: "About", path: "about", type: "scroll" },
-    { link: "Courses", path: "course", type: "scroll" },
+    { link: "Courses", path: "/courses", type: "route" },
     { link: "Contact Us", path: "/contact", type: "route" },
     { link: "Online Compiler", path: "/online-compiler", type: "route" },
   ];

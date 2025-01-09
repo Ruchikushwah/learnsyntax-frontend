@@ -28,6 +28,7 @@ import SingleViewPage from "./User/SingleViewPage.jsx";
 import TopicEdit from "./Admin/TopicEdit.jsx";
 import ContactForm from "./User/Home_components/ContatctForm.jsx";
 import AllContents from "./User/AllContents.jsx";
+import AllCourses from "./User/AllCourses.jsx"
 import InsertPost from "./Admin/InsertPost.jsx";
 import ChapterEdit from "./Admin/Chapteredit.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -37,8 +38,9 @@ import OnlineCompiler from "./OnlineCompiler.jsx";
 
 import AuthLayout from "./Auth/AuthLayout.jsx";
 import ProtectedAdmin from "./utils/ProtectedAdmin.jsx";
+import ManageCourse from "./Admin/ManageCourse.jsx";
+import CourseCard from "./User/CourseCard.jsx";
 
-import ManageCourse from "./admin/ManageCourse.jsx";
 
 
 
@@ -64,6 +66,10 @@ const router = createBrowserRouter(
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
       </Route>
+      {/* For the all courses */}
+      <Route path="/courses" element={<AllCourses />}/>
+
+     
 
       {/* Admin Routes */}
 
