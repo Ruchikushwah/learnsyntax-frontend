@@ -40,7 +40,7 @@ import ProtectedAdmin from "./utils/ProtectedAdmin.jsx";
 import ManageCourse from "./Admin/ManageCourse.jsx";
 import CourseCard from "./User/CourseCard.jsx";
 
-import ManageCourse from "./Admin/ManageCourse.jsx";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
