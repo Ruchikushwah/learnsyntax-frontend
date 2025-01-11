@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { RiArrowDropDownLine, RiCloseLine, RiMenuLine } from "react-icons/ri";
 import FlowbiteStepper from './FlowbiteStepper';
 import parse from 'html-react-parser';
+import { Helmet } from "react-helmet-async";
 
 const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 
@@ -83,6 +84,13 @@ const AllContents = () => {
 
   return (
     <div className="flex flex-col lg:flex-row w-full flex gap-5 px-8 py-6 mt-12">
+      <Helmet>
+        <title>{selectedTopic?.topic_name || "All Contents"}</title>
+        <meta
+          name="description"
+          content={selectedPost?.title || "Explore course topics and content."}
+        />
+      </Helmet>
       {/* Hamburger for Mobile */}
       <div className="lg:hidden mb-4">
         <RiMenuLine

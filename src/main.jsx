@@ -39,12 +39,14 @@ import AuthLayout from "./Auth/AuthLayout.jsx";
 import ProtectedAdmin from "./utils/ProtectedAdmin.jsx";
 import ManageCourse from "./Admin/ManageCourse.jsx";
 import CourseCard from "./User/CourseCard.jsx";
+import { HelmetProvider } from "react-helmet-async";
 
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
+
       {/* Main Routes */}
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
@@ -65,9 +67,9 @@ const router = createBrowserRouter(
         <Route path="login" element={<Login />} />
       </Route>
       {/* For the all courses */}
-      <Route path="/courses" element={<AllCourses />}/>
+      <Route path="/courses" element={<AllCourses />} />
 
-     
+
 
       {/* Admin Routes */}
       <Route element={<ProtectedAdmin />}>
@@ -83,7 +85,7 @@ const router = createBrowserRouter(
           />
           <Route path="/admin/insertcourse" element={<InsertCourse />} />
           <Route path="/admin/managecourse" element={<ManageCourse />} />
-           
+
           <Route
             path="/admin/managecourse/:id/:course_slug"
             element={<ViewCourse />}
@@ -155,14 +157,17 @@ const router = createBrowserRouter(
       <Route path="/admin/viewcourse/viewpost/:id" element={<PostEdit />} />
 
       <Route path="/admin/setting" element={<Setting />} />
+
     </>
   )
 );
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <GoogleOAuthProvider clientId="3535758964-nov4csc4qa3nfgpvba1s9nf22pfekln0.apps.googleusercontent.com">
-      <RouterProvider router={router} />
-    </GoogleOAuthProvider>
+    <HelmetProvider>
+      <GoogleOAuthProvider clientId="3535758964-nov4csc4qa3nfgpvba1s9nf22pfekln0.apps.googleusercontent.com">
+        <RouterProvider router={router} />
+      </GoogleOAuthProvider>
+    </HelmetProvider>
   </StrictMode>
 );
