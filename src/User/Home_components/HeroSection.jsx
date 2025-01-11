@@ -34,9 +34,8 @@ const HeroSection = () => {
           <div className="my-12 md:my-8 py-6 flex flex-col md:flex-row-reverse items-center lg:justify-between gap-6 w-full h-auto lg:h-full">
             {/* Right-Aligned Image */}
             <div
-              className={`w-full md:w-1/2 flex justify-center transition-opacity duration-1000 ${
-                inView ? "opacity-100" : "opacity-0"
-              }`}
+              className={`w-full md:w-1/2 flex justify-center transition-opacity duration-1000 ${inView ? "opacity-100" : "opacity-0"
+                }`}
             >
               <img
                 src="/banner-removebg.png"
@@ -47,9 +46,8 @@ const HeroSection = () => {
 
             {/* Left Content */}
             <div
-              className={`md:w-1/2 text-center md:text-left transition-opacity duration-1000 ${
-                inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
-              }`}
+              className={`md:w-1/2 text-center md:text-left transition-opacity duration-1000 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+                }`}
             >
               <h1 className="text-3xl md:text-5xl font-semibold mb-4 text-neutralDGrey leading-snug">
                 Welcome to <span className="text-brandPrimary">LearnSyntax</span>
