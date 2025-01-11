@@ -1,30 +1,37 @@
-import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import parse from "html-react-parser";
 
 const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 
-const CourseCard = ({ courses = [] }) => {
-  const [visibleCount, setVisibleCount] = useState(6);
-  // Initial visible courses count
-  const navigate = useNavigate();
+const AllCourses = () => {
 
-  const showMoreCourses = () => {
-    // setVisibleCount(visibleCount + 6); 
-    // Increase visible courses by 6
-    navigate("/courses");
-  };
+const [courses, setCourses] = useState([]);
 
-  // const showLessCourses = () => {
-  //   setVisibleCount(6); // Reset to initial count
-  // };
+  useEffect(() => {
+    const fetchCourses = async()=>{       
+    try {
+        const url = `${APP_URL}/api/courses`;
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Failed to fetch courses");
+        }
+        const data = await response.json();
+        setCourses(data.data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
   return (
     <div id="course" className="md:px-14 max-w-screen-2xl mx-auto">
       {/* Header Section */}
       <div className="mt-20 md:w-1/2 mx-auto text-center">
         <h2 className="text-4xl tracking-tight font-extrabold text-neutralDGrey mb-2">
-          Popular <span className="text-brandPrimary">Courses</span>
+          Our <span className="text-brandPrimary">Courses</span>
         </h2>
         <p className="text-neutralGrey">
           LearnSyntax will enhance your learning experience the way you
@@ -35,14 +42,13 @@ const CourseCard = ({ courses = [] }) => {
       {/* Courses Section */}
       <div className="mt-14 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:w-11/12 mx-auto gap-12">
         {courses.length > 0 ? (
-          courses.slice(0, visibleCount).map((course) => (
+          courses.map((course) => (
             <NavLink
               to={`/singleviewpage/${course.id}/${course.course_slug}`}
               key={course.id}
               className="p-5 shadow rounded cursor-pointer hover:shadow-lg"
             >
               <div
-                key={course.id}
                 className="px-4 py-8 text-center md:w-[300px] mx-auto md:h-80 rounded-md shadow cursor-pointer 
                     hover:-translate-y-5 hover:border-b-4 hover:border-brandPrimary transition-all duration-300 flex items-center justify-center h-full"
               >
@@ -72,16 +78,10 @@ const CourseCard = ({ courses = [] }) => {
           </p>
         )}
       </div>
-      <div className="text-center mt-8">
-        <button
-          onClick={showMoreCourses}
-          className="px-6 py-2 bg-brandPrimary text-white rounded hover:bg-brandSecondary transition-all mx-2"
-        >
-          Show More
-        </button>
-      </div>
+
+     
     </div>
   );
 };
 
-export default CourseCard;
+export default AllCourses;

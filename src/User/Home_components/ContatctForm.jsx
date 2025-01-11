@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -47,6 +48,10 @@ const ContactForm = () => {
 
   return (
     <section className="bg-white dark:bg-gray-900">
+      <Helmet>
+        <title>LearnSyntax - Contact Us</title>
+        <meta name="description" content="Connect with LearnSyntax Team" />
+      </Helmet>
       <div className="py-8 lg:py-16 px-4 sm:px-6 lg:px-8 mx-auto max-w-screen-md">
         <h2 className="mb-4 text-2xl sm:text-3xl lg:text-4xl tracking-tight font-extrabold text-center text-neutralDGrey dark:text-white">
           Contact <span className="text-brandPrimary">Us</span>
