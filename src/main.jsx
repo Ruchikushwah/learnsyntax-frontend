@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import {
-  createBrowserRouter,
+  createHashRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
@@ -43,7 +43,8 @@ import { HelmetProvider } from "react-helmet-async";
 
 
 
-const router = createBrowserRouter(
+
+const router = createHashRouter(
   createRoutesFromElements(
     <>
 
@@ -124,6 +125,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="online-compiler" element={<OnlineCompiler />} />
+      
 
       <Route path="/admin/viewchapter/:id" element={<ViewChapter />} />
       <Route path="/admin/insertchapter/:id" element={<InsertChapter />} />
