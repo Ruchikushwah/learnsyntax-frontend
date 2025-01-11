@@ -113,25 +113,31 @@ const AllContents = () => {
           </div>
         ))}
       </div>
-      <div className="lg:w-8/12 bg-white p-6 rounded-md shadow-2xl">
-        {selectedPost ? (
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">{selectedPost.title}</h2>
+{/* Main Content */}
+<div className="lg:w-8/12 bg-white p-6 rounded-md shadow-2xl">
+  {selectedTopic ? (
+    selectedTopic.post && selectedTopic.post.length > 0 ? (
+      selectedTopic.post.map((post) => (
+        <div key={post.id} className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">{post.title}</h2>
+          <p className="text-gray-700">{parse(post.content)}</p>
+          {post.image_path && (
+            <img
+              src={`${APP_URL}/storage/${post.image_path}`}
+              alt={post.title}
+              className="w-[460px] h-[400px] object-contain rounded-md mb-4 mx-auto"
+            />
+          )}
+        </div>
+      ))
+    ) : (
+      <p className="text-gray-500 text-center">No posts available for this topic.</p>
+    )
+  ) : (
+    <p className="text-gray-500 text-center">Select a topic to view its posts.</p>
+  )}
+</div>
 
-            <p className="text-gray-700">{parse(selectedPost.content)}</p>
-            {selectedPost.image_path && (
-              <img
-              src={`${APP_URL}/storage/${selectedPost.image_path}`}
-                alt={selectedPost.title}
-                className="w-[460px] h-[400px] object-contain rounded-md mb-4"
-              />
-            )}
-           
-          </div>
-        ) : (
-          <p className="text-gray-500 text-center">Select a topic to view its content.</p>
-        )}
-      </div>
     </div>
   );
 };
