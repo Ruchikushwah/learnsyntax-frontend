@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { GrView } from "react-icons/gr"; // Import the view icon
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 import { BeatLoader } from "react-spinners";
 
 const APP_URL = import.meta.env.VITE_REACT_APP_URL;
@@ -21,11 +21,9 @@ const ViewCourse = () => {
   const fetchCourseAndChapters = async (preserveSelectedChapterId = null) => {
     setLoading(true);
     try {
-      const courseResponse = await fetch(
-        `${APP_URL}/api/courses/${id}`
-      );
+      const courseResponse = await fetch(`${APP_URL}/api/courses/${id}`);
       const courseData = await courseResponse.json();
-  
+
       if (courseResponse.ok) {
         const chaptersWithTopics = await Promise.all(
           courseData.data.chapters.map(async (chapter) => {
@@ -36,21 +34,21 @@ const ViewCourse = () => {
             return { ...chapter, topics: topicsData.data || [] };
           })
         );
-  
+
         setRecord(courseData.data || null);
         setChapters(chaptersWithTopics);
-  
+
         const chapterIdFromURL = searchParams.get("chapterId");
         const currentChapter = chaptersWithTopics.find(
           (chapter) =>
             chapter.id ===
             (preserveSelectedChapterId || parseInt(chapterIdFromURL, 10))
         );
-  
+
         const defaultChapter = currentChapter || chaptersWithTopics[0] || null;
-  
+
         setSelectedChapter(defaultChapter);
-  
+
         // Update URL with the default chapter ID if not already set
         if (!chapterIdFromURL && defaultChapter) {
           setSearchParams({ chapterId: defaultChapter.id });
@@ -65,7 +63,6 @@ const ViewCourse = () => {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
     fetchCourseAndChapters();
@@ -73,12 +70,9 @@ const ViewCourse = () => {
 
   const handleDelete = async (chapterId) => {
     try {
-      const resp = await fetch(
-        `${APP_URL}/api/chapter/${chapterId}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const resp = await fetch(`${APP_URL}/api/chapters/${chapterId}`, {
+        method: "DELETE",
+      });
       if (resp.ok) {
         console.log(`Chapter ${chapterId} deleted successfully`);
         setChapters(chapters.filter((chapter) => chapter.id !== chapterId));

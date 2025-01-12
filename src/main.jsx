@@ -2,7 +2,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import {
-  createHashRouter,
+  createBrowserRouter,
+ 
   createRoutesFromElements,
   Route,
   RouterProvider,
@@ -44,7 +45,7 @@ import { HelmetProvider } from "react-helmet-async";
 
 
 
-const router = createHashRouter(
+const router = createBrowserRouter(
   createRoutesFromElements(
     <>
 

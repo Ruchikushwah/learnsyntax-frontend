@@ -18,6 +18,7 @@ const OnlineCompiler = () => {
   const [output, setOutput] = useState("");
   const [language, setLanguage] = useState("javascript");
   const [isLoading, setIsLoading] = useState(false);
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
 
   const handleCodeChange = (newValue) => {
     setCode(newValue);
@@ -58,77 +59,98 @@ const OnlineCompiler = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
-      {/* All Languages */}
-      <div className="w-1/4 bg-gray-100 border-r border-gray-300 p-4 flex flex-col">
-        <h2 className="text-lg font-semibold mb-4">Languages</h2>
-        <ul className="flex flex-col gap-2">
-          {["javascript", "html", "php", "python", "c", "c++"].map((lang) => (
-            <li
-              key={lang}
-              className={`p-2 rounded cursor-pointer ${
-                language === lang ? "bg-brandPrimary text-white" : "bg-gray-200"
-              }`}
-              onClick={() => setLanguage(lang)}
-            >
-              {lang.toUpperCase()}
-            </li>
-          ))}
-        </ul>
-
-        <h2 className="text-lg font-semibold mt-6">Themes</h2>
-        <select
-          className="p-2 border border-gray-500 mt-2"
-          value={theme}
-          onChange={(e) => setTheme(e.target.value)}
+    <div className="min-h-screen flex flex-col">
+      {/* Header */}
+      <header className="py-4 px-4 text-2xl font-bold flex justify-between items-center">
+        <span>Online Compiler</span>
+        <button
+          className="md:hidden p-2 bg-gray-200 rounded"
+          onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
         >
-          <option value="monokai">Monokai</option>
-          <option value="github">Github</option>
-          <option value="solarized_dark">Solarized Dark</option>
-        </select>
-      </div>
+          Languages
+        </button>
+      </header>
 
-      {/* Write Code Here */}
-      <div className="flex-1 flex flex-col p-4">
-        <h2 className="text-2xl mb-4">Online Compiler</h2>
+      <div className="flex flex-1">
+        {/* Sidebar */}
+        <aside
+          className={`${
+            isLanguageMenuOpen ? "block" : "hidden"
+          } md:block w-full md:w-1/4 bg-gray-100 border-r border-gray-300 p-4 flex flex-col`}
+        >
+          <h2 className="text-lg font-semibold mb-4">Languages</h2>
+          <ul className="flex flex-col gap-2">
+            {["javascript", "html", "php", "python", "c", "c++"].map((lang) => (
+              <li
+                key={lang}
+                className={`p-2 rounded cursor-pointer ${
+                  language === lang ? "bg-brandPrimary text-white" : "bg-gray-200"
+                }`}
+                onClick={() => {
+                  setLanguage(lang);
+                  setIsLanguageMenuOpen(false); // Close the menu on language select
+                }}
+              >
+                {lang.toUpperCase()}
+              </li>
+            ))}
+          </ul>
 
-        {/* Run Code Button */}
-        <div className="flex justify-center mb-4">
-          <button
-            className="p-2 bg-brandPrimary text-white rounded"
-            onClick={handleRunCode}
-            disabled={isLoading}
+          <h2 className="text-lg font-semibold mt-6">Themes</h2>
+          <select
+            className="p-2 border border-gray-500 mt-2"
+            value={theme}
+            onChange={(e) => setTheme(e.target.value)}
           >
-            {isLoading ? "Running..." : "Run Code"}
-          </button>
-        </div>
+            <option value="monokai">Monokai</option>
+            <option value="github">Github</option>
+            <option value="solarized_dark">Solarized Dark</option>
+          </select>
+        </aside>
 
-        <div className="flex flex-1 flex-col md:flex-row gap-5">
-          <AceEditor
-            mode={language === "c++" ? "c_cpp" : language}
-            theme={theme}
-            onChange={handleCodeChange}
-            width="100%"
-            height="100%"
-            fontSize={16}
-            value={code}
-            setOptions={{
-              showLineNumbers: true,
-              enableBasicAutocompletion: true,
-              enableLiveAutocompletion: true,
-              enableSnippets: true,
-              tabSize: 2,
-            }}
-            className="md:w-1/2 h-full"
-          />
+        {/* Main Content */}
+        <main className="flex-1 flex flex-col items-center p-6">
+          <div className="w-full max-w-6xl flex flex-col md:flex-row gap-6">
+            {/* Code Editor */}
+            <div className="w-full md:w-1/2">
+              <div className="flex justify-between mb-2">
+                <span className="text-lg font-semibold">{language.toUpperCase()}</span>
+                <button
+                  className="px-6 py-2 bg-brandPrimary text-white rounded hover:bg-brandPrimaryDark"
+                  onClick={handleRunCode}
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Running..." : "Run Code"}
+                </button>
+              </div>
+              <AceEditor
+                mode={language === "c++" ? "c_cpp" : language}
+                theme={theme}
+                onChange={handleCodeChange}
+                width="100%"
+                height="400px"
+                fontSize={16}
+                value={code}
+                setOptions={{
+                  showLineNumbers: true,
+                  enableBasicAutocompletion: true,
+                  enableLiveAutocompletion: true,
+                  enableSnippets: true,
+                  tabSize: 2,
+                }}
+                className="border border-gray-300 rounded-md"
+              />
+            </div>
 
-          <div className="mt-5 flex flex-col w-full md:w-1/2">
-            <h3 className="text-lg font-semibold">Output:</h3>
-            <div className="bg-gray-100 p-5 overflow-auto h-full border border-gray-300">
-              <pre>{output}</pre>
+            {/* Output Section */}
+            <div className="w-full md:w-1/2">
+              <h3 className="text-lg font-semibold mb-2">Output:</h3>
+              <div className="bg-gray-100 p-4 border border-gray-300 rounded-md h-96 overflow-auto">
+                <pre>{output}</pre>
+              </div>
             </div>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
