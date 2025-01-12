@@ -30,9 +30,9 @@ const Header = () => {
       if (!response.ok) throw new Error("Failed to fetch user info");
 
       const data = await response.json();
-      console.log("hi",data.role);
+      console.log("hi",data);
       setUserInfo(data.user || data.adminData ||data.role);
-      console.log("hgf",data.role);
+      console.log("hgf",data.user);
 
       setIsLoggedIn(true);
 
@@ -134,7 +134,7 @@ const Header = () => {
                       </div>
                     </div>
                     <ul className="py-2 text-sm text-gray-700">
-                      {userInfo?.role === "admin" ? (
+                      {(userInfo?.is_admin) ? (
                         <li>
                 
                           <a
