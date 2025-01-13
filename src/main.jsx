@@ -54,6 +54,7 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
 
         <Route path="contact" element={<ContactForm />} />
+        <Route path="/courses" element={<AllCourses />} />
         {/* User Routes */}
         <Route
           path="/singleviewpage/:courseId/:course_slug"
@@ -69,7 +70,7 @@ const router = createBrowserRouter(
         <Route path="login" element={<Login />} />
       </Route>
       {/* For the all courses */}
-      <Route path="/courses" element={<AllCourses />} />
+      
 
 
 
