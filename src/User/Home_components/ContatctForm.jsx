@@ -10,6 +10,7 @@ const ContactForm = () => {
 
   const [responseMessage, setResponseMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // Track loading state
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -21,6 +22,7 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Start loading spinner
 
     try {
       const response = await fetch("http://localhost:8000/api/contact", {
@@ -30,19 +32,28 @@ const ContactForm = () => {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "An error occurred. Please try again.");
       }
-
+  
       const responseData = await response.json();
-      setResponseMessage(responseData.message);
-      setErrorMessage(null);
-      setFormData({ email: "", subject: "", message: "" }); // Reset form
+  
+      setTimeout(() => {
+        setResponseMessage(responseData.message);
+        setErrorMessage(null);
+        setFormData({ email: "", subject: "", message: "" }); // Reset form fields
+      }, 2000); // 2-second delay for message display
     } catch (error) {
-      setErrorMessage(error.message);
-      setResponseMessage(null);
+      setTimeout(() => {
+        setErrorMessage(error.message);
+        setResponseMessage(null);
+      }, 2000); // 2-second delay for error display
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false); // Hide spinner
+      }, 2000); // Match the delay duration
     }
   };
 
@@ -52,13 +63,16 @@ const ContactForm = () => {
         <title>LearnSyntax - Contact Us</title>
         <meta name="description" content="Connect with LearnSyntax Team" />
       </Helmet>
-      <div className="py-8 lg:py-16 px-4 sm:px-6 lg:px-8 mx-auto max-w-screen-md">
-        <h2 className="mb-4 text-2xl sm:text-3xl lg:text-4xl tracking-tight font-extrabold text-center text-neutralDGrey dark:text-white">
+      <div className="pt-16 md:pt-20 lg:pt-24 pb-8 lg:pb-16 px-4 sm:px-6 lg:px-8 mx-auto max-w-screen-md">
+        <h2 className="mb-6 text-2xl sm:text-3xl lg:text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
           Contact <span className="text-brandPrimary">Us</span>
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
               Your email
             </label>
             <input
@@ -66,13 +80,16 @@ const ContactForm = () => {
               id="email"
               value={formData.email}
               onChange={handleChange}
-              className="block w-full p-2.5 bg-gray-50 border rounded-lg"
+              className="block w-full p-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100"
               placeholder="john@example.com"
               required
             />
           </div>
           <div>
-            <label htmlFor="subject" className="block mb-2 text-sm font-medium text-gray-900">
+            <label
+              htmlFor="subject"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
               Subject
             </label>
             <input
@@ -80,13 +97,16 @@ const ContactForm = () => {
               id="subject"
               value={formData.subject}
               onChange={handleChange}
-              className="block w-full p-2.5 bg-gray-50 border rounded-lg"
+              className="block w-full p-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100"
               placeholder="Subject"
               required
             />
           </div>
           <div>
-            <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900">
+            <label
+              htmlFor="message"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
               Your message
             </label>
             <textarea
@@ -94,20 +114,48 @@ const ContactForm = () => {
               value={formData.message}
               onChange={handleChange}
               rows="6"
-              className="block w-full p-2.5 bg-gray-50 border rounded-lg"
+              className="block w-full p-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100"
               placeholder="Write your message here..."
               required
             ></textarea>
           </div>
           <button
             type="submit"
-            className="w-full bg-brandPrimary text-white p-2.5 rounded-lg"
+            className="w-full bg-brandPrimary text-white p-3 rounded-lg font-medium flex items-center justify-center"
+            disabled={isLoading}
           >
-            Submit
+            {isLoading ? (
+              <svg
+                className="w-5 h-5 mr-2 text-white animate-spin"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+            ) : (
+              "Submit"
+            )}
           </button>
         </form>
-        {responseMessage && <p className="text-green-500 mt-4">{responseMessage}</p>}
-        {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
+        {responseMessage && (
+          <p className="text-green-500 mt-4 text-center">{responseMessage}</p>
+        )}
+        {errorMessage && (
+          <p className="text-red-500 mt-4 text-center">{errorMessage}</p>
+        )}
       </div>
     </section>
   );

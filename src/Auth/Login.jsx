@@ -54,7 +54,7 @@ const Login = () => {
         },
       });
       resp = await resp.json();
-      
+
 
       if (resp.access_token) {
         // Ensure token and user data are correct
@@ -62,7 +62,7 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(resp.user)); // Store user info
         // // Redirect based on role
         const userdata = localStorage.getItem("user");
-        
+
 
         if (userdata.is_admin) {
           navigate("/admin"); // Admin goes to dashboard
@@ -79,11 +79,13 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-8">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-8 sm:pt-20">
       <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg gap-5 flex flex-col">
         <div className="flex flex-col">
           <p className="mb-2 text-center text-lg font-semibold text-gray-600 flex flex-col ">
-            Please log in to continue
+            Please Sign in to continue
+          </p>
+          <p className="mb-2 text-center text-lg font-semibold text-gray-600 flex flex-col ">
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 console.log("Login Success:", credentialResponse);
@@ -94,6 +96,17 @@ const Login = () => {
               }}
             />
           </p>
+        </div>
+        {/* divider */}
+        <div class="relative my-6">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-700"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="bg-white px-2  text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+              or continue with
+            </span>
+          </div>
         </div>
         <div>
           <label
