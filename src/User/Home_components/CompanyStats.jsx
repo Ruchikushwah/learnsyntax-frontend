@@ -22,7 +22,7 @@ const CompanyStats = () => {
                         <div className="flex items-center gap-4">
                             <img src="iconreact.png" alt="Icon 1" className="w-16 h-16 object-contain" />
                             <div>
-                                <h4 className="text-2xl text-neutralDGrey font-semibold">2,233,344</h4>
+                                <h4 className="text-2xl text-neutralDGrey font-semibold">2,233</h4>
                                 <p>Members</p>
                             </div>
                         </div>
@@ -31,7 +31,7 @@ const CompanyStats = () => {
                         <div className="flex items-center gap-4">
                             <img src="iconjs.png" alt="Icon 2" className="w-16 h-16 object-contain" />
                             <div>
-                                <h4 className="text-2xl text-neutralDGrey font-semibold">2,233,344</h4>
+                                <h4 className="text-2xl text-neutralDGrey font-semibold">3,22</h4>
                                 <p>Members</p>
                             </div>
                         </div>
@@ -49,7 +49,7 @@ const CompanyStats = () => {
                         <div className="flex items-center gap-4">
                             <img src="iconphp.png" alt="Icon 4" className="w-16 h-16 object-contain" />
                             <div>
-                                <h4 className="text-2xl text-neutralDGrey font-semibold">2,233,344</h4>
+                                <h4 className="text-2xl text-neutralDGrey font-semibold">2,233</h4>
                                 <p>Members</p>
                             </div>
                         </div>

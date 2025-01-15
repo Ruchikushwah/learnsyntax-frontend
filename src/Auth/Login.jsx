@@ -98,7 +98,7 @@ const Login = () => {
           </p>
         </div>
         {/* divider */}
-        <div class="relative my-6">
+        <div class="relative my-2">
           <div class="absolute inset-0 flex items-center">
             <div class="w-full border-t border-700"></div>
           </div>

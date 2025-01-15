@@ -19,7 +19,7 @@ const ContactForm = () => {
       [id]: value,
     }));
   };
-
+    //added this for spinner
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Start loading spinner
