@@ -1,3 +1,4 @@
+import { GoogleLogin } from "@react-oauth/google";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -63,6 +64,15 @@ const Register = () => {
         <h2 className="text-2xl font-bold text-center text-gray-700">
           Register
         </h2>
+        <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            console.log("Register Success:", credentialResponse);
+            const { credential } = credentialResponse;
+          }}
+          onError={() => {
+            console.error("Google Login Failed");
+          }}
+        />
 
         <div>
           <label className="block text-sm font-medium text-gray-600">

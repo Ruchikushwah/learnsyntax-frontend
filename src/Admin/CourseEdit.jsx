@@ -4,6 +4,7 @@ import Title from "./Title";
 import Description from "./Description";
 import Image from "./Image";
 import { BeatLoader } from "react-spinners";
+import parse from "html-react-parser";
 
 const APP_URL = import.meta.env.VITE_REACT_APP_URL;
 
@@ -51,7 +52,7 @@ const CourseEdit = () => {
   return (
     <div className="grid grid-cols-2 gap-4 px-6 py-4 w-full">
       <Title label="Title" field={record.title} />
-      <Description label="Description" field={record.description} />
+      <Description label="Description" field={ parse (record.description)} />
 
         <Image
           label="Image"
