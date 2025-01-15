@@ -112,7 +112,7 @@ const OnlineCompiler = () => {
         <main className="flex-1 flex flex-col items-center p-6">
           <div className="w-full max-w-6xl flex flex-col md:flex-row gap-6">
             {/* Code Editor */}
-            <div className="w-full md:w-1/2">
+            <div className="w-full md:w-2/2">
               <div className="flex justify-between mb-2">
                 <span className="text-lg font-semibold">{language.toUpperCase()}</span>
                 <button
@@ -144,7 +144,7 @@ const OnlineCompiler = () => {
 
             {/* Output Section */}
             <div className="w-full md:w-1/2">
-              <h3 className="text-lg font-semibold mb-2">Output:</h3>
+              <h3 className="text-lg font-semibold mb-4">Output:</h3>
               <div className="bg-gray-100 p-4 border border-gray-300 rounded-md h-96 overflow-auto">
                 <pre>{output}</pre>
               </div>
