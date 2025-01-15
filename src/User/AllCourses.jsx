@@ -18,6 +18,8 @@ const [courses, setCourses] = useState([]);
         }
         const data = await response.json();
         setCourses(data.data);
+       
+        
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
