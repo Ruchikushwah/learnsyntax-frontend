@@ -78,6 +78,37 @@ const Login = () => {
     }
   };
 
+  const handleGoogleLogin = async (credential) => {
+    try {
+      const response = await fetch(`${APP_URL}/api/auth/google-login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: credential }),
+      });
+      const data = await response.json();
+      console.log(data.user);
+
+      if (response.ok) {
+        localStorage.setItem("token", data.access_token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        // Redirect user based on role
+        const user = data.user;
+        if (user.is_admin) {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
+      } else {
+        alert(data.error || "Google login failed.");
+      }
+    } catch (error) {
+      console.error("Google login error:", error);
+      alert("An error occurred during Google login. Please try again.");
+    }
+  };
+
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-8 sm:pt-20">
       <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg gap-5 flex flex-col">
@@ -86,15 +117,17 @@ const Login = () => {
             Please Sign in to continue
           </p>
           <p className="mb-2 text-center text-lg font-semibold text-gray-600 flex flex-col ">
-            <GoogleLogin
-              onSuccess={(credentialResponse) => {
-                console.log("Login Success:", credentialResponse);
-                const { credential } = credentialResponse;
-              }}
-              onError={() => {
-                console.error("Google Login Failed");
-              }}
-            />
+           {/* Google Login */}
+        <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            const { credential } = credentialResponse;
+            handleGoogleLogin(credential);
+          }}
+          onError={() => {
+            console.error("Google Login Failed");
+            alert("Google Login Failed. Please try again.");
+          }}
+        />
           </p>
         </div>
         {/* divider */}
