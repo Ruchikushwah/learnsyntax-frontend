@@ -37,7 +37,7 @@ const InsertTopic = () => {
     if (!validateForm()) {
       return;
     }
-   
+
     const topicData = {
       topic_name: topicName,
       topic_description: topicDescription,
@@ -114,9 +114,8 @@ const InsertTopic = () => {
           <ReactQuill
             theme="snow"
             value={topicDescription}
-            onChange={ setTopicDescription}
+            onChange={setTopicDescription}
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200 truncate"
-            
           />
           {errors.topicDescription && (
             <p className="text-red-500 text-sm">{errors.topicDescription}</p>
@@ -143,6 +142,14 @@ const InsertTopic = () => {
         {errors.order && <p className="text-red-500 text-sm">{errors.order}</p>}
 
         <div className="flex justify-end gap-2">
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300"
+            disabled={loading}
+          >
+            Cancel
+          </button>
           <button
             onClick={handleSubmit}
             className="px-4 py-2 text-white bg-teal-500 rounded hover:bg-teal-600"

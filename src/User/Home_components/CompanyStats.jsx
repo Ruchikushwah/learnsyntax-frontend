@@ -9,7 +9,7 @@ const CompanyStats = () => {
                     <div className="md:w-1/2">
                         <h2 className="text-4xl text-neutralDGrey font-semibold mb-4 md:w-3/4">
                         LearnSyntax, a platform focused  <br />
-                            <span className="text-brandPrimary"> on teaching programming </span>
+                            <span className="text-brandPrimary text-4xl"> on teaching programming </span>
                         </h2>
                         <p>
                         The design focuses on presenting the member count for each technology in a neat and organized way, with clear iconography and text styling.

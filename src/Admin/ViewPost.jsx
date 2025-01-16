@@ -137,7 +137,7 @@ const filteredPost = post.filter(items =>
               <tr className="bg-white border-b hover:bg-gray-50" key={items.id}>
                 <td className="px-6 py-4">{items.id}</td>
                 <td className="px-6 py-4">{items.title}</td>
-                <td className="px-6 py-4 line-clamp-1">{parse(items.content)}</td>
+                <td className="px-6 py-4 line-clamp-3">{parse(items.content)}</td>
                 <td className="px-6 py-4">
                   <img
                     src={`${APP_URL}/storage/${items.image_path}`}

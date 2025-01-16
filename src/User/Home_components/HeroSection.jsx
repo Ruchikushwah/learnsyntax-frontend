@@ -28,13 +28,13 @@ const HeroSection = () => {
 
   return (
     <div className="bg-neutralSilver" id="herosection">
-      <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto min-h-screen h-screen">
-        <Carousel className="w-full h-full">
+      <div className="px-10 lg:px-14 max-w-screen-2xl mx-auto min-h-screen h-screen">
+        <Carousel className="w-full h-full px-14">
           {/* First Slide */}
-          <div className="my-6 md:my-4 py-6 flex flex-col md:flex-row-reverse items-center lg:justify-between gap-6 w-full h-auto lg:h-full">
+          <div className="my-6 md:my-4 py-6 flex flex-col md:flex-row-reverse items-center lg:justify-between gap-20 w-full h-auto lg:h-full">
             {/* Right-Aligned Image */}
             <div
-              className={`w-full md:w-1/2 flex justify-center transition-opacity duration-1000 ${inView ? "opacity-100" : "opacity-0"
+              className={`w-full md:w-1/2 flex justify-center  transition-opacity duration-1000 ${inView ? "opacity-100" : "opacity-0"
                 }`}
             >
               <img

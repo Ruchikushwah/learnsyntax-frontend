@@ -49,7 +49,7 @@ const WhatWeOffer = () => {
   }, []);
 
   return (
-    <div id="service" className="md:px-14 px-4 py-16 max-w-screen-2xl mx-auto">
+    <div id="service" className="md:px-14 px-4 py-10 max-w-screen-2xl mx-auto">
       <div className="text-center my-8">
         <h2 className="text-4xl tracking-tight font-extrabold text-neutralDGrey mb-2">
           Our <span className="text-brandPrimary">Courses</span>

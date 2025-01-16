@@ -84,7 +84,7 @@ const SingleViewPage = () => {
               <li
                 key={chapter.id}
                 className={`p-4 rounded-md cursor-pointer hover:bg-gray-100 ${selectedChapter?.id === chapter.id
-                  ? "bg-[#E8F5E9] border-l-4 border-[#4c973d]"
+                  ? "bg-[#ccdce8a4] border-l-4 border-brandPrimary"
                   : "bg-white"
                   }`}
                 onClick={() => setSelectedChapter(chapter)}
