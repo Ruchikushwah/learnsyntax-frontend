@@ -28,7 +28,6 @@ const WhatWeOffer = () => {
   }, []);
 
   useEffect(() => {
-    
     const fetchCourses = async () => {
       try {
         const response = await fetch(`${APP_URL}/api/courses`);
@@ -37,9 +36,6 @@ const WhatWeOffer = () => {
         }
         const data = await response.json();
         setCourses(data.data);
-        console.log(setCourses);
-        
-        
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
@@ -56,7 +52,7 @@ const WhatWeOffer = () => {
         </h2>
         <p className="text-neutralGrey">
           LearnSyntax will enhance your learning experience the way you
-          interacts.
+          interact.
         </p>
         <div
           className={`my-12 flex flex-wrap justify-between items-center gap-8 transform transition-all duration-1000 ${
@@ -64,7 +60,7 @@ const WhatWeOffer = () => {
           }`}
         >
           {courses.length > 0 ? (
-            courses.map((course) => (
+            courses.slice(0, 6).map((course) => (
               <div key={course.id} className="flex flex-col items-center">
                 <img
                   src={`${APP_URL}/storage/${course.image}`}

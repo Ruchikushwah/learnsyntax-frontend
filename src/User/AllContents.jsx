@@ -83,7 +83,7 @@ const AllContents = () => {
   if (error) return <p>Error: {error}</p>;
  
   return (
-    <div className="flex flex-col lg:flex-row w-full flex gap-5 px-8 py-6 mt-12">
+    <div className=" flex-col lg:flex-row w-full flex gap-5 px-8 py-6 mt-12">
       <Helmet>
         <title>{selectedTopic?.topic_name || "All Contents"}</title>
         <meta
