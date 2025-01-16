@@ -86,7 +86,7 @@ const Login = () => {
         body: JSON.stringify({ token: credential }),
       });
       const data = await response.json();
-      console.log(data.user);
+      console.log("hello",data.user);
 
       if (response.ok) {
         localStorage.setItem("token", data.access_token);
