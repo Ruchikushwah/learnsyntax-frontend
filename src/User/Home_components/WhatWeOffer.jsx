@@ -36,10 +36,7 @@ const WhatWeOffer = () => {
           throw new Error("Failed to fetch courses");
         }
         const data = await response.json();
-        setCourses(data.data);
-        console.log(setCourses);
-        
-        
+        setCourses(data.data);    
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
