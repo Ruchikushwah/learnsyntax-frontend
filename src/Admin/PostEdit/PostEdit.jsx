@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
 import { useNavigate, useParams } from "react-router-dom";
 
 const APP_URL = import.meta.env.VITE_REACT_APP_URL;
@@ -82,7 +83,7 @@ const PostEdit = () => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-      <div className="w-full max-w-md p-6 bg-white rounded shadow-lg">
+      <div className="w-full max-w-3xl p-6 bg-white rounded shadow-lg">
         <h2 className="text-lg font-bold text-gray-700 mb-4">Edit Post</h2>
 
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
@@ -100,18 +101,18 @@ const PostEdit = () => {
               }
               required
             />
-            <InputField
+            <ReactQuill
               label="Post Content"
               id="content"
               value={values.content}
               onChange={(value) =>
                 setValues({ ...values, content: value })
               }
-              textarea
+              style={{ height: '300px' }} 
               required
             />
             
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-2 mt-12">
               <button
                 type="button"
                 onClick={() => navigate(-1)}

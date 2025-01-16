@@ -12,7 +12,7 @@ export default {
       colors:{
         'neutralSilver':'#F5F7FA',
         'neutralDGrey':'#4D4D4D',
-        'brandPrimary':'#4CAF4F',
+        'brandPrimary':'#0574bd',
         'neutralGrey':'#717171',
         'grey900':'#1819F'
       }

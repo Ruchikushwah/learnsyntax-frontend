@@ -33,7 +33,7 @@ const CourseCard = ({ courses = [] }) => {
       </div>
 
       {/* Courses Section */}
-      <div className="mt-14 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:w-11/12 mx-auto gap-12">
+      <div className="mt-14 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:w-10/12 mx-auto gap-12">
         {courses.length > 0 ? (
           courses.slice(0, visibleCount).map((course) => (
             <NavLink
@@ -43,11 +43,11 @@ const CourseCard = ({ courses = [] }) => {
             >
               <div
                 key={course.id}
-                className="px-4 py-8 text-center md:w-[300px] mx-auto md:h-80 rounded-md shadow cursor-pointer 
+                className="px-4 py-5 text-center md:w-[300px] mx-auto md:h-80 rounded-md cursor-pointer 
                     hover:-translate-y-5 hover:border-b-4 hover:border-brandPrimary transition-all duration-300 flex items-center justify-center h-full"
               >
                 <div>
-                  <div className="bg-[#E8F5E9] mb-4 h-14 w-14 mx-auto rounded-tl-3xl rounded-br-3xl">
+                  <div className="bg-[#ccdce8a4] mb-4 h-14 w-14 mx-auto rounded-tl-3xl rounded-br-3xl">
 
                     <img
                       src={`${APP_URL}/storage/${course.image}`}

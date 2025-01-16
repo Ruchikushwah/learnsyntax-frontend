@@ -9,7 +9,7 @@ const CompanyStats = () => {
                     <div className="md:w-1/2">
                         <h2 className="text-4xl text-neutralDGrey font-semibold mb-4 md:w-3/4">
                         LearnSyntax, a platform focused  <br />
-                            <span className="text-brandPrimary"> on teaching programming </span>
+                            <span className="text-brandPrimary text-4xl"> on teaching programming </span>
                         </h2>
                         <p>
                         The design focuses on presenting the member count for each technology in a neat and organized way, with clear iconography and text styling.
@@ -22,7 +22,7 @@ const CompanyStats = () => {
                         <div className="flex items-center gap-4">
                             <img src="iconreact.png" alt="Icon 1" className="w-16 h-16 object-contain" />
                             <div>
-                                <h4 className="text-2xl text-neutralDGrey font-semibold">2,233,344</h4>
+                                <h4 className="text-2xl text-neutralDGrey font-semibold">2,233</h4>
                                 <p>Members</p>
                             </div>
                         </div>
@@ -31,7 +31,7 @@ const CompanyStats = () => {
                         <div className="flex items-center gap-4">
                             <img src="iconjs.png" alt="Icon 2" className="w-16 h-16 object-contain" />
                             <div>
-                                <h4 className="text-2xl text-neutralDGrey font-semibold">2,233,344</h4>
+                                <h4 className="text-2xl text-neutralDGrey font-semibold">3,22</h4>
                                 <p>Members</p>
                             </div>
                         </div>
@@ -49,7 +49,7 @@ const CompanyStats = () => {
                         <div className="flex items-center gap-4">
                             <img src="iconphp.png" alt="Icon 4" className="w-16 h-16 object-contain" />
                             <div>
-                                <h4 className="text-2xl text-neutralDGrey font-semibold">2,233,344</h4>
+                                <h4 className="text-2xl text-neutralDGrey font-semibold">2,233</h4>
                                 <p>Members</p>
                             </div>
                         </div>
